@@ -67,7 +67,7 @@ engine.execute("""CREATE TABLE IF NOT EXISTS test (
   id serial,
   name text
 );""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace, hopper'), ('alan, turing'), ('ada, lovelace');""")
+engine.execute("INSERT INTO test(id, name) VALUES (?, ?);",[1,2],[2,3])
 #
 # END SQLITE SETUP CODE
 #
