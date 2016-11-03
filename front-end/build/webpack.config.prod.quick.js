@@ -67,6 +67,11 @@ module.exports = {
         // loader: 'style!css?sourceMap!autoprefixer-loader',
       },
       {
+        test: /\.less$/,
+        // loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+        loader: "style!css!less"
+      },
+      {
         test: /\.hcss$/,
         // loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'

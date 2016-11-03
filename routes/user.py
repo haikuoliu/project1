@@ -10,7 +10,7 @@ import time
 
 
 # return all info of a user
-# get: /api/user?id=1
+# get: /api/users?id=1
 @routes.route('/api/users', methods=['POST', 'GET'])
 def user_api():
     if request.method == 'GET':
@@ -18,5 +18,5 @@ def user_api():
         res = conn.execute("select * from users where uid=%s", id)
         rows = res.fetchall()
         print list(rows[0])
-        print time.mktime(tmp[1].timetuple())
+        # print time.mktime(tmp[1].timetuple())
         return json.dumps(list(rows[0])[3:])

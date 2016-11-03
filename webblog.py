@@ -39,7 +39,7 @@ def connectdb():
     return conn;
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.register_blueprint(routes)
 conn = connectdb()  # get connection
 
