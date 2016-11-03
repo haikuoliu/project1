@@ -1,0 +1,11 @@
+.custom-image {
+  height: 80%;
+  overflow: hidden;
+}
+.custom-card {
+  height: 20%;
+  padding: 10px 16px;
+}
+.custom-card p {
+  color: #999;
+}
