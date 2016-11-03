@@ -1,14 +1,14 @@
-  # try:
-  #   g.conn = engine.connect()
-  # except:
-  #   print "uh oh, problem connecting to database"
-  #   import traceback; traceback.print_exc()
-  #   g.conn = None
+# try:
+#   g.conn = engine.connect()
+# except:
+#   print "uh oh, problem connecting to database"
+#   import traceback; traceback.print_exc()
+#   g.conn = None
 
-  # try:
-  #   g.conn.close()
-  # except Exception as e:
-  #   pass
+# try:
+#   g.conn.close()
+# except Exception as e:
+#   pass
 
 
 
@@ -26,6 +26,7 @@ from sqlalchemy import *
 import json
 from routes import *
 
+
 # handle db connection
 def connectdb():
     host = "104.196.175.120"
@@ -34,8 +35,10 @@ def connectdb():
     url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
     db = create_engine(url)
     conn = db.connect()
-    if conn: print "connected to db"
-    else: print "connection failed"
+    if conn:
+        print "connected to db"
+    else:
+        print "connection failed"
     return conn;
 
 
@@ -51,13 +54,17 @@ def hello_world():
 
 if __name__ == "__main__":
     import click
+
+
     @click.command()
     @click.option('--debug', is_flag=True)
     @click.option('--threaded', is_flag=True)
-    @click.argument('HOST', default='0.0.0.0')
-    @click.argument('PORT', default=8111, type=int)
+    @click.argument('HOST', default='127.0.0.1')
+    @click.argument('PORT', default=8080, type=int)
     def run(debug, threaded, host, port):
         HOST, PORT = host, port
         print "running on %s:%d" % (HOST, PORT)
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
+
+
     run()

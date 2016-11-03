@@ -59,7 +59,6 @@
         "sex": "male" | "female",
         "name": "Nick Name",
         "follows": 123,
-        "topics": ["science", "movie"]
       }
       // fail
       "result": {
@@ -71,12 +70,12 @@
 
 3. View Profile of Other Users GET
 
-    URL: `/api/users`
+    URL: `/api/users/view_profile`
 
     GET:
 
     ```
-    ?id=2311
+    ?myid=1&otherid=2311
     ```
 
     Return:
@@ -89,16 +88,39 @@
         "uid": 23111,
         "isFollow": true | false,
         "email": "name@gmail.com",
-        "birth": "2000-02-13",
+        "birth": "742449600.0",
         "sex": "male" | "female",
         "name": "Nick Name",
         "follows": 123,
-        "topics": ["science", "movie"]
       }
       // fail
       "result": {
         "code": 0,
         "msg": "User None Exist"
+      }
+    }
+    ```
+
+4. Get User's Subscribes (GET)
+
+    URL: `/api/users/subscribes`
+
+    GET:
+
+    ```
+    ?id=1
+    ```
+    Return:
+
+    ```
+    {
+      "status": "succ" | "fail",
+      // succ
+      "result": ["science", "movie"]
+      // fail
+      "result": {
+        "code": 0,
+        "msg": "Some msg"
       }
     }
     ```
