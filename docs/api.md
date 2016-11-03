@@ -748,7 +748,7 @@ Return:
 
 ## Pushes
 
-1. Create A new 
+1. Create A new
 
 URL: `api/pushes/create`
 
