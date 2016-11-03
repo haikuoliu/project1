@@ -309,11 +309,11 @@
     }
     ```
 
-### Events List
+### Events/Ads List
 
 1. Retrieve Feeds GET
 
-URL: `api/feeds`
+URL: `api/posts/feeds`
 
 GET:
 
@@ -353,7 +353,7 @@ Return:
 
 2. Retrieve Users's Posts GET
 
-URL: `api/posts`
+URL: `api/posts/user`
 
 GET:
 
@@ -391,6 +391,75 @@ Return:
 }
 ```
 
+3. Retrieve All Events of Specific Topics
+
+URL: `api/posts/topic`
+
+GET:
+
+```
+?topicName=science
+```
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "eid": 12,
+    "event_type": "blog" | "picture",
+    "description": "some thing",
+    "uid": 2311,
+    "user_name": "haikuo",
+    "likes": 23,
+    // picture
+    "url": "http:0.0.0.0/abcd",
+    // blog
+    "title": "Title"
+  },
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "Unknown"
+  }
+}
+```
+
+4. Retrieve Users's Ads (GET)
+
+URL: `api/ads/user`
+
+GET:
+
+```
+?uid=123
+```
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "ads": [
+      {
+        "sid": 12,
+        "sponsor_name": "apple",
+        "url": "http:..."
+      }
+    ]
+  },
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "Unknown"
+  }
+}
+```
+
 ## Topics & Belongs & Subscribes
 
 1. Retrieve All Topics
@@ -416,42 +485,6 @@ Return:
         "count": 231
       }
     ]
-  },
-  // fail
-  "result": {
-    "code": 0,
-    "msg": "Unknown"
-  }
-}
-```
-
-2. Retrieve All Events of Specific Topics
-
-URL: `api/topics`
-
-GET:
-
-```
-?topicName=science
-```
-
-Return:
-
-```
-{
-  "status": "succ" | "fail",
-  // succ
-  "result": {
-    "eid": 12,
-    "event_type": "blog" | "picture",
-    "description": "some thing",
-    "uid": 2311,
-    "user_name": "haikuo",
-    "likes": 23,
-    // picture
-    "url": "http:0.0.0.0/abcd",
-    // blog
-    "title": "Title"
   },
   // fail
   "result": {
@@ -547,10 +580,38 @@ Return:
   "status": "succ" | "fail",
   // succ
   "result": {
-    "sponsors": [
+    "aid": 111
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+2. Retrieve Sponsor's Ads List (GET)
+
+URL: `/api/ads/sponsor`
+
+GET:
+
+```
+?sid=12
+```
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "ads": [
       {
-        "sid": 123,
-        "name": "apple"
+        "sid": 12,
+        "sponsor_name": "apple",
+        "url": "http:..."
       }
     ]
   }
@@ -564,4 +625,192 @@ Return:
 
 ## User_Sets
 
+1. Create a new User_Sets (POST)
+
+URL: `api/user_sets/create`
+POST:
+
+```
+{
+  "sid": 123,
+  "filters": {
+    "age": "18-30"
+  },
+  "description": "haha"
+}
+```
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "set_id": 123,
+    "sid": 123,
+    "filters": {
+      "age": "18-30"
+    },
+    "description": "haha",
+    "size": 100
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+2. Delete a new User_Sets (GET)
+
+URL: `api/user_sets/delete`
+GET: `?set_id=123`
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": null
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+3. Get Sponsor's all User_Sets List (GET)
+
+URL: `api/user_sets/sponsor`
+GET: `?sid=123`
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "user_sets": [
+      {
+        "sid": 123,
+        "filters": {
+          "age": "18-30"
+        },
+        "description": "haha",
+        "size": 100
+      }
+    ]
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+4. Get User Sets (GET)
+
+URL: `api/user_sets/get`
+
+GET: `?set_id=1`
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "user_sets": [
+      {
+        "sid": 123,
+        "filters": {
+          "age": "18-30"
+        },
+        "description": "haha",
+        "size": 100
+      }
+    ]
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
 ## Pushes
+
+1. Create A new 
+
+URL: `api/pushes/create`
+
+POST:
+
+```
+{
+  "sid": 1,
+  "aid": 1,
+}
+```
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "sid": 1,
+    "aid": 1,
+    "price": 11,
+    "size": 1000,
+    "description": "haha",
+    "time": 1349374939
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+2. Retrieve sponsor's pushes list (GET)
+
+URL: `api/pushes/sponsor`
+
+GET: `?sid=1`
+
+Return:
+
+```
+{
+  "status": "succ" | "fail",
+  // succ
+  "result": {
+    "pushes": [
+      {
+        "sid": 1,
+        "aid": 1,
+        "price": 11,
+        "size": 1000,
+        "description": "haha",
+        "time": 1349374939
+      }
+    ]
+  }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```

@@ -107,6 +107,13 @@ CREATE TABLE pushes(
     primary key (sid, aid, set_id, time)
 );
 
+CREATE TABLE user_ads(
+    uid int references users,
+    aid int references ads,
+    count int NOT NULL,
+    primary key (uid, aid)
+);
+
 --insert
 INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES
 (now() - interval'1day','1993-7-12','lllhhhkkk','haikuo.liu.cu@gmail.com','HaikuoLiu',true),
