@@ -64,3 +64,22 @@ def event_create_edit():
         except Exception, e:
             print e
             return default_error_msg(e.message)
+
+# can't use now!!
+@routes.route('/api/event/delete', methods=['GET', 'POST'])
+@crossdomain(origin='*')
+def event_delete():
+    if request.method == 'POST':
+        try:
+            eid = request.args.get('eid')
+            uid = request.args.get('uid')
+            exe_sql = "DELETE FROM events WHERE eid = %s AND uid = %s"
+            conn.execute(exe_sql, (eid, uid))
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = "null"
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)

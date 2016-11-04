@@ -22,8 +22,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": null,
       // fail
       "result": {
@@ -50,8 +50,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": {
         "uid": 23111,
         "email": "name@gmail.com",
@@ -82,8 +82,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": {
         "uid": 23111,
         "isFollow": true | false,
@@ -114,8 +114,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": ["science", "movie"]
       // fail
       "result": {
@@ -146,8 +146,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": null
       // fail
       "result": {
@@ -190,8 +190,8 @@
 
         ```
         {
-          "status": "succ" | "fail",
-          // succ
+          "status": "success" | "fail",
+          // success
           "result": {
             "eid": 1021
           }
@@ -213,15 +213,15 @@
         {
           "uid": 1211,
           "eid": 1021
-        }
+        }d
         ```
 
         Return:
 
         ```
         {
-          "status": "succ" | "fail",
-          // succ
+          "status": "" | "fail",
+          // success
           "result": null
           // fail
           "result": {
@@ -247,8 +247,8 @@
 
         ```
         {
-          "status": "succ" | "fail",
-          // succ
+          "status": "success" | "fail",
+          // success
           "result": {
             "eid": 12,
             "event_type": "blog" | "picture",
@@ -283,8 +283,8 @@
 
         ```
         {
-          "status": "succ" | "fail",
-          // succ
+          "status": "success" | "fail",
+          // success
           "result": {
             "comments": [ {
                 "cid": 102,
@@ -320,8 +320,8 @@
 
     ```
     {
-      "status": "succ" | "fail",
-      // succ
+      "status": "success" | "fail",
+      // success
       "result": null,
       // fail
       "result": {
@@ -347,8 +347,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     feeds: [
       {
@@ -387,8 +387,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     feeds: [
       {
@@ -427,8 +427,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "eid": 12,
     "event_type": "blog" | "picture",
@@ -463,8 +463,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "ads": [
       {
@@ -497,8 +497,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     topics: [
       {
@@ -535,8 +535,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": null,
   // fail
   "result": {
@@ -561,8 +561,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "sponsors": [
       {
@@ -599,8 +599,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "aid": 111
   }
@@ -626,8 +626,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "ads": [
       {
@@ -666,8 +666,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "set_id": 123,
     "sid": 123,
@@ -694,8 +694,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": null
   // fail
   "result": {
@@ -714,8 +714,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "user_sets": [
       {
@@ -746,8 +746,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "user_sets": [
       {
@@ -787,8 +787,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "sid": 1,
     "aid": 1,
@@ -815,8 +815,8 @@ Return:
 
 ```
 {
-  "status": "succ" | "fail",
-  // succ
+  "status": "success" | "fail",
+  // success
   "result": {
     "pushes": [
       {
