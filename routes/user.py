@@ -30,7 +30,7 @@ def view_user_profile():
                 }
                 exe_sql = "SELECT count(*) AS count FROM follows WHERE source = %s AND destination = %s"
                 res = conn.execute(exe_sql, (myid, otherid))
-                if res.fetchone()["count"] == "1":
+                if res.fetchone()["count"] == 1:
                     u_info["isFollow"] = TRUE
                 else:
                     u_info["isFollow"] = FALSE
