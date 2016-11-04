@@ -1,4 +1,13 @@
 from sqlalchemy import *
+from flask import request
+from utils.connect_db import *
+from utils.constants import *
+from utils.time_format import *
+import json
+import time
+import calendar
+from datetime import datetime, date
+
 #
 # host = "localhost"
 # password = ""
@@ -17,24 +26,22 @@ from sqlalchemy import *
 #             print row
 # add_b_safe(conn, "abcd")
 
-from utils.connect_db import *
-import time
 
-id = 1
-dbres = conn.execute("select * from users", id)
-# row = dbres.fetchone()
-# res = {""}
-res = []
-for row in dbres:
-    tmp = {}
-    tmp['time'] = row['reg_t']
-    res.append(tmp)
-
-ret = {
-    "status": "succ",
-    "result": res
-}
-print ret
+# id = 1
+# dbres = conn.execute("select * from users", id)
+# # row = dbres.fetchone()
+# # res = {""}
+# res = []
+# for row in dbres:
+#     tmp = {}
+#     tmp['time'] = row['reg_t']
+#     res.append(tmp)
+#
+# ret = {
+#     "status": "succ",
+#     "result": res
+# }
+# print ret
 
 
 
@@ -55,3 +62,41 @@ print ret
 # res = conn.execute("select * from users")
 # rows = res.fetchall()
 # print rows
+
+
+myid = 2
+otherid = 1
+exe_sql = "select * from users where uid = %s"
+res = conn.execute(exe_sql, otherid)
+row = res.fetchone()
+ret = {}
+if row:
+    ret[STATUS] = SUCCESS
+    timestamp1 = time.mktime(row["birth"].timetuple())
+    dt = datetime.fromtimestamp(timestamp1)
+    print dt
+    u_info = {
+        "uid": row["uid"],
+        "email": row["email"],
+        "birth_tmp": row["birth"],
+        "birth": date_to_timestamp(row["birth"]),
+        "sex": row["sex"],
+        "name": row["name"]
+    }
+    exe_sql = "select count(*) as count from follows where source = %s and destination = %s"
+    res = conn.execute(exe_sql, (myid, otherid))
+    if res.fetchone()["count"] == "1":
+        u_info["isFollow"] = TRUE
+    else:
+        u_info["isFollow"] = FALSE
+    exe_sql = "select count(*) as count from follows where destination = %s;"
+    res = conn.execute(exe_sql, otherid)
+    u_info["follows"] = int(res.fetchone()["count"])
+    ret[RESULTS] = u_info
+else:
+    ret[STATUS] = FAIL
+    fail_info = dict()
+    fail_info[CODE] = "0"
+    fail_info[MSG] = "User None Exist"
+    ret[RESULTS] = fail_info
+print ret

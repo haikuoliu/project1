@@ -1,3 +1,5 @@
+import json
+
 # store all constants
 
 SUCCESS = "succ"
@@ -15,3 +17,5 @@ MSG = "msg"
 TRUE = "true"
 
 FALSE = "false"
+
+#DEFAULT_ERROR_MSG = json.dumps({"status": "fail", "result": {CODE = "",MSG: "Unknown Error"}})

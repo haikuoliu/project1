@@ -1,6 +1,7 @@
 from flask import request
 from utils.connect_db import *
 from utils.constants import *
+from utils.time_format import *
 import json
 from . import routes
 import time
@@ -17,13 +18,13 @@ def view_user_profile():
             exe_sql = "select * from users where uid = %s"
             res = conn.execute(exe_sql, otherid)
             row = res.fetchone()
-            ret = dict()
+            ret = {}
             if row:
                 ret[STATUS] = SUCCESS
                 u_info = {
                     "uid"  : row["uid"],
                     "email": row["email"],
-                    "birth": time.mktime(row["birth"].timetuple()),
+                    "birth": date_to_timestamp(row["birth"]),
                     "sex"  : row["sex"],
                     "name" : row["name"]
                 }
@@ -52,6 +53,7 @@ def view_user_profile():
                     "msg": "Unknown Error"
                 }
             })
+
 
 # return topics subscribed by an user
 # /api/users/subscribes?id=2
