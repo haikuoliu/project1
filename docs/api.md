@@ -172,7 +172,7 @@
 
         ```
         {
-          "eid": null | 123, // null for create
+          "eid": -1 | 123, // null for create
           "event_type": "blog" | "picture",
           "description": "some thing",
           "uid": 2311,
