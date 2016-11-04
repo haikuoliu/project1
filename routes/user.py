@@ -1,7 +1,7 @@
-from flask import request
 from utils.connect_db import *
 from utils.constants import *
 from utils.time_format import *
+from utils.crossdomain import *
 import json
 from . import routes
 
@@ -9,6 +9,7 @@ from . import routes
 # return all info of an user
 # http://127.0.0.1:8080/api/users/view_profile?myid=1&otherid=2
 @routes.route('/api/users/view_profile', methods=['GET'])
+@crossdomain(origin='*')
 def view_user_profile():
     if request.method == 'GET':
         try:
@@ -83,6 +84,7 @@ def user_subscribes():
 # return topics subscribed by an user
 # http://127.0.0.1:8080/api/users/follow?sour=2&dest=1&isFollow=1
 @routes.route('/api/users/follow', methods=['GET'])
+@crossdomain(origin='*')
 def user_follows():
     if request.method == 'GET':
         try:
