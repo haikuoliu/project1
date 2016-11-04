@@ -12,10 +12,10 @@ from . import routes
 def users_posts():
     if request.method == 'GET':
         try:
-            exe_sql = "SELECT * FROM topics, users WHERE users.uid = %s AND events.uid = users.uid"
-            res = conn.execute(exe_sql, uid)
+            exe_sql = "SELECT * FROM topics"
+            res = conn.execute(exe_sql)
             rows = res.fetchall()
-            feeds = []
+            topics = []
             for row in rows:
                 exe_sql = "SELECT count(*) AS count FROM events, likes " \
                           "WHERE likes.eid = events.eid AND events.eid = %s GROUP BY events.eid"

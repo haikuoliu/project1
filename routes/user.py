@@ -19,31 +19,24 @@ def view_user_profile():
             res = conn.execute(exe_sql, otherid)
             row = res.fetchone()
             ret = {}
-            if row:
-                ret[STATUS] = SUCCESS
-                u_info = {
-                    "uid"  : row["uid"],
-                    "email": row["email"],
-                    "birth": date_to_timestamp(row["birth"]),
-                    "sex"  : row["sex"],
-                    "name" : row["name"]
-                }
-                exe_sql = "SELECT count(*) AS count FROM follows WHERE source = %s AND destination = %s"
-                res = conn.execute(exe_sql, (myid, otherid))
-                if res.fetchone()["count"] == 1:
-                    u_info["isFollow"] = TRUE
-                else:
-                    u_info["isFollow"] = FALSE
-                exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s;"
-                res = conn.execute(exe_sql, otherid)
-                u_info["follows"] = int(res.fetchone()["count"])
-                ret[RESULT] = u_info
+            ret[STATUS] = SUCCESS
+            u_info = {
+                "uid"  : row["uid"],
+                "email": row["email"],
+                "birth": date_to_timestamp(row["birth"]),
+                "sex"  : row["sex"],
+                "name" : row["name"]
+            }
+            exe_sql = "SELECT count(*) AS count FROM follows WHERE source = %s AND destination = %s"
+            res = conn.execute(exe_sql, (myid, otherid))
+            if res.fetchone()["count"] == 1:
+                u_info["isFollow"] = TRUE
             else:
-                ret[STATUS] = FAIL
-                fail_info = dict()
-                fail_info[CODE] = "0"
-                fail_info[MSG] = "User None Exist"
-                ret[RESULT] = fail_info
+                u_info["isFollow"] = FALSE
+            exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s;"
+            res = conn.execute(exe_sql, otherid)
+            u_info["follows"] = int(res.fetchone()["count"])
+            ret[RESULT] = u_info
             print ret
             return json.dumps(ret)
         except Exception, e:
@@ -62,18 +55,16 @@ def user_subscribes():
             res = conn.execute(exe_sql, id)
             rows = res.fetchall()
             ret = dict()
-            if rows:
-                ret[STATUS] = SUCCESS
-                topics = []
-                for row in rows:
-                    topics.append(row["topic"])
-                ret[RESULT] = topics
-            else:
-                ret[STATUS] = FAIL
-                fail_info = dict()
-                fail_info[CODE] = "0"
-                fail_info[MSG] = "None topics"
-                ret[RESULT] = fail_info
+            ret[STATUS] = SUCCESS
+            topics = []
+            for row in rows:
+                topics.append(row["topic"])
+            ret[RESULT] = topics
+            ret[STATUS] = FAIL
+            fail_info = dict()
+            fail_info[CODE] = "0"
+            fail_info[MSG] = "None topics"
+            ret[RESULT] = fail_info
             print ret
             return json.dumps(ret)
         except Exception, e:
