@@ -3,7 +3,7 @@ import { CLIENT_USER } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
 
-import * as PersistentActions from 'SRC/action'
+// import * as PersistentActions from 'SRC/action'
 
 // export function deleteBlogListItem(id) {
 //   return {
@@ -28,7 +28,7 @@ export function loadUserInfo(userId) {
           logger.error(api('users:getUserInfo', userId, userId), json.result.msg)
           return
         }
-        dispatch(PersistentActions.persistentSet('username', json.result.name))
+        // dispatch(PersistentActions.persistentSet('username', json.result.name))
         dispatch({
           type: CLIENT_USER.LOAD,
           status: json.status,

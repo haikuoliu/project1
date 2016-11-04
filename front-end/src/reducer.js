@@ -15,7 +15,7 @@ const reducerMap = {
   },
   'PERSISTENT@SET': (state, action) => {
     sessionStorage.setItem(action.key, action.value)
-    return state.set(action.key, Immutable.fromJS(action.value))
+    return state.set(action.key, Immutable.fromJS(`${action.value}`))
   },
   'PERSISTENT@REMOVE': (state, action) => {
     sessionStorage.removeItem(action.key)

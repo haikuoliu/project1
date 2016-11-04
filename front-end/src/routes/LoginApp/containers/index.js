@@ -20,7 +20,7 @@ class LoginApp extends Component {
   login(type) {
     if (type === 'client') {
       this.props.persistentActions.persistentSet('userId', 2)
-      this.props.router.push('/client')
+      this.props.router.push('/client/feed')
     } else { // type === 'ads'
       this.props.persistentActions.persistentSet('sponsorId', 1)
       this.props.router.push('/ads')
