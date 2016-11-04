@@ -1,8 +1,12 @@
+import { injectReducer } from 'SRC/reducer.js' // eslint-disable-line no-unused-vars
+
 export default (store) => ({
   path: 'client',
   getComponent(location, cb) {
     require.ensure([], (require) => {
-      // require('SRC/components/sub-nav/SubNav')
+      // Asyn Injection Of Reducers
+      const reducer = require('./containers/reducer').default
+      injectReducer(store, { key: 'clientGeneral', reducer })
       cb(null, require('./containers/').default)
     }, 'client')
   },

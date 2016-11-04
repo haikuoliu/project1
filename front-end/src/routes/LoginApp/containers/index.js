@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as PersistentActions from 'SRC/action'
+
 import { Link } from 'react-router'
 import { Card, Col, Row } from 'antd'
 
@@ -11,14 +15,14 @@ class LoginApp extends Component {
     this.login = this.login.bind(this)
   }
   componentWillMount() {
-    sessionStorage.clear()
+    this.props.persistentActions.persistentClear()
   }
   login(type) {
     if (type === 'client') {
-      sessionStorage.setItem('userId', 2)
+      this.props.persistentActions.persistentSet('userId', 2)
       this.props.router.push('/client')
     } else { // type === 'ads'
-      sessionStorage.setItem('sponsorId', 1)
+      this.props.persistentActions.persistentSet('sponsorId', 1)
       this.props.router.push('/ads')
     }
   }
@@ -65,7 +69,21 @@ class LoginApp extends Component {
 }
 
 LoginApp.propTypes = {
-  router: React.PropTypes.object
+  router: React.PropTypes.object,
+  // state: React.PropTypes.object,
+  persistentActions: React.PropTypes.object
 }
 
-export default CSSModules(LoginApp, styles)
+function mapState(state) { // eslint-disable-line
+  return {
+    // state: state.blog.BlogContent
+  }
+}
+
+function mapDispatch(dispatch) {
+  return {
+    persistentActions: bindActionCreators(PersistentActions, dispatch)
+  }
+}
+
+export default connect(mapState, mapDispatch)(CSSModules(LoginApp, styles))

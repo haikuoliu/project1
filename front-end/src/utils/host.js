@@ -1,9 +1,9 @@
 let hostname // eslint-disable-line
 
 if (process.env.NODE_ENV === 'production') {
-  hostname = () => window.location.host
+  hostname = () => `http://${window.location.host}`
 } else {
-  hostname = () => 'localhost:8080'
+  hostname = () => 'http://localhost:8080'
 }
 
 export default hostname
