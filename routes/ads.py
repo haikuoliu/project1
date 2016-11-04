@@ -1,8 +1,9 @@
-from utils.connect_db import *
 from utils.constants import *
 from utils.crossdomain import *
 import json
 from . import routes
+from flask import g
+
 
 
 # to be discussed
@@ -14,7 +15,7 @@ def user_ads():
         try:
             uid = request.args.get('uid')
             exe_sql = "SELECT * FROM ads, sponsors AS S WHERE uid = %s AND ads.sid = S.sid"
-            res = conn.execute(exe_sql, uid)
+            res = g.conn.execute(exe_sql, uid)
             ads = []
             for row in res.fetchall():
                 ads.append({

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request, g, send_from_directory
 from routes import *
-
+from utils.connect_db import *
 
 app = Flask(__name__, static_url_path='')
 app.register_blueprint(routes)

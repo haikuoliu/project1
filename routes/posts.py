@@ -1,9 +1,8 @@
-from utils.connect_db import *
 from utils.constants import *
 from utils.crossdomain import *
 import json
 from . import routes
-
+from flask import g
 
 # Retrieve Users's Posts
 # http://127.0.0.1:8080/api/posts/user?uid=4
@@ -14,13 +13,13 @@ def users_posts():
         try:
             uid = request.args.get('uid')
             exe_sql = "SELECT * FROM events, users WHERE users.uid = %s AND events.uid = users.uid"
-            res = conn.execute(exe_sql, uid)
+            res = g.conn.execute(exe_sql, uid)
             rows = res.fetchall()
             feeds = []
             for row in rows:
-                exe_sql = "SELECT count(*) AS count FROM events, likes " \
-                          "WHERE likes.eid = events.eid AND events.eid = %s GROUP BY events.eid"
-                res = conn.execute(exe_sql, row["eid"])
+                exe_sql = "SELECT count(*) AS count FROM events, topics " \
+                          "WHERE topics.eid = events.eid AND topics.name = %s"
+                res = g.conn.execute(exe_sql, row["name"])
                 row_likes = res.fetchone()
                 likes = row_likes["count"]
                 event = {

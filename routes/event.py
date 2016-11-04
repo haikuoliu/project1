@@ -1,10 +1,9 @@
-from utils.connect_db import *
 from utils.constants import *
 from utils.crossdomain import *
 from utils.time_format import *
 import json
 from . import routes
-
+from flask import g
 
 # create/edit events
 @routes.route('/api/event/create', methods=['GET', 'POST'])
@@ -27,38 +26,38 @@ def event_create_edit():
                 if event_type == "blog":
                     exe_sql = "INSERT INTO events(time, event_type, description, uid, title, content) " \
                               "VALUES(now(), %s, %s, %s, %s, %s)"
-                    conn.execute(exe_sql, (event_type, description, uid, title, content))
+                    g.conn.execute(exe_sql, (event_type, description, uid, title, content))
                 elif event_type == "picture":
                     exe_sql = "INSERT INTO events(time, event_type, description, uid, title, url) " \
                               "VALUES(now(), %s, %s, %s, %s, %s)"
-                    conn.execute(exe_sql, (event_type, description, uid, title, url))
+                    g.conn.execute(exe_sql, (event_type, description, uid, title, url))
                 else:
                     raise Exception("The event type should be either blog or picture")
                 # get eid
                 exe_sql = "SELECT eid FROM events ORDER BY eid DESC LIMIT 1"
-                res = conn.execute(exe_sql)
+                res = g.conn.execute(exe_sql)
                 row = res.fetchone()
                 eid = row["eid"]
                 # update belongs
                 for topic in topics:
                     exe_sql = "INSERT INTO belongs(eid, topic) VALUES (%s, %s)"
-                    conn.execute(exe_sql, (eid, topic))
+                    g.conn.execute(exe_sql, (eid, topic))
             else:  # edit
                 if event_type == "blog":
                     exe_sql = "UPDATE events SET time = now(), event_type = %s, description = %s, uid = %s, title = %s, content = %s"\
                               "WHERE eid = %s"
-                    conn.execute(exe_sql, (event_type, description, uid, title, content, eid))
+                    g.conn.execute(exe_sql, (event_type, description, uid, title, content, eid))
                 elif event_type == "picture":
                     exe_sql = "UPDATE events SET time = now(), event_type = %s, description = %s, uid = %s, title = %s, url = %s"\
                               "WHERE eid = %s"
-                    conn.execute(exe_sql, (event_type, description, uid, title, url, eid))
+                    g.conn.execute(exe_sql, (event_type, description, uid, title, url, eid))
                 # update belongs
                 exe_sql = "DELETE FROM belongs WHERE eid = %s"  # delete first
-                conn.execute(exe_sql, eid)
+                g.conn.execute(exe_sql, eid)
                 # then add
                 for topic in topics:
                     exe_sql = "INSERT INTO belongs(eid, topic) VALUES (%s, %s)"
-                    conn.execute(exe_sql, (eid, topic))
+                    g.conn.execute(exe_sql, (eid, topic))
             ret[RESULT] = {"eid": eid}
             print ret
             return json.dumps(ret)
@@ -77,7 +76,7 @@ def event_delete():
             eid = request.args.get('eid')
             uid = request.args.get('uid')
             exe_sql = "DELETE FROM events WHERE eid = %s AND uid = %s"
-            conn.execute(exe_sql, (eid, uid))
+            g.conn.execute(exe_sql, (eid, uid))
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = "null"
@@ -97,7 +96,7 @@ def event_get():
         try:
             eid = request.args.get('eid')
             exe_sql = "SELECT * FROM events, users WHERE eid = %s AND events.uid = users.uid"
-            res = conn.execute(exe_sql, eid)
+            res = g.conn.execute(exe_sql, eid)
             row = res.fetchone()
             event = {
                 "eid": eid,
@@ -130,7 +129,7 @@ def event_create_comments():
             uid = request.args.get('uid')
             content = request.args.get('content')
             exe_sql = "INSERT INTO comments(uid, eid, time, content) VALUES(%s, %s, now(), %s)"
-            conn.execute(exe_sql, (uid, eid, content))
+            g.conn.execute(exe_sql, (uid, eid, content))
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = "null"
@@ -145,7 +144,7 @@ def event_create_comments():
             exe_sql = "SELECT events.eid AS eid, users.uid AS uid, name, comments.time AS time, comments.content AS content " \
                       "FROM comments, users, events " \
                       "WHERE events.eid = %s AND comments.uid = users.uid AND events.eid = comments.eid"
-            res = conn.execute(exe_sql, eid)
+            res = g.conn.execute(exe_sql, eid)
             rows = res.fetchall()
             comments = []
             for row in rows:
