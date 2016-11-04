@@ -269,7 +269,7 @@
         }
         ```
 
-    2. Get Comments (GET)
+    2. Get Comments (GET) (done)
 
         URL: `api/event/comments`
 
@@ -302,7 +302,7 @@
         }
         ```
 
-3. Create Comments POST
+3. Create Comments POST (done)
 
     URL: `api/event/comments`
 
@@ -373,7 +373,7 @@ Return:
 }
 ```
 
-2. Retrieve Users's Posts GET
+2. Retrieve Users's Posts GET (done)
 
 URL: `api/posts/user`
 
@@ -401,6 +401,7 @@ Return:
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
+        "content": "Some contents"
         "title": "Title"
       }
     ]

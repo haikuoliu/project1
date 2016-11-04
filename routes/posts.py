@@ -7,12 +7,13 @@ from . import routes
 
 # Retrieve Users's Posts
 # http://127.0.0.1:8080/api/posts/user?uid=4
-@routes.route('/api/topics/all', methods=['GET'])
+@routes.route('/api/posts/user', methods=['GET'])
 @crossdomain(origin='*')
 def users_posts():
     if request.method == 'GET':
         try:
-            exe_sql = "SELECT * FROM topics, users WHERE users.uid = %s AND events.uid = users.uid"
+            uid = request.args.get('uid')
+            exe_sql = "SELECT * FROM events, users WHERE users.uid = %s AND events.uid = users.uid"
             res = conn.execute(exe_sql, uid)
             rows = res.fetchall()
             feeds = []
