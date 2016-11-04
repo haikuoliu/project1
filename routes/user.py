@@ -4,6 +4,7 @@ from utils.time_format import *
 from utils.crossdomain import *
 import json
 from . import routes
+from flask import g
 
 
 # return all info of an user
@@ -16,7 +17,7 @@ def view_user_profile():
             myid = request.args.get('myid')
             otherid = request.args.get('otherid')
             exe_sql = "SELECT * FROM users WHERE uid = %s"
-            res = conn.execute(exe_sql, otherid)
+            res = g.conn.execute(exe_sql, otherid)
             row = res.fetchone()
             ret = {}
             if row:
@@ -29,13 +30,13 @@ def view_user_profile():
                     "name" : row["name"]
                 }
                 exe_sql = "SELECT count(*) AS count FROM follows WHERE source = %s AND destination = %s"
-                res = conn.execute(exe_sql, (myid, otherid))
+                res = g.conn.execute(exe_sql, (myid, otherid))
                 if res.fetchone()["count"] == 1:
                     u_info["isFollow"] = TRUE
                 else:
                     u_info["isFollow"] = FALSE
                 exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s;"
-                res = conn.execute(exe_sql, otherid)
+                res = g.conn.execute(exe_sql, otherid)
                 u_info["follows"] = int(res.fetchone()["count"])
                 ret[RESULT] = u_info
             else:
@@ -59,7 +60,7 @@ def user_subscribes():
         try:
             id = request.args.get('id')
             exe_sql = "SELECT topic FROM subscribes WHERE uid = %s"
-            res = conn.execute(exe_sql, id)
+            res = g.conn.execute(exe_sql, id)
             rows = res.fetchall()
             ret = dict()
             if rows:
@@ -96,7 +97,7 @@ def user_follows():
             ret[RESULT] = NULL
             if isFollow == "1":
                 exe_sql = "SELECT * FROM follows WHERE source = %s AND destination = %s"
-                res = conn.execute(exe_sql, (source, destination))
+                res = g.conn.execute(exe_sql, (source, destination))
                 row = res.fetchall()
                 print row
                 # No record before:
@@ -105,11 +106,11 @@ def user_follows():
                 else:
                     exe_sql = "INSERT INTO follows(source, destination) VALUES(%s, %s)"
                     # INSERT statement does not return rows. It'll close automatically.
-                    conn.execute(exe_sql, (source, destination))
+                    g.conn.execute(exe_sql, (source, destination))
             elif isFollow == "0":
                 exe_sql = "DELETE FROM follows WHERE source = %s and destination = %s"
                 # INSERT statement does not return rows. It'll close automatically.
-                conn.execute(exe_sql, (source, destination))
+                g.conn.execute(exe_sql, (source, destination))
             else:
                 raise Exception("isFollow should be either 1 or 0!")
             print ret

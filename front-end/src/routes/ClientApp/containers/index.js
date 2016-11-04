@@ -19,6 +19,7 @@ class ClientApp extends Component {
   }
   render() {
     const pathname = this.props.location.pathname.replace('/client/', '')
+    const { userId } = this.props.persistentStore
     return (
       <Row>
         <Col span={4}>
@@ -38,7 +39,11 @@ class ClientApp extends Component {
               <Menu.Item key="blog/edit"><Link to="/client/blog/edit">Create Blog</Link></Menu.Item>
             </SubMenu>
             <SubMenu key="profile" title="Profile">
-              <Menu.Item key="profile/info"><Link to="/client/profile/info">My Profile</Link></Menu.Item>
+              <Menu.Item key="profile/info">
+                <Link to={{ pathname: '/client/profile/info', query: { uid: userId } }}>
+                  My Profile
+                </Link>
+              </Menu.Item>
               <Menu.Item key="profile/follow"><Link to="/client/profile/follow">My Follows</Link></Menu.Item>
             </SubMenu>
           </Menu>
