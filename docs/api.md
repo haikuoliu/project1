@@ -164,7 +164,7 @@
 
 1. Create/Delete/Edit Events Doc|Pic
 
-    1. Create/Edit (POST)
+    1. Create/Edit (POST) (done)
 
         URL: `api/event/create`
 
@@ -286,13 +286,13 @@
           "status": "success" | "fail",
           // success
           "result": {
-            "comments": [ {
-                "cid": 102,
+            "comments": [{
+                "eid": 12,
                 "uid": 12,
                 "user_name": "haikuo",
                 "timestamp": 1023023984938,
                 "content": "Some Comments"
-              } ]
+              }]
           }
           // fail
           "result": {

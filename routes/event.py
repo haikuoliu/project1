@@ -1,6 +1,7 @@
 from utils.connect_db import *
 from utils.constants import *
 from utils.crossdomain import *
+from utils.time_format import *
 import json
 from . import routes
 
@@ -118,7 +119,8 @@ def event_get():
             return default_error_msg(e.message)
 
 
-# create comments
+# create comments & get comments
+# http://127.0.0.1:8080/api/event/comments?eid=1
 @routes.route('/api/event/comments', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def event_create_comments():
@@ -137,3 +139,30 @@ def event_create_comments():
         except Exception, e:
             print e
             return default_error_msg(e.message)
+    if request.method == 'GET':
+        try:
+            eid = request.args.get('eid')
+            exe_sql = "SELECT events.eid AS eid, users.uid AS uid, name, comments.time AS time, comments.content AS content " \
+                      "FROM comments, users, events " \
+                      "WHERE events.eid = %s AND comments.uid = users.uid AND events.eid = comments.eid"
+            res = conn.execute(exe_sql, eid)
+            rows = res.fetchall()
+            comments = []
+            for row in rows:
+                comment = {
+                    "eid": row["eid"],
+                    "uid": row["uid"],
+                    "user_name": row["name"],
+                    "timestamp": date_to_timestamp(row["time"]),
+                    "content": row["content"]
+                }
+                comments.append(comment)
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = comments
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+        return default_error_msg(e.message)
+
