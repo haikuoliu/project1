@@ -11,39 +11,47 @@ import time
 @routes.route('/api/users/view_profile', methods=['GET'])
 def view_user_profile():
     if request.method == 'GET':
-        myid = request.args.get('myid')
-        otherid = request.args.get('otherid')
-        exe_sql = "select * from users where uid = %s"
-        res = conn.execute(exe_sql, otherid)
-        row = res.fetchone()
-        ret = dict()
-        if row:
-            ret[STATUS] = SUCCESS
-            u_info = {
-                "uid"  : row["uid"],
-                "email": row["email"],
-                "birth": time.mktime(row["birth"].timetuple()),
-                "sex"  : row["sex"],
-                "name" : row["name"]
-            }
-            exe_sql = "select count(*) as count from follows where source = %s and destination = %s"
-            res = conn.execute(exe_sql, (myid, otherid))
-            if res.fetchone()["count"] == "1":
-                u_info["isFollow"] = TRUE
-            else:
-                u_info["isFollow"] = FALSE
-            exe_sql = "select count(*) as count from follows where destination = %s group by destination;"
+        try:
+            myid = request.args.get('myid')
+            otherid = request.args.get('otherid')
+            exe_sql = "select * from users where uid = %s"
             res = conn.execute(exe_sql, otherid)
-            u_info["follows"] = int(res.fetchone()["count"])
-            ret[RESULTS] = u_info
-        else:
-            ret[STATUS] = FAIL
-            fail_info = dict()
-            fail_info[CODE] = "0"
-            fail_info[MSG] = "User None Exist"
-            ret[RESULTS] = fail_info
-        print ret
-        return json.dumps(ret)
+            row = res.fetchone()
+            ret = dict()
+            if row:
+                ret[STATUS] = SUCCESS
+                u_info = {
+                    "uid"  : row["uid"],
+                    "email": row["email"],
+                    "birth": time.mktime(row["birth"].timetuple()),
+                    "sex"  : row["sex"],
+                    "name" : row["name"]
+                }
+                exe_sql = "select count(*) as count from follows where source = %s and destination = %s"
+                res = conn.execute(exe_sql, (myid, otherid))
+                if res.fetchone()["count"] == "1":
+                    u_info["isFollow"] = TRUE
+                else:
+                    u_info["isFollow"] = FALSE
+                exe_sql = "select count(*) as count from follows where destination = %s;"
+                res = conn.execute(exe_sql, otherid)
+                u_info["follows"] = int(res.fetchone()["count"])
+                ret[RESULTS] = u_info
+            else:
+                ret[STATUS] = FAIL
+                fail_info = dict()
+                fail_info[CODE] = "0"
+                fail_info[MSG] = "User None Exist"
+                ret[RESULTS] = fail_info
+            print ret
+            return json.dumps(ret)
+        except:
+            return json.dumps({
+                "status": 'fail',
+                "result": {
+                    "msg": "Unknown Error"
+                }
+            })
 
 # return topics subscribed by an user
 # /api/users/subscribes?id=2
