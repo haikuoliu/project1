@@ -68,7 +68,7 @@
     }
     ```
 
-3. View Profile of Other Users GET
+3. View Profile of Other Users GET (done)
 
     URL: `/api/users/view_profile`
 
@@ -101,7 +101,7 @@
     }
     ```
 
-4. Get User's Subscribes (GET)
+4. Get User's Subscribes (GET) (done)
 
     URL: `/api/users/subscribes`
 
@@ -127,7 +127,7 @@
 
 ## Follows
 
-1. User1 follows User2 (GET)
+1. User1 follows User2 (GET) (done)
 
     URL: `/api/users/follow`
 
