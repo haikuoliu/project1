@@ -5,8 +5,8 @@ from . import routes
 from flask import g
 
 
-# Retrieve Users's Posts
-# http://127.0.0.1:8080/api/posts/user?uid=4
+# Retrieve all topics
+# http://127.0.0.1:8080/api/topics/all
 @routes.route('/api/topics/all', methods=['GET'])
 @crossdomain(origin='*')
 def topics_all():
@@ -17,23 +17,16 @@ def topics_all():
             rows = res.fetchall()
             topics = []
             for row in rows:
-                exe_sql = "SELECT count(*) AS count FROM events, likes " \
-                          "WHERE likes.eid = events.eid AND events.eid = %s GROUP BY events.eid"
-                res = g.conn.execute(exe_sql, row["eid"])
-                row_likes = res.fetchone()
-                likes = row_likes["count"]
-                event = {
-                    "eid": row["eid"],
-                    "event_type": row["event_type"],
+                exe_sql = "SELECT count(*) AS count FROM belongs, topics " \
+                          "WHERE topics.name = belongs.topic AND topics.name = %s"
+                res = g.conn.execute(exe_sql, row["name"])
+                row_count = res.fetchone()
+                topic = {
+                    "topic_name": row["name"],
                     "description": row["description"],
-                    # "uid": uid,
-                    "user_name": row["name"],
-                    "url": row["url"],
-                    "likes": likes,
-                    "content": row["content"],
-                    "title": row["title"]
+                    "count": row_count["count"]
                 }
-                topics.append(event)
+                topics.append(topic)
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = topics

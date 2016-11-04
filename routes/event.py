@@ -164,4 +164,3 @@ def event_create_comments():
         except Exception, e:
             print e
         return default_error_msg(e.message)
-

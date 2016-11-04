@@ -2,28 +2,40 @@ from flask import request
 from utils.connect_db import *
 from utils.constants import *
 import json
-import time
+from flask import g
+from sqlalchemy import *
+
+# host = "104.196.175.120"
+# password = "che2q"
+# user = "hl3023"
+host = "localhost"
+password = ""
+user = "HaikuoLiu"
+url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
+db = create_engine(url)
+conn = db.connect()
+if conn: print "connected to db"
+else: print "connection failed"
 
 
 
 
-# subscribes
-id = 1
-exe_sql = "select topic from subscribes where uid = %s"
-res = conn.execute(exe_sql, id)
-rows = res.fetchall()
-ret = dict()
-if rows:
-    ret[STATUS] = SUCCESS
-    topics = []
-    for row in rows:
-        topics.append(row["topic"])
-    ret[RESULT] = topics
+
+isLike = "0"
+uid = 1
+eid = 2
+# cancle like
+if isLike == "0":
+    exe_sql = "DELETE FROM likes WHERE uid = %s AND eid = %s"
+    g.conn.execute(exe_sql, uid, eid)
+# create like
+elif isLike == "1":
+    exe_sql = "INSERT INTO likes(uid, eid) VALUES(%s, %s)"
+    g.conn.execute(exe_sql, uid, eid)
 else:
-    ret[STATUS] = FAIL
-    fail_info = dict()
-    fail_info[CODE] = "0"
-    fail_info[MSG] = "None topics"
-    ret[RESULT] = fail_info
+    raise Exception("isLike should be either 0 or 1")
+ret = {}
+ret[STATUS] = SUCCESS
+ret[RESULT] = NULL
 print ret
 
