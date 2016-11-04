@@ -231,7 +231,7 @@
         }
         ```
 
-2. View Events & Comments GET
+2. View Events & Comments GET (done)
 
     1. Get Blog | Picture
 
@@ -471,6 +471,7 @@ Return:
         "sid": 12,
         "sponsor_name": "apple",
         "url": "http:..."
+        "description": "this is ..."
       }
     ]
   },
