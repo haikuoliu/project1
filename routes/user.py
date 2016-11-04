@@ -14,17 +14,18 @@ def view_user_profile():
         myid = request.args.get('myid')
         otherid = request.args.get('otherid')
         exe_sql = "select * from users where uid = %s"
-        res = conn.execute(exe_sql, myid)
+        res = conn.execute(exe_sql, otherid)
         row = res.fetchone()
         ret = dict()
         if row:
             ret[STATUS] = SUCCESS
-            u_info = dict()
-            u_info["uid"] = row["uid"]
-            u_info["email"] = row["email"]
-            u_info["birth"] = time.mktime(row["birth"].timetuple())
-            u_info["sex"] = row["sex"]
-            u_info["name"] = row["name"]
+            u_info = {
+                "uid"  : row["uid"],
+                "email": row["email"],
+                "birth": time.mktime(row["birth"].timetuple()),
+                "sex"  : row["sex"],
+                "name" : row["name"]
+            }
             exe_sql = "select count(*) as count from follows where source = %s and destination = %s"
             res = conn.execute(exe_sql, (myid, otherid))
             if res.fetchone()["count"] == "1":

@@ -34,8 +34,8 @@ export const mockAPIConfig = {
       enabled: false,
       url: new RegExp('http://host.name.com/[\\d]+/[\\w+]'),
       type: 'error',
-      delay: 1000
-      error: 'Error Message...',
+      delay: 1000,
+      error: 'Error Message...'
     }
   ]
 }
