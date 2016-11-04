@@ -21,7 +21,7 @@
 #   return redirect('/')
 
 from flask import Flask
-from flask import request
+from flask import request, send_from_directory
 from sqlalchemy import *
 import json
 from routes import *
@@ -50,6 +50,10 @@ conn = connectdb()  # get connection
 @app.route('/')
 def hello_world():
     return app.send_static_file('index.html')
+
+@app.route('/img/<path:path>')
+def img(path):
+    return send_from_directory('static/img', path)
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@
       "react/prefer-stateless-function": 0,
       "react/jsx-pascal-case": 0,
       "react/jsx-closing-bracket-location": [2, "props-aligned"],
-      "react/jsx-no-bind": [1]
+      "react/jsx-no-bind": [0]
     },
   "parser" : "babel-eslint"
 }
