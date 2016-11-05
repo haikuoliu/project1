@@ -7,11 +7,12 @@ import { CLIENT_USER } from 'SRC/constants/action_const'
 // import blogContent from '../routes/content/containers/reducer'
 
 const initialState = Immutable.fromJS({
-  userName: 'Unkown UserName',
+  userName: '',
   sex: 'Male',
   birth: 1478236926748,
-  email: 'example@gmail.com',
-  followerNum: 12
+  email: '',
+  followerNum: 12,
+  userId: -1
 })
 
 /* eslint-disable arrow-body-style, no-unused-vars*/
@@ -22,7 +23,8 @@ const reducerMap = {
       sex: action.result.sex ? 'Male' : 'Female',
       birth: action.result.birth,
       email: action.result.email,
-      followerNum: action.result.follows
+      followerNum: action.result.follows,
+      userId: action.result.uid
     }))
   },
   [CLIENT_USER.UPDATE]: (state, action) => {

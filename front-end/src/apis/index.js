@@ -1,7 +1,9 @@
 import users from './users'
+import topics from './topics'
 
 const dirs = {
-  users
+  users,
+  topics
 }
 
 function api(rawPath, ...args) {

@@ -1,16 +1,7 @@
 import fetchPro from 'SRC/utils/fetchPro'
-import { CLIENT_USER } from 'SRC/constants/action_const'
+import { CLIENT_TOPICS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
-
-// import * as PersistentActions from 'SRC/action'
-
-// export function deleteBlogListItem(id) {
-//   return {
-//     type: 'BLOG@BLOG_CONTENT@DELETE_ITEM',
-//     id
-//   }
-// }
 
 /**
 
@@ -18,21 +9,21 @@ import logger from 'SRC/utils/logger'
 
 */
 
-export function loadMyInfo(userId) {
+export function loadAllTopics() {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
-    fetchPro(api('users:getUserInfo', userId, userId))
+    fetchPro(api('topics:getAllTopics'))
       .then(response => response.json())
       .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
       .then(json => {
         if (json.status === 'fail') {
-          logger.error(api('users:getUserInfo', userId, userId), json.result.msg)
+          logger.error(api('topics:getAllTopics'), json.result.msg)
           return
         }
         // dispatch(PersistentActions.persistentSet('username', json.result.name))
         dispatch({
-          type: CLIENT_USER.LOAD,
+          type: CLIENT_TOPICS.LOAD_TOPIC_LIST,
           status: json.status,
-          result: json.result
+          result: json.result.sort((a, b) => b.count - a.count)
         })
       })
   )

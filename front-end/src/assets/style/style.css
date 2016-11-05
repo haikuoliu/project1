@@ -35,6 +35,9 @@
 }
 
 /* font */
+.fs30 {
+  font-size: 30px !important;
+}
 .fs20 {
   font-size: 20px !important;
 }
@@ -54,6 +57,14 @@
 }
 .fc-dark {
   color: #666;
+}
+.fc-white {
+  color: white;
+}
+
+/* font style */
+.captialize {
+  text-transform: capitalize
 }
 
 /* fixed padding */

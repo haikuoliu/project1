@@ -5,9 +5,8 @@ import { bindActionCreators } from 'redux'
 import * as ClientGeneralAction from './action'
 import * as PersistentActions from 'SRC/action'
 
-import { Col, Row, Menu, Icon } from 'antd'
+import { Col, Row, Menu } from 'antd'
 const SubMenu = Menu.SubMenu
-const MenuItemGroup = Menu.ItemGroup
 
 // import CSSModules from 'react-css-modules'
 // import styles from './style.hcss'
@@ -15,7 +14,14 @@ const MenuItemGroup = Menu.ItemGroup
 class ClientApp extends Component {
   componentWillMount() {
     const { userId } = this.props.persistentStore
-    this.props.actions.loadUserInfo(userId)
+    this.props.actions.loadMyInfo(userId)
+  }
+  componentWillReceiveProps(nextProps) { // eslint-disable-line no-unused-vars
+    const { userId } = this.props.persistentStore
+    const userInfo = this.props.userInfo
+    if (userId != userInfo.userId) { // eslint-disable-line eqeqeq
+      this.props.actions.loadMyInfo(userId)
+    }
   }
   render() {
     const pathname = this.props.location.pathname.replace('/client/', '')
@@ -64,6 +70,7 @@ ClientApp.propTypes = {
     React.PropTypes.element
   ]),
   location: React.PropTypes.object,
+  userInfo: React.PropTypes.object,
   persistentStore: React.PropTypes.object,
   persistentActions: React.PropTypes.object,
   actions: React.PropTypes.object
@@ -71,7 +78,8 @@ ClientApp.propTypes = {
 
 function mapState(state) {
   return {
-    persistentStore: state.persistentStore.toJS()
+    persistentStore: state.persistentStore.toJS(),
+    userInfo: state.clientGeneral.userInfo.toJS()
   }
 }
 

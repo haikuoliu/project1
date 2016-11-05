@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { CLIENT_PROFILE } from 'SRC/constants/action_const'
+import { CLIENT_PROFILE_USER_INFO } from 'SRC/constants/action_const'
 
 // import blogList from '../routes/list/containers/BlogListReducer'
 // import blogContent from '../routes/content/containers/reducer'
@@ -16,19 +16,19 @@ const initialState = Immutable.fromJS({
 
 /* eslint-disable arrow-body-style, no-unused-vars*/
 const reducerMap = {
-  [CLIENT_PROFILE.LOAD]: (state, action) => {
+  [CLIENT_PROFILE_USER_INFO.LOAD]: (state, action) => {
     return state.merge(Immutable.Map({
       userName: action.result.name,
       sex: action.result.sex ? 'Male' : 'Female',
       birth: action.result.birth,
       email: action.result.email,
       followerNum: action.result.follows,
-      isFollow: action.result.isFollow === 'true',
+      isFollow: action.result.isFollow,
       isSelf: action.result.isSelf,
       uid: action.result.uid
     }))
   },
-  [CLIENT_PROFILE.UPDATE]: (state, action) => {
+  [CLIENT_PROFILE_USER_INFO.UPDATE]: (state, action) => {
     return state.set(action.key, action.value)
   }
 }

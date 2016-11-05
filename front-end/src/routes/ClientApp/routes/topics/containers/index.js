@@ -4,10 +4,16 @@ import React, { Component } from 'react'
 class Topics extends Component {
   render() {
     return (
-      <div>
-        <div> Topics </div>
-        <div>
-          {this.props.children}
+      <div className="full-height">
+        <div className="fix-top-row-wrapper" style={{ paddingTop: '80px' }}>
+          <div className="fix-top-row" style={{ height: '80px', background: '#0272A2' }}>
+            <h1 className="fc-white" style={{ fontSize: '30px', lineHeight: '80px', marginLeft: '5%' }}>
+              All Topics
+            </h1>
+          </div>
+          <div className="full-height">
+            {this.props.children}
+          </div>
         </div>
       </div>
     )

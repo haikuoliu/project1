@@ -22,19 +22,6 @@ class ProfileInfo extends Component {
     super(props)
     this.switchFollowStatus = throttle(this.switchFollowStatus, 5000).bind(this)
   }
-  componentWillMount() {
-    const query = this.props.location.query
-    const { userId } = this.props.persistentStore
-    this.props.actions.loadUserInfo(userId, query.uid)
-  }
-  componentWillReceiveProps(nextProps) {
-    const query = this.props.location.query
-    const nextQuery = nextProps.location.query
-    if (query.uid !== nextQuery.uid) {
-      const { userId } = this.props.persistentStore
-      this.props.actions.loadUserInfo(userId, nextQuery.uid)
-    }
-  }
   switchFollowStatus() {
     const { uid, isFollow } = this.props.userInfo // otherId
     const { userId } = this.props.persistentStore // myId
@@ -43,8 +30,7 @@ class ProfileInfo extends Component {
   render() {
     const { userInfo } = this.props
     return (
-      <div>
-        <div> Infomation </div>
+      <div style={{ paddingTop: '30px' }}>
         {
           infoList.map((args) => (
             <Row key={args[0]} className="fs16" style={{ marginBottom: '24px' }}>
