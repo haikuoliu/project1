@@ -20,19 +20,25 @@ class ClientApp extends Component {
     const { userId } = this.props.persistentStore
     const userInfo = this.props.userInfo
     if (userId != userInfo.userId) { // eslint-disable-line eqeqeq
-      this.props.actions.loadMyInfo(userId)
+      // this.props.actions.loadMyInfo(userId)
     }
   }
   render() {
     let pathname = this.props.location.pathname.replace('/client/', '')
     if (pathname === 'topics/topic') pathname = 'topics/list'
     const { userId } = this.props.persistentStore
+    const userInfo = this.props.userInfo
     return (
       <Row style={{ height: window.innerHeight }}>
-        <Col span={4} className="full-height">
+        <Col span={4} className="full-height" style={{ background: '#404040' }}>
+          <h1
+            className="text-center fc-white"
+            style={{ height: '80px', lineHeight: '80px' }}
+            >
+            {userInfo.userName}
+          </h1>
           <Menu
             theme="dark"
-            className="full-height"
             style={{ width: '100%' }}
             defaultOpenKeys={['topics', 'blog', 'profile']}
             selectedKeys={[pathname]}

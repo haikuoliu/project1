@@ -1,5 +1,5 @@
 import fetchPro from 'SRC/utils/fetchPro'
-import { CLIENT_PROFILE_USER_INFO, CLIENT_TOPICS } from 'SRC/constants/action_const'
+import { CLIENT_PROFILE_USER_INFO, CLIENT_TOPICS, CLIENT_EVENTS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
 
@@ -53,6 +53,26 @@ export function getTopicsOfUser(myId) {
         // dispatch(PersistentActions.persistentSet('username', json.result.name))
         dispatch({
           type: CLIENT_TOPICS.LOAD_USER_TOPICS,
+          status: json.status,
+          result: json.result
+        })
+      })
+  )
+}
+
+export function getPostsOfUser(myId) {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('events:getPostsOfUser', myId))
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('topics:getTopicsOfUser', myId), json.result.msg)
+          return
+        }
+        // dispatch(PersistentActions.persistentSet('username', json.result.name))
+        dispatch({
+          type: CLIENT_EVENTS.LOAD_USER_POSTS,
           status: json.status,
           result: json.result
         })

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as ClientProfileSubscribeAction from './action'
 import * as PersistentActions from 'SRC/action'
 
 import { Row, Col, Card, Badge } from 'antd'
@@ -43,8 +42,7 @@ ProfileSubscribe.propTypes = {
   userInfo: React.PropTypes.object,
   userTopics: React.PropTypes.object,
   persistentStore: React.PropTypes.object,
-  persistentActions: React.PropTypes.object,
-  actions: React.PropTypes.object
+  persistentActions: React.PropTypes.object
 }
 
 function mapState(state) {
@@ -57,8 +55,7 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(PersistentActions, dispatch),
-    actions: bindActionCreators(ClientProfileSubscribeAction, dispatch)
+    persistentActions: bindActionCreators(PersistentActions, dispatch)
   }
 }
 

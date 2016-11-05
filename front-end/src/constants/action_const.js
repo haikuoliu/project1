@@ -13,3 +13,7 @@ export const CLIENT_TOPICS = {
   LOAD_EVENT_LIST: '@Client/topics/LOAD_EVENT_LIST',
   LOAD_USER_TOPICS: '@Client/topics/LOAD_USER_TOPICS'
 }
+
+export const CLIENT_EVENTS = {
+  LOAD_USER_POSTS: '@Client/events/LOAD_USER_POSTS'
+}

@@ -4,6 +4,7 @@ import { combineReducers } from 'redux'
 // import { CLIENT_USER } from 'SRC/constants/action_const'
 import userInfo from '../routes/info/containers/reducer'
 import userTopics from '../routes/subscribe/containers/reducer'
+import userPosts from '../routes/posts/containers/reducer'
 //
 // const initialState = Immutable.fromJS({
 //   userName: 'Unkown UserName',
@@ -38,5 +39,6 @@ import userTopics from '../routes/subscribe/containers/reducer'
 
 export default combineReducers({
   userInfo,
-  userTopics
+  userTopics,
+  userPosts
 })
