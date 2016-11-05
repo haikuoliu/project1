@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 class Profile extends Component {
   render() {
     return (
-      <div>
+      <div className="full-height">
         <div> User Profile </div>
         <div>
           <Link to="/client/profile/info">Info </Link>
@@ -13,7 +13,7 @@ class Profile extends Component {
           <Link to="/client/profile/follow">Follow </Link>
           <Link to="/client/profile/subscribe">Subscribe </Link>
         </div>
-        <div>
+        <div style={{ overflow: 'auto' }}>
           {this.props.children}
         </div>
       </div>

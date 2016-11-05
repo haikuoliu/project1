@@ -21,9 +21,11 @@ class ClientApp extends Component {
     const pathname = this.props.location.pathname.replace('/client/', '')
     const { userId } = this.props.persistentStore
     return (
-      <Row>
-        <Col span={4}>
+      <Row style={{ height: window.innerHeight }}>
+        <Col span={4} className="full-height">
           <Menu
+            theme="dark"
+            className="full-height"
             style={{ width: '100%' }}
             defaultOpenKeys={['topics', 'blog', 'profile']}
             selectedKeys={[pathname]}
@@ -48,10 +50,8 @@ class ClientApp extends Component {
             </SubMenu>
           </Menu>
         </Col>
-        <Col span={20}>
-          <div>
-            {this.props.children}
-          </div>
+        <Col span={20} className="full-height">
+          {this.props.children}
         </Col>
       </Row>
     )

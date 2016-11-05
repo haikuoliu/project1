@@ -48,6 +48,14 @@
   font-size: 12px !important;
 }
 
+/* font color */
+.fc-blue {
+  color: #2db7f5;
+}
+.fc-dark {
+  color: #666;
+}
+
 /* fixed padding */
 .fixed-position {
   position: fixed !important;

@@ -24,8 +24,12 @@ const reducerMap = {
       email: action.result.email,
       followerNum: action.result.follows,
       isFollow: action.result.isFollow === 'true',
-      isSelf: action.result.isSelf
+      isSelf: action.result.isSelf,
+      uid: action.result.uid
     }))
+  },
+  [CLIENT_PROFILE.UPDATE]: (state, action) => {
+    return state.set(action.key, action.value)
   }
 }
 

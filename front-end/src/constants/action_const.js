@@ -4,5 +4,6 @@ export const CLIENT_USER = {
 }
 
 export const CLIENT_PROFILE = {
-  LOAD: '@Client/user/profile/LOAD'
+  LOAD: '@Client/user/profile/LOAD',
+  UPDATE: '@Client/user/profile/UPDATE'
 }
