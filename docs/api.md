@@ -157,6 +157,40 @@
     }
     ```
 
+2. Retrieve the user list that a specific user follows
+
+    URL: `/api/users/follow/list`
+
+    GET:
+
+    ```
+    ?uid=1
+    ```
+
+    Return:
+
+    ```
+    {
+      "status": "success" | "fail",
+      // success
+      "result": [
+        {
+          "uid": 23111,
+          "isFollow": true | false,
+          "email": "name@gmail.com",
+          "birth": "742449600.0",
+          "sex": "male" | "female",
+          "name": "Nick Name",
+          "follows": 123,
+        }
+      ]
+      // fail
+      "result": {
+        "code": 0,
+        "msg": "Unknown"
+      }
+    }
+    ```
 
 ## Events & Comments
 

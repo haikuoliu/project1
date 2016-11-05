@@ -13,15 +13,15 @@ webpackJsonp([12],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactRouter = __webpack_require__(28);
+	var _reactRouter = __webpack_require__(21);
 	
-	var _reactRouterRedux = __webpack_require__(63);
+	var _reactRouterRedux = __webpack_require__(90);
 	
-	var _app = __webpack_require__(475);
+	var _app = __webpack_require__(428);
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _configureStore = __webpack_require__(525);
+	var _configureStore = __webpack_require__(489);
 	
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 	
@@ -34,7 +34,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 74:
+/***/ 46:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48,11 +48,11 @@ webpackJsonp([12],{
 	
 	var _reducerMap;
 	
-	var _redux = __webpack_require__(57);
+	var _redux = __webpack_require__(14);
 	
-	var _reactRouterRedux = __webpack_require__(63);
+	var _reactRouterRedux = __webpack_require__(90);
 	
-	var _immutable = __webpack_require__(75);
+	var _immutable = __webpack_require__(41);
 	
 	var _immutable2 = _interopRequireDefault(_immutable);
 	
@@ -70,7 +70,13 @@ webpackJsonp([12],{
 	  return state;
 	}), _defineProperty(_reducerMap, 'PERSISTENT@SET', function PERSISTENTSET(state, action) {
 	  sessionStorage.setItem(action.key, action.value);
-	  return state.set(action.key, _immutable2.default.fromJS(action.value));
+	  return state.set(action.key, _immutable2.default.fromJS('' + action.value));
+	}), _defineProperty(_reducerMap, 'PERSISTENT@REMOVE', function PERSISTENTREMOVE(state, action) {
+	  sessionStorage.removeItem(action.key);
+	  return state.delete(action.key);
+	}), _defineProperty(_reducerMap, 'PERSISTENT@CLEAR', function PERSISTENTCLEAR(state, action) {
+	  sessionStorage.clear();
+	  return state.clear();
 	}), _reducerMap);
 	
 	function persistentStore() {
@@ -103,7 +109,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 475:
+/***/ 428:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -118,15 +124,15 @@ webpackJsonp([12],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(323);
+	var _reactRedux = __webpack_require__(34);
 	
-	var _reactRouter = __webpack_require__(28);
+	var _reactRouter = __webpack_require__(21);
 	
-	__webpack_require__(534);
+	__webpack_require__(564);
 	
-	__webpack_require__(535);
+	__webpack_require__(565);
 	
-	var _routes = __webpack_require__(476);
+	var _routes = __webpack_require__(432);
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
@@ -180,7 +186,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 476:
+/***/ 432:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -191,7 +197,7 @@ webpackJsonp([12],{
 	var createRootRoutes = function createRootRoutes(store) {
 	  return {
 	    component: 'div',
-	    childRoutes: [__webpack_require__(516).default(store), __webpack_require__(478).default(store), __webpack_require__(486).default(store), __webpack_require__(512).default, __webpack_require__(514).default]
+	    childRoutes: [__webpack_require__(480).default(store), __webpack_require__(434).default(store), __webpack_require__(444).default(store), __webpack_require__(476).default, __webpack_require__(478).default]
 	  };
 	};
 	
@@ -199,7 +205,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 478:
+/***/ 434:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -214,19 +220,19 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(477).default);
+	        cb(null, __webpack_require__(433).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(2, __WEBPACK_CALLBACK__);}());
 	    },
 	
 	    childRoutes: [
 	    // require('./routes/home/routes.js').default,
-	    __webpack_require__(480).default(store), __webpack_require__(482).default(store), __webpack_require__(484).default(store)]
+	    __webpack_require__(436).default(store), __webpack_require__(438).default(store), __webpack_require__(440).default(store)]
 	  };
 	};
 
 /***/ },
 
-/***/ 480:
+/***/ 436:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -241,7 +247,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(479).default);
+	        cb(null, __webpack_require__(435).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(2, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -254,7 +260,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 482:
+/***/ 438:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -269,7 +275,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(481).default);
+	        cb(null, __webpack_require__(437).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(2, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -282,7 +288,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 484:
+/***/ 440:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -297,7 +303,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(483).default);
+	        cb(null, __webpack_require__(439).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(2, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -310,7 +316,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 486:
+/***/ 444:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -318,26 +324,32 @@ webpackJsonp([12],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _reducer = __webpack_require__(46);
+	
+	// eslint-disable-line no-unused-vars
 	
 	exports.default = function (store) {
 	  return {
 	    path: 'client',
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(485).default);
+	        // Asyn Injection Of Reducers
+	        var reducer = __webpack_require__(443).default;
+	        (0, _reducer.injectReducer)(store, { key: 'clientGeneral', reducer: reducer });
+	        cb(null, __webpack_require__(442).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(5, __WEBPACK_CALLBACK__);}());
 	    },
 	
 	    childRoutes: [
 	    // require('./routes/home/routes.js').default,
-	    __webpack_require__(488).default(store), __webpack_require__(494).default(store), __webpack_require__(496).default(store), __webpack_require__(506).default(store)]
+	    __webpack_require__(446).default(store), __webpack_require__(452).default(store), __webpack_require__(455).default(store), __webpack_require__(470).default(store)]
 	  };
 	};
 
 /***/ },
 
-/***/ 488:
+/***/ 446:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -346,7 +358,7 @@ webpackJsonp([12],{
 	  value: true
 	});
 	
-	var _reducer = __webpack_require__(74);
+	var _reducer = __webpack_require__(46);
 	
 	// eslint-disable-line no-unused-vars
 	
@@ -359,18 +371,18 @@ webpackJsonp([12],{
 	          // Asyn Injection Of Reducers
 	          // const reducer = require('./containers/reducer').default
 	          // injectReducer(store, { key: 'blog', reducer })
-	          cb(null, __webpack_require__(487).default);
+	          cb(null, __webpack_require__(445).default);
 	        }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(4, __WEBPACK_CALLBACK__);}());
 	      },
 	
-	      childRoutes: [__webpack_require__(490).default(store), __webpack_require__(492).default(store)]
+	      childRoutes: [__webpack_require__(448).default(store), __webpack_require__(450).default(store)]
 	    }
 	  );
 	};
 
 /***/ },
 
-/***/ 490:
+/***/ 448:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -385,7 +397,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(489).default);
+	        cb(null, __webpack_require__(447).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(4, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -398,7 +410,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 492:
+/***/ 450:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -413,7 +425,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(491).default);
+	        cb(null, __webpack_require__(449).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(4, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -426,7 +438,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 494:
+/***/ 452:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -441,7 +453,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(493).default);
+	        cb(null, __webpack_require__(451).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(5, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -454,7 +466,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 496:
+/***/ 455:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -463,25 +475,31 @@ webpackJsonp([12],{
 	  value: true
 	});
 	
+	var _reducer = __webpack_require__(46);
+	
+	// eslint-disable-line no-unused-vars
+	
 	exports.default = function (store) {
 	  return { // eslint-disable-line no-unused-vars
 	    path: 'profile',
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(495).default);
+	        // Asyn Injection Of Reducers
+	        var reducer = __webpack_require__(454).default;
+	        (0, _reducer.injectReducer)(store, { key: 'clientProfile', reducer: reducer });
+	        cb(null, __webpack_require__(453).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(1, __WEBPACK_CALLBACK__);}());
 	    },
 	
 	    childRoutes: [
 	    // require('./routes/home/routes.js').default,
-	    __webpack_require__(500).default(store), __webpack_require__(498).default(store), __webpack_require__(502).default(store), __webpack_require__(504).default(store)]
+	    __webpack_require__(461).default(store), __webpack_require__(457).default(store), __webpack_require__(463).default(store), __webpack_require__(467).default(store)]
 	  };
 	};
 
 /***/ },
 
-/***/ 498:
+/***/ 457:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -496,7 +514,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(497).default);
+	        cb(null, __webpack_require__(456).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(1, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -509,7 +527,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 500:
+/***/ 461:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -524,7 +542,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(499).default);
+	        cb(null, __webpack_require__(459).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(1, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -537,7 +555,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 502:
+/***/ 463:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -552,7 +570,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(501).default);
+	        cb(null, __webpack_require__(462).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(1, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -565,7 +583,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 504:
+/***/ 467:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -580,7 +598,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(503).default);
+	        cb(null, __webpack_require__(465).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(1, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -593,7 +611,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 506:
+/***/ 470:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -602,25 +620,31 @@ webpackJsonp([12],{
 	  value: true
 	});
 	
+	var _reducer = __webpack_require__(46);
+	
+	// eslint-disable-line no-unused-vars
+	
 	exports.default = function (store) {
 	  return { // eslint-disable-line no-unused-vars
 	    path: 'topics',
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(505).default);
+	        // Asyn Injection Of Reducers
+	        var reducer = __webpack_require__(469).default;
+	        (0, _reducer.injectReducer)(store, { key: 'clientTopics', reducer: reducer });
+	        cb(null, __webpack_require__(468).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(3, __WEBPACK_CALLBACK__);}());
 	    },
 	
 	    childRoutes: [
 	    // require('./routes/home/routes.js').default,
-	    __webpack_require__(508).default(store), __webpack_require__(510).default(store)]
+	    __webpack_require__(472).default(store), __webpack_require__(474).default(store)]
 	  };
 	};
 
 /***/ },
 
-/***/ 508:
+/***/ 472:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -635,7 +659,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(507).default);
+	        cb(null, __webpack_require__(471).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(3, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -648,7 +672,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 510:
+/***/ 474:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -663,7 +687,7 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(509).default);
+	        cb(null, __webpack_require__(473).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(3, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -676,7 +700,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 512:
+/***/ 476:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -688,14 +712,14 @@ webpackJsonp([12],{
 	  path: '/demo',
 	  getComponent: function getComponent(location, cb) {
 	    (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	      cb(null, __webpack_require__(511).default);
+	      cb(null, __webpack_require__(475).default);
 	    }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(7, __WEBPACK_CALLBACK__);}());
 	  }
 	};
 
 /***/ },
 
-/***/ 514:
+/***/ 478:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -707,14 +731,14 @@ webpackJsonp([12],{
 	  path: '/login',
 	  getComponent: function getComponent(location, cb) {
 	    (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	      cb(null, __webpack_require__(513).default);
-	    }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(11, __WEBPACK_CALLBACK__);}());
+	      cb(null, __webpack_require__(477).default);
+	    }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(9, __WEBPACK_CALLBACK__);}());
 	  }
 	};
 
 /***/ },
 
-/***/ 516:
+/***/ 480:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -726,20 +750,25 @@ webpackJsonp([12],{
 	exports.default = function (store) {
 	  return {
 	    path: '/',
+	    indexRoute: {
+	      onEnter: function onEnter(nextState, replace) {
+	        return replace('/login');
+	      }
+	    },
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // require('SRC/components/sub-nav/SubNav')
-	        cb(null, __webpack_require__(515).default);
-	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(10, __WEBPACK_CALLBACK__);}());
+	        cb(null, __webpack_require__(479).default);
+	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(11, __WEBPACK_CALLBACK__);}());
 	    },
 	
-	    childRoutes: [__webpack_require__(523).default, __webpack_require__(519).default(store)]
+	    childRoutes: [__webpack_require__(487).default, __webpack_require__(483).default(store)]
 	  };
 	};
 
 /***/ },
 
-/***/ 519:
+/***/ 483:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -748,7 +777,7 @@ webpackJsonp([12],{
 	  value: true
 	});
 	
-	var _reducer = __webpack_require__(74);
+	var _reducer = __webpack_require__(46);
 	
 	exports.default = function (store) {
 	  return {
@@ -756,9 +785,9 @@ webpackJsonp([12],{
 	    getComponent: function getComponent(location, cb) {
 	      (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
 	        // Asyn Injection Of Reducers
-	        var reducer = __webpack_require__(518).default;
+	        var reducer = __webpack_require__(482).default;
 	        (0, _reducer.injectReducer)(store, { key: 'blog', reducer: reducer });
-	        cb(null, __webpack_require__(517).default);
+	        cb(null, __webpack_require__(481).default);
 	      }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(8, __WEBPACK_CALLBACK__);}());
 	    },
 	
@@ -768,7 +797,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 523:
+/***/ 487:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -780,14 +809,14 @@ webpackJsonp([12],{
 	  path: 'home',
 	  getComponent: function getComponent(location, cb) {
 	    (function(/* nsure */) {var __WEBPACK_REMAINING_CHUNKS__ = 2;var __WEBPACK_CALLBACK__ = function() {if(--__WEBPACK_REMAINING_CHUNKS__ < 1) (function (require) {
-	      cb(null, __webpack_require__(522).default);
-	    }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(9, __WEBPACK_CALLBACK__);}());
+	      cb(null, __webpack_require__(486).default);
+	    }(__webpack_require__));};__webpack_require__.e(0, __WEBPACK_CALLBACK__);__webpack_require__.e(10, __WEBPACK_CALLBACK__);}());
 	  }
 	};
 
 /***/ },
 
-/***/ 524:
+/***/ 488:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -797,15 +826,15 @@ webpackJsonp([12],{
 	});
 	exports.default = configureStore;
 	
-	var _redux = __webpack_require__(57);
+	var _redux = __webpack_require__(14);
 	
-	var _reduxThunk = __webpack_require__(161);
+	var _reduxThunk = __webpack_require__(186);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reactRouterRedux = __webpack_require__(63);
+	var _reactRouterRedux = __webpack_require__(90);
 	
-	var _reducer = __webpack_require__(74);
+	var _reducer = __webpack_require__(46);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
@@ -827,7 +856,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 525:
+/***/ 489:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -836,11 +865,11 @@ webpackJsonp([12],{
 	  value: true
 	});
 	
-	var _configureStore = __webpack_require__(526);
+	var _configureStore = __webpack_require__(490);
 	
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 	
-	var _configureStore3 = __webpack_require__(524);
+	var _configureStore3 = __webpack_require__(488);
 	
 	var _configureStore4 = _interopRequireDefault(_configureStore3);
 	
@@ -858,7 +887,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 526:
+/***/ 490:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -868,17 +897,17 @@ webpackJsonp([12],{
 	});
 	exports.default = configureStore;
 	
-	var _redux = __webpack_require__(57);
+	var _redux = __webpack_require__(14);
 	
-	var _reduxThunk = __webpack_require__(161);
+	var _reduxThunk = __webpack_require__(186);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducer = __webpack_require__(74);
+	var _reducer = __webpack_require__(46);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
-	var _reactRouterRedux = __webpack_require__(63);
+	var _reactRouterRedux = __webpack_require__(90);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -890,14 +919,14 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 534:
+/***/ 564:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 535:
+/***/ 565:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
@@ -905,4 +934,4 @@ webpackJsonp([12],{
 /***/ }
 
 });
-//# sourceMappingURL=app.ddc12326ed6618f3efca.js.map
+//# sourceMappingURL=app.d1c91dba9495ee54cd47.js.map
