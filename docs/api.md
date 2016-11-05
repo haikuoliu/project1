@@ -333,7 +333,7 @@
 
 ### Events/Ads List
 
-1. Retrieve Feeds GET
+1. Retrieve Feeds GET (done)
 
 URL: `api/posts/feeds`
 
