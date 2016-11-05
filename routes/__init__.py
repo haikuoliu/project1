@@ -7,3 +7,4 @@ from .event import *
 from .ads import *
 from .topics import *
 from .posts import *
+from .likes import *

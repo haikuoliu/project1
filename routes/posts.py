@@ -4,6 +4,7 @@ import json
 from . import routes
 from flask import g
 
+
 # Retrieve Users's Posts
 # http://127.0.0.1:8080/api/posts/user?uid=4
 @routes.route('/api/posts/user', methods=['GET'])
@@ -17,9 +18,9 @@ def users_posts():
             rows = res.fetchall()
             feeds = []
             for row in rows:
-                exe_sql = "SELECT count(*) AS count FROM events, topics " \
-                          "WHERE topics.eid = events.eid AND topics.name = %s"
-                res = g.conn.execute(exe_sql, row["name"])
+                exe_sql = "SELECT count(*) AS count FROM events, likes " \
+                          "WHERE likes.eid = events.eid AND events.eid = %s"
+                res = g.conn.execute(exe_sql, row["eid"])
                 row_likes = res.fetchone()
                 likes = row_likes["count"]
                 event = {
@@ -29,11 +30,13 @@ def users_posts():
                     "uid": uid,
                     "user_name": row["name"],
                     "url": row["url"],
-                    "likes": likes,
+                    "likes": int(likes),
                     "content": row["content"],
                     "title": row["title"]
                 }
+                print likes
                 feeds.append(event)
+                print feeds
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = feeds

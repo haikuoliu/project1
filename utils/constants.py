@@ -16,10 +16,6 @@ CODE = "code"
 
 MSG = "msg"
 
-TRUE = "true"
-
-FALSE = "false"
-
 
 def default_error_msg(e):
     ret = json.dumps({

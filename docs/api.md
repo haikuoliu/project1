@@ -486,7 +486,7 @@ Return:
 
 ## Topics & Belongs & Subscribes
 
-1. Retrieve All Topics
+1. Retrieve All Topics (done)
 
 URL: `api/topics/all`
 
@@ -518,7 +518,7 @@ Return:
 }
 ```
 
-## Likes
+## Likes (done)
 
 URL: `api/likes`
 
