@@ -46,7 +46,7 @@ CREATE TABLE follows(
 --comments
 CREATE TABLE comments(
     uid int references users,
-    eid int references events,
+    eid int references events ON DELETE CASCADE,
     time timestamp,
     content text DEFAULT '',
     primary key (uid, eid, time)
@@ -55,21 +55,21 @@ CREATE TABLE comments(
 --likes
 CREATE TABLE likes(
     uid int references users,
-    eid int references events,
+    eid int references events ON DELETE CASCADE,
     primary key (uid, eid)
 );
 
 --subscribes
 CREATE TABLE subscribes(
     uid int references users,
-    topic text references topics(name),
+    topic text references topics(name) ON DELETE CASCADE,
     primary key (uid, topic)
 );
 
 --belongs
 CREATE TABLE belongs(
-    eid int references events,
-    topic text references topics(name),
+    eid int references events ON DELETE CASCADE,
+    topic text references topics(name) ON DELETE CASCADE,
     primary key (eid, topic)
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE sponsors(
 --ads
 CREATE TABLE ads(
     aid serial primary key,
-    sid int NOT NULL references sponsors,
+    sid int NOT NULL references sponsors ON DELETE CASCADE,
     url text NOT NULL,
     description text
 );
@@ -93,14 +93,15 @@ CREATE TABLE user_sets(
     set_id serial primary key,
     filters text NOT NULL,
     description text DEFAULT 'No description',
-    sid int NOT NULL references sponsors
+    size int,
+    sid int NOT NULL references sponsors ON DELETE CASCADE
 );
 
 --pushes
 CREATE TABLE pushes(
-    sid int references sponsors,
-    aid int references ads,
-    set_id int references user_sets,
+    sid int references sponsors ON DELETE CASCADE,
+    aid int references ads ON DELETE CASCADE,
+    set_id int references user_sets ON DELETE CASCADE,
     time timestamp,
     price float NOT NULL CHECK(price >= 0),
     count int NOT NULL CHECK(count >= 0),
@@ -109,7 +110,7 @@ CREATE TABLE pushes(
 
 CREATE TABLE user_ads(
     uid int references users,
-    aid int references ads,
+    aid int references ads ON DELETE CASCADE,
     count int NOT NULL,
     primary key (uid, aid)
 );
@@ -272,17 +273,17 @@ INSERT INTO ads(sid, url, description)VALUES
 ;
 
 
-INSERT INTO user_sets(filters, description, sid) VALUES
-('{"age":"18-30"}', 'Young People', 1),
-('{"age":"30-50"}', 'Middle Aged', 1),
-('{"subscribe_topics":["technology","shopping"],"age":"0-25"}', 'Young Users who might be interested in purchase new phone', 1),
-('{"post_topics":["technology"]},keywords:["iphone"]', 'Bloggers who have posted articles about iphone', 1),
-('{"active_within":["30day"]},"age":"18-30","sex":"male"','Active Male Customs', 1),
-('{"active_within":["30day"]},"age":"18-30","sex":"female"','Active Female Customs', 1),
-('{"subscribe_topics":["sports"]},"age":"18-30","sex":"male"','Potential Male Customs', 7),
-('{"subscribe_topics":["sports"]},"age":"18-30","sex":"female"','Potential Female Customs', 7),
-('{"reg_time":["3year","1year"]}"','Users who have registered for a long time', 3),
-('{"email":"@gmail.com$"','Users who have a gmail account', 3)
+INSERT INTO user_sets(filters, description, sid, size) VALUES
+('{"age":"18-30"}', 'Young People', 1, 5),
+('{"age":"30-50"}', 'Middle Aged', 1, 6),
+('{"subscribe_topics":["technology","shopping"],"age":"0-25"}', 'Young Users who might be interested in purchase new phone', 1, 2),
+('{"post_topics":["technology"]},keywords:["iphone"]', 'Bloggers who have posted articles about iphone', 1, 3),
+('{"active_within":["30day"]},"age":"18-30","sex":"male"','Active Male Customs', 1, 4),
+('{"active_within":["30day"]},"age":"18-30","sex":"female"','Active Female Customs', 1, 5),
+('{"subscribe_topics":["sports"]},"age":"18-30","sex":"male"','Potential Male Customs', 7, 6),
+('{"subscribe_topics":["sports"]},"age":"18-30","sex":"female"','Potential Female Customs', 7, 7),
+('{"reg_time":["3year","1year"]}"','Users who have registered for a long time', 3, 8),
+('{"email":"@gmail.com$"','Users who have a gmail account', 3, 1)
 ;
 
 INSERT INTO pushes( sid, aid, set_id, time, price, count)VALUES

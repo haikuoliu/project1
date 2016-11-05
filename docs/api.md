@@ -203,7 +203,7 @@
         }
         ```
 
-    2. Delete (POST) (done)
+    2. Delete (POST) (Done, but not work)
 
         URL: `api/event/delete`
 
@@ -650,7 +650,7 @@ Return:
 
 ## User_Sets
 
-1. Create a new User_Sets (POST)
+1. Create a new User_Sets (POST) ()
 
 URL: `api/user_sets/create`
 POST:
@@ -659,7 +659,8 @@ POST:
 {
   "sid": 123,
   "filters": {
-    "age": "18-30"
+    "age": [18, 30],
+    "sex": ["male", "female"]
   },
   "description": "haha"
 }
@@ -675,7 +676,8 @@ Return:
     "set_id": 123,
     "sid": 123,
     "filters": {
-      "age": "18-30"
+      "age": [18, 30],
+      "sex": ["male", "female"]
     },
     "description": "haha",
     "size": 100
@@ -688,10 +690,10 @@ Return:
 }
 ```
 
-2. Delete a new User_Sets (GET)
+2. Delete a new User_Sets (GET) (Done, but not work)
 
 URL: `api/user_sets/delete`
-GET: `?set_id=123`
+GET: `?set_id=1
 
 Return:
 
@@ -752,8 +754,7 @@ Return:
   "status": "success" | "fail",
   // success
   "result": {
-    "user_sets": [
-      {
+    "user_sets":{
         "sid": 123,
         "filters": {
           "age": "18-30"
@@ -761,7 +762,6 @@ Return:
         "description": "haha",
         "size": 100
       }
-    ]
   }
   // fail
   "result": {

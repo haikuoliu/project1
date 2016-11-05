@@ -66,7 +66,6 @@ def event_create_edit():
             return default_error_msg(e.message)
 
 
-# can't use now!!
 # delete an event
 @routes.route('/api/event/delete', methods=['GET', 'POST'])
 @crossdomain(origin='*')
