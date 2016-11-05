@@ -48,24 +48,23 @@ def view_user_profile():
 # return topics subscribed by an user
 # http://127.0.0.1:8080/api/users/subscribes?id=2
 @routes.route('/api/users/subscribes', methods=['GET'])
+@crossdomain(origin='*')
 def user_subscribes():
     if request.method == 'GET':
         try:
             id = request.args.get('id')
-            exe_sql = "SELECT topic FROM subscribes WHERE uid = %s"
+            exe_sql = "SELECT S.topic, T.description FROM subscribes as S, topics as T WHERE S.uid = %s and S.topic = T.name"
             res = g.conn.execute(exe_sql, id)
             rows = res.fetchall()
             ret = dict()
             ret[STATUS] = SUCCESS
             topics = []
             for row in rows:
-                topics.append(row["topic"])
+                topics.append({
+                    'topic_name': row["topic"],
+                    'description': row["description"]
+                })
             ret[RESULT] = topics
-            ret[STATUS] = FAIL
-            fail_info = dict()
-            fail_info[CODE] = "0"
-            fail_info[MSG] = "None topics"
-            ret[RESULT] = fail_info
             print ret
             return json.dumps(ret)
         except Exception, e:

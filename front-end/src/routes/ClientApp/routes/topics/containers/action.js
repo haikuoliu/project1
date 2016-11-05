@@ -28,3 +28,26 @@ export function loadAllTopics() {
       })
   )
 }
+
+export function loadAllEventsOfTopics(topic) {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('topics:getAllEventsOfTopic', topic))
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('topics:getAllEventsOfTopic', topic), json.result.msg)
+          return
+        }
+        // dispatch(PersistentActions.persistentSet('username', json.result.name))
+        dispatch({
+          type: CLIENT_TOPICS.LOAD_EVENT_LIST,
+          status: json.status,
+          result: {
+            topic,
+            eventsList: json.result.sort((a, b) => b.likes - a.likes)
+          }
+        })
+      })
+  )
+}

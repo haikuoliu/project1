@@ -8,7 +8,7 @@ class Topics extends Component {
         <div className="fix-top-row-wrapper" style={{ paddingTop: '80px' }}>
           <div className="fix-top-row" style={{ height: '80px', background: '#0272A2' }}>
             <h1 className="fc-white" style={{ fontSize: '30px', lineHeight: '80px', marginLeft: '5%' }}>
-              All Topics
+              Topics
             </h1>
           </div>
           <div className="full-height">

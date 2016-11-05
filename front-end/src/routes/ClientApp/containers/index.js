@@ -24,7 +24,8 @@ class ClientApp extends Component {
     }
   }
   render() {
-    const pathname = this.props.location.pathname.replace('/client/', '')
+    let pathname = this.props.location.pathname.replace('/client/', '')
+    if (pathname === 'topics/topic') pathname = 'topics/list'
     const { userId } = this.props.persistentStore
     return (
       <Row style={{ height: window.innerHeight }}>
@@ -39,11 +40,19 @@ class ClientApp extends Component {
             >
             <Menu.Item key="feed"><Link to="/client/feed">News Feed</Link></Menu.Item>
             <SubMenu key="topics" title="Topics">
-              <Menu.Item key="profile/subscribe"><Link to="/client/profile/subscribe">My Topics</Link></Menu.Item>
+              <Menu.Item key="profile/subscribe">
+                <Link to={{ pathname: '/client/profile/subscribe', query: { uid: userId } }}>
+                  My Topics
+                </Link>
+              </Menu.Item>
               <Menu.Item key="topics/list"><Link to="/client/topics/list">More Topics</Link></Menu.Item>
             </SubMenu>
             <SubMenu key="blog" title="Blog">
-              <Menu.Item key="profile/posts"><Link to="/client/profile/posts">My Posts</Link></Menu.Item>
+              <Menu.Item key="profile/posts">
+                <Link to={{ pathname: '/client/profile/posts', query: { uid: userId } }}>
+                  My Posts
+                </Link>
+              </Menu.Item>
               <Menu.Item key="blog/edit"><Link to="/client/blog/edit">Create Blog</Link></Menu.Item>
             </SubMenu>
             <SubMenu key="profile" title="Profile">
@@ -52,7 +61,11 @@ class ClientApp extends Component {
                   My Profile
                 </Link>
               </Menu.Item>
-              <Menu.Item key="profile/follow"><Link to="/client/profile/follow">My Follows</Link></Menu.Item>
+              <Menu.Item key="profile/follow">
+                <Link to={{ pathname: '/client/profile/follow', query: { uid: userId } }}>
+                  My Follows
+                </Link>
+              </Menu.Item>
             </SubMenu>
           </Menu>
         </Col>

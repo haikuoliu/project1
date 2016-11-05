@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ClientTopicsAction from '../../../containers/action'
@@ -19,7 +20,13 @@ class TopicsList extends Component {
             topicsStore.topicsList.map(topic => (
               <Col key={topic.topic_name} span={12} style={{ height: '200px' }}>
                 <Card
-                  title={<h3 className="captialize">{topic.topic_name}</h3>}
+                  title={
+                    <h3 className="captialize">
+                      <Link to={{ pathname: '/client/topics/topic', query: { topic: topic.topic_name } }}>
+                        {topic.topic_name}
+                      </Link>
+                    </h3>
+                  }
                   bordered
                   extra={<Badge count={topic.count} style={{ backgroundColor: '#fff', color: '#999', borderColor: '#d9d9d9' }} />}
                   style={{ width: '90%' }}

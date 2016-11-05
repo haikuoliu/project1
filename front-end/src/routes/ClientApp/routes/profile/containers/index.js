@@ -26,6 +26,7 @@ class Profile extends Component {
     const query = this.props.location.query
     const { userId } = this.props.persistentStore
     this.props.actions.loadUserInfo(userId, query.uid || userId)
+    this.props.actions.getTopicsOfUser(query.uid || userId)
   }
   componentWillReceiveProps(nextProps) {
     const query = this.props.location.query
@@ -33,6 +34,7 @@ class Profile extends Component {
     if (query.uid !== nextQuery.uid) {
       const { userId } = this.props.persistentStore
       this.props.actions.loadUserInfo(userId, nextQuery.uid || userId)
+      this.props.actions.getTopicsOfUser(query.uid || userId)
     }
   }
   render() {

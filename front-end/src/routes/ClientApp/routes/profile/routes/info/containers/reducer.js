@@ -6,7 +6,7 @@ import { CLIENT_PROFILE_USER_INFO } from 'SRC/constants/action_const'
 // import blogContent from '../routes/content/containers/reducer'
 
 const initialState = Immutable.fromJS({
-  userName: 'Unkown UserName',
+  userName: '',
   sex: 'Male',
   birth: 1478236926748,
   email: 'example@gmail.com',

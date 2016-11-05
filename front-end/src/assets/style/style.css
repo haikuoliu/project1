@@ -67,6 +67,11 @@
   text-transform: capitalize
 }
 
+/* Margin */
+.margB15 {
+  margin-bottom: 15px;
+}
+
 /* fixed padding */
 .fixed-position {
   position: fixed !important;
