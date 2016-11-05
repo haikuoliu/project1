@@ -203,7 +203,7 @@
         }
         ```
 
-    2. Delete (POST) (Done, but not work)
+    2. Delete (POST) (done)
 
         URL: `api/event/delete`
 
@@ -650,7 +650,7 @@ Return:
 
 ## User_Sets
 
-1. Create a new User_Sets (POST) ()
+1. Create a new User_Sets (POST) (done)
 
 URL: `api/user_sets/create`
 POST:
@@ -677,7 +677,7 @@ Return:
     "sid": 123,
     "filters": {
       "age": [18, 30],
-      "sex": ["male", "female"]
+      "sex": "male" // Here sex is either male or female
     },
     "description": "haha",
     "size": 100
@@ -690,7 +690,7 @@ Return:
 }
 ```
 
-2. Delete a new User_Sets (GET) (Done, but not work)
+2. Delete a new User_Sets (GET) (Done)
 
 URL: `api/user_sets/delete`
 GET: `?set_id=1
@@ -710,7 +710,7 @@ Return:
 }
 ```
 
-3. Get Sponsor's all User_Sets List (GET)
+3. Get Sponsor's all User_Sets List (GET) (done)
 
 URL: `api/user_sets/sponsor`
 GET: `?sid=123`
@@ -724,7 +724,8 @@ Return:
   "result": {
     "user_sets": [
       {
-        "sid": 123,
+        "sid": 1,
+        "set_id": 2,
         "filters": {
           "age": "18-30"
         },
@@ -741,7 +742,7 @@ Return:
 }
 ```
 
-4. Get User Sets (GET)
+4. Get User Sets (GET) (done)
 
 URL: `api/user_sets/get`
 
@@ -773,7 +774,7 @@ Return:
 
 ## Pushes
 
-1. Create A new
+1. Create a new push (done)
 
 URL: `api/pushes/create`
 
@@ -781,8 +782,9 @@ POST:
 
 ```
 {
-  "sid": 1,
+  "sid": 1
   "aid": 1,
+  "set_id": 2
 }
 ```
 
@@ -808,7 +810,7 @@ Return:
 }
 ```
 
-2. Retrieve sponsor's pushes list (GET)
+2. Retrieve sponsor's pushes list (GET) (done)
 
 URL: `api/pushes/sponsor`
 
@@ -823,6 +825,7 @@ Return:
   "result": {
     "pushes": [
       {
+        "set_id": 1,
         "sid": 1,
         "aid": 1,
         "price": 11,

@@ -16,6 +16,8 @@ CODE = "code"
 
 MSG = "msg"
 
+UNIT_PRICE = 5
+
 
 def default_error_msg(e):
     ret = json.dumps({
