@@ -29,8 +29,8 @@ def users_posts():
                     "description": row["description"],
                     "uid": uid,
                     "user_name": row["name"],
-                    "url": row["url"],
                     "likes": int(likes),
+                    "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]
                 }
@@ -40,6 +40,51 @@ def users_posts():
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = feeds
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
+# Retrieve Users's Posts
+# http://127.0.0.1:8080/api/posts/topic?topicName=science
+@routes.route('/api/posts/topic', methods=['GET'])
+@crossdomain(origin='*')
+def events_of_topic():
+    if request.method == 'GET':
+        try:
+            topic_name = request.args.get('topicName')
+            exe_sql = "SELECT * FROM events, belongs WHERE belongs.topic = %s AND events.eid = belongs.eid"
+            res = g.conn.execute(exe_sql, topic_name)
+            rows = res.fetchall()
+            events = []
+            for row in rows:
+                exe_sql = "SELECT count(*) AS count FROM events, likes " \
+                          "WHERE likes.eid = events.eid AND events.eid = %s"
+                res = g.conn.execute(exe_sql, row["eid"])
+                row_likes = res.fetchone()
+                likes = row_likes["count"]
+                exe_sql = "SELECT name FROM users WHERE uid = %s"
+                res_name = g.conn.execute(exe_sql, row["uid"])
+                name = res_name.fetchone()["name"]
+                event = {
+                    "eid": row["eid"],
+                    "event_type": row["event_type"],
+                    "description": row["description"],
+                    "uid": row["uid"],
+                    "user_name": name,
+                    "likes": int(likes),
+                    "url": row["url"],
+                    "content": row["content"],
+                    "title": row["title"]
+                }
+                print likes
+                events.append(event)
+                print events
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = events
             print ret
             return json.dumps(ret)
         except Exception, e:

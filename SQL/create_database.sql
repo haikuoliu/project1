@@ -297,3 +297,17 @@ INSERT INTO pushes( sid, aid, set_id, time, price, count)VALUES
 (3, 10, 9, now() - interval'40day', 1, 80),
 (3, 10, 10, now() - interval'1min', 2, 900)
 ;
+
+INSERT INTO user_ads(uid, aid, count) VALUES
+(1,3,4),
+(1,2,5),
+(2,1,3),
+(3,3,4),
+(5,3,5),
+(6,5,3),
+(7,8,4),
+(8,3,2),
+(4,6,1),
+(2,7,1),
+(1,8,1)
+;

@@ -203,7 +203,7 @@
         }
         ```
 
-    2. Delete (POST)
+    2. Delete (POST) (done)
 
         URL: `api/event/delete`
 
@@ -401,7 +401,7 @@ Return:
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
-        "content": "Some contents"
+        "content": "Some contents",
         "title": "Title"
       }
     ]
@@ -414,7 +414,7 @@ Return:
 }
 ```
 
-3. Retrieve All Events of Specific Topics
+3. Retrieve All Events of Specific Topics (done)
 
 URL: `api/posts/topic`
 
@@ -440,6 +440,7 @@ Return:
     // picture
     "url": "http:0.0.0.0/abcd",
     // blog
+    "content": "Some content",
     "title": "Title"
   },
   // fail
@@ -450,14 +451,14 @@ Return:
 }
 ```
 
-4. Retrieve Users's Ads (GET)
+4. Retrieve Users's Ads (GET) (done)
 
 URL: `api/ads/user`
 
 GET:
 
 ```
-?uid=123
+?uid=1&num=4
 ```
 
 Return:
@@ -550,7 +551,7 @@ Return:
 
 ## Sponsors
 
-1. Return All Sponsors List (GET)
+1. Return All Sponsors List (GET) (done)
 
 URL: `/api/sponsors`
 
@@ -583,7 +584,7 @@ Return:
 
 ## Ads
 
-1. Create a new ad (POST)
+1. Create a new ad (POST) (done)
 
 URL: `/api/ads/create`
 
@@ -614,7 +615,7 @@ Return:
 }
 ```
 
-2. Retrieve Sponsor's Ads List (GET)
+2. Retrieve Sponsor's Ads List (GET) (done)
 
 URL: `/api/ads/sponsor`
 
@@ -633,9 +634,9 @@ Return:
   "result": {
     "ads": [
       {
-        "sid": 12,
         "sponsor_name": "apple",
-        "url": "http:..."
+        "url": "http:...",
+        "description": "some description"
       }
     ]
   }
