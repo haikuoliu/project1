@@ -98,7 +98,7 @@ def events_of_topic():
 
 
 # Retrieve Feeds
-# http://127.0.0.1:8080/api/posts/feeds?uid=1&offset=0&count=10&timestamp=1402323213
+# http://127.0.0.1:8080/api/posts/feeds?uid=1&offset=0&count=10&timestamp=1478411123
 @routes.route('/api/posts/feeds', methods=['GET'])
 @crossdomain(origin='*')
 def users_feeds():
@@ -109,9 +109,12 @@ def users_feeds():
             count = request.args.get('count')
             offset = request.args.get('offset')
             exe_sql = "SELECT * FROM events, users WHERE " \
-                      "users.uid = %s AND events.uid = users.uid AND events.time < %s " \
-                      "ORDER BY events.time DESC LIMIT %s OFFSET %s"
-            res = g.conn.execute(exe_sql, (uid, timestamp_to_datetime(ts), str(count), str(offset)))
+                      "events.uid = users.uid AND events.time < %s AND (events.eid in " \
+                      "(SELECT events.eid FROM events, follows WHERE events.uid = follows.destination AND follows.source = %s) " \
+                      "OR events.eid in " \
+                      "(SELECT events.eid FROM subscribes, events, belongs WHERE events.eid = belongs.eid AND belongs.topic = subscribes.topic AND subscribes.uid = %s)" \
+                      ")ORDER BY events.time DESC LIMIT %s OFFSET %s"
+            res = g.conn.execute(exe_sql, (timestamp_to_datetime(ts), uid, uid, str(count), str(offset)))
             rows = res.fetchall()
             feeds = []
             for row in rows:
@@ -124,7 +127,7 @@ def users_feeds():
                     "eid": row["eid"],
                     "event_type": row["event_type"],
                     "description": row["description"],
-                    "uid": uid,
+                    "uid": row["uid"],
                     "user_name": row["name"],
                     "likes": int(likes),
                     "islike": is_like(uid, row["eid"]),
