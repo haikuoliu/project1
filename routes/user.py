@@ -126,7 +126,6 @@ def user_follows_list():
             rows = res.fetchall()
             dests = []
             for row in rows:
-                print type(row["sex"])
                 if row["sex"] == True:
                     sex = "male"
                 else:

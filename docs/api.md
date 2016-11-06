@@ -554,6 +554,8 @@ Return:
 
 ## Likes (done)
 
+1. User likes/dislikes an event.
+
 URL: `api/likes`
 
 GET:
@@ -581,6 +583,8 @@ Return:
   }
 }
 ```
+
+2. Check whether user likes an event or not.
 
 URL: `api/likes/islike`
 

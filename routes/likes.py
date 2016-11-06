@@ -34,3 +34,25 @@ def like_event():
         except Exception, e:
             print e
             return default_error_msg(e.message)
+
+
+# Check whether user likes an event or not.
+# http://127.0.0.1:8080/api/likes/islike?uid=1&eid=2
+@routes.route('/api/likes/islike', methods=['GET'])
+@crossdomain(origin='*')
+def islike_event():
+    if request.method == 'GET':
+        try:
+            uid = request.args.get('uid')
+            eid = request.args.get('eid')
+            exe_sql = "SELECT count(*) > 0 AS islike FROM likes WHERE uid = %s AND eid = %s"
+            islike = g.conn.execute(exe_sql, uid, eid).fetchone()["islike"]
+            print type(islike)
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = islike
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
