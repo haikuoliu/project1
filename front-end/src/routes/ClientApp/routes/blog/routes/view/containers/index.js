@@ -9,12 +9,14 @@ import * as PersistentActions from 'SRC/action'
 import moment from 'moment'
 import { throttle } from 'SRC/utils/utils'
 
+import { Comment } from 'SRC/components/form'
 import { Card, Icon, Row, Col } from 'antd'
 
 class BlogView extends Component {
   constructor(props) {
     super(props)
     this.switchLike = throttle(this.switchLike, 5000).bind(this)
+    this.makeComment = this.makeComment.bind(this)
   }
   componentWillMount() {
     const eid = this.props.location.query.eid
@@ -36,6 +38,11 @@ class BlogView extends Component {
   switchLike(eid, type = 'like') {
     const uid = this.props.persistentStore.userId
     this.props.globalActions.switchLike(uid, eid, type)
+  }
+  makeComment(comment) {
+    const uid = this.props.persistentStore.userId
+    const eid = this.props.event.eid
+    this.props.actions.makeComments(uid, eid, comment)
   }
   render() {
     const event = this.props.event
@@ -100,6 +107,7 @@ class BlogView extends Component {
               </div>
             ))
           }
+          <Comment onSubmit={this.makeComment} />
         </Card>
       </div>
     )

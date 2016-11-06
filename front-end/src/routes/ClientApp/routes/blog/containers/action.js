@@ -57,3 +57,24 @@ export function loadComments(eid) {
       })
   )
 }
+
+export function makeComments(uid, eid, content) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('content', content)
+    formData.append('eid', eid)
+    formData.append('uid', uid)
+    return fetchPro(api('events:createComments'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('events:createComments'), json.result.msg)
+          return
+        }
+        dispatch(loadComments(eid))
+      })
+  }
+}
