@@ -11,7 +11,9 @@ class BlogCard extends Component {
         style={{ margin: '30px 10%' }}
         >
         <div>
-          <img alt="example" width="100%" src={event.url} />
+          <Link className="fc-dark" style={{ display: 'block' }} to={{ pathname: '/client/blog/view', query: { eid: event.eid } }}>
+            <img alt="example" width="100%" src={event.url} />
+          </Link>
         </div>
         <div className="fs12 margB15">
           <Link className="fc-dark" to={{ pathname: '/client/profile/info', query: { uid: event.uid } }}>

@@ -6,8 +6,8 @@ export default (store) => ( // eslint-disable-line no-unused-vars
     getComponent(location, cb) {
       require.ensure([], (require) => {
         // Asyn Injection Of Reducers
-        // const reducer = require('./containers/reducer').default
-        // injectReducer(store, { key: 'blog', reducer })
+        const reducer = require('./containers/reducer').default
+        injectReducer(store, { key: 'clientEvent', reducer })
         cb(null, require('./containers/').default)
       }, 'blog')
     },

@@ -21,7 +21,7 @@ class TopicsList extends Component {
               <Col key={topic.topic_name} span={12} style={{ height: '200px' }}>
                 <Card
                   title={
-                    <h3 className="captialize">
+                    <h3 className="capitalize">
                       <Link to={{ pathname: '/client/topics/topic', query: { topic: topic.topic_name } }}>
                         {topic.topic_name}
                       </Link>

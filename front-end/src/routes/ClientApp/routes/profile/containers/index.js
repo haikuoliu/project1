@@ -35,8 +35,8 @@ class Profile extends Component {
     if (query.uid !== nextQuery.uid) {
       const { userId } = this.props.persistentStore
       this.props.actions.loadUserInfo(userId, nextQuery.uid || userId)
-      this.props.actions.getTopicsOfUser(query.uid || userId)
-      this.props.actions.getPostsOfUser(query.uid || userId)
+      this.props.actions.getTopicsOfUser(nextQuery.uid || userId)
+      this.props.actions.getPostsOfUser(nextQuery.uid || userId)
     }
   }
   render() {

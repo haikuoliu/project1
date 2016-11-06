@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as ClientProfileInfoAction from './action'
+import * as ClientProfileAction from '../../../containers/action'
 import * as PersistentActions from 'SRC/action'
 
 import { Row, Col, Button } from 'antd'
@@ -81,7 +81,7 @@ function mapState(state) {
 function mapDispatch(dispatch) {
   return {
     persistentActions: bindActionCreators(PersistentActions, dispatch),
-    actions: bindActionCreators(ClientProfileInfoAction, dispatch)
+    actions: bindActionCreators(ClientProfileAction, dispatch)
   }
 }
 

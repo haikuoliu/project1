@@ -12,7 +12,7 @@ class BlogCard extends Component {
         >
         <div className="fs14 margB15">
           <h2 className="captialize fc-dark">
-            <Link className="fc-dark" to={{ pathname: '/client/profile/info', query: { uid: event.uid } }}>
+            <Link className="fc-dark" to={{ pathname: '/client/blog/view', query: { eid: event.eid } }}>
               {event.title}
             </Link>
           </h2>

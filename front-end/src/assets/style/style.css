@@ -63,13 +63,16 @@
 }
 
 /* font style */
-.captialize {
+.capitalize {
   text-transform: capitalize
 }
 
 /* Margin */
 .margB15 {
   margin-bottom: 15px;
+}
+.margB30 {
+  margin-bottom: 30px;
 }
 
 /* fixed padding */

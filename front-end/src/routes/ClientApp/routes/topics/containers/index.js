@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+
 // import { DatePicker } from 'antd'
 
 class Topics extends Component {
   render() {
+    const query = this.props.location.query
     return (
       <div className="full-height">
         <div className="fix-top-row-wrapper" style={{ paddingTop: '80px' }}>
           <div className="fix-top-row" style={{ height: '80px', background: '#0272A2' }}>
-            <h1 className="fc-white" style={{ fontSize: '30px', lineHeight: '80px', marginLeft: '5%' }}>
-              Topics
+            <h1 className="fc-white capitalize" style={{ fontSize: '30px', lineHeight: '80px', marginLeft: '5%' }}>
+              {`Topics${query.topic ? ` - ${query.topic}` : ''}`}
             </h1>
           </div>
           <div className="full-height">
@@ -21,6 +23,7 @@ class Topics extends Component {
 }
 
 Topics.propTypes = {
+  location: React.PropTypes.object,
   children: React.PropTypes.oneOfType([
     React.PropTypes.string,
     React.PropTypes.element

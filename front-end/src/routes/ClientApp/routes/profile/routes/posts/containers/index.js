@@ -26,7 +26,7 @@ ProfilePosts.propTypes = {
   location: React.PropTypes.object,
   // persistentActions: React.PropTypes.object,
   // persistentStore: React.PropTypes.object,
-  userPostsList: React.PropTypes.object
+  userPostsList: React.PropTypes.array
 }
 
 function mapState(state) {

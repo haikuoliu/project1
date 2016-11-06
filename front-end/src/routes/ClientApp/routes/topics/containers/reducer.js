@@ -21,11 +21,9 @@ const reducerMap = {
   }
 }
 
-function clientTopics(state = initialState, action) {
+export default function clientTopics(state = initialState, action) {
   if (reducerMap[action.type]) {
     return reducerMap[action.type](state, action)
   }
   return state
 }
-
-export default clientTopics

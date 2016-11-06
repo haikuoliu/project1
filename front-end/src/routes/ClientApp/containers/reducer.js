@@ -12,7 +12,7 @@ const initialState = Immutable.fromJS({
   birth: 1478236926748,
   email: '',
   followerNum: 12,
-  userId: -1
+  userId: 0
 })
 
 /* eslint-disable arrow-body-style, no-unused-vars*/
