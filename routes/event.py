@@ -5,21 +5,23 @@ import json
 from . import routes
 from flask import g
 
+
 # create/edit events
+# http://127.0.0.1:8080/api/event/create
 @routes.route('/api/event/create', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def event_create_edit():
     if request.method == 'POST':
         try:
-            eid = request.args.get('eid')
-            event_type = request.args.get('event_type')
-            description = request.args.get('description')
-            uid = request.args.get('uid')
-            topics = request.args.get('topics')
+            eid = request.form.get('eid')
+            event_type = request.form.get('event_type')
+            description = request.form.get('description')
+            uid = request.form.get('uid')
+            topics = request.form.get('topics')
             topics = topics.replace("[", "").replace("]", "").replace("\"", "").split(",")
-            url = request.args.get('url')
-            content = request.args.get('content')
-            title = request.args.get('title')
+            url = request.form.get('url')
+            content = request.form.get('content')
+            title = request.form.get('title')
             ret = {}
             ret[STATUS] = SUCCESS
             if eid == "-1":  # create
@@ -67,13 +69,14 @@ def event_create_edit():
 
 
 # delete an event
+# http://127.0.0.1:8080/api/event/delete
 @routes.route('/api/event/delete', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def event_delete():
     if request.method == 'POST':
         try:
-            eid = request.args.get('eid')
-            uid = request.args.get('uid')
+            eid = request.form.get('eid')
+            uid = request.form.get('uid')
             exe_sql = "DELETE FROM events WHERE eid = %s AND uid = %s"
             g.conn.execute(exe_sql, (eid, uid))
             ret = {}
@@ -123,7 +126,7 @@ def event_get():
 
 
 # create comments & get comments
-# http://127.0.0.1:8080/api/event/comments?eid=1
+# http://127.0.0.1:8080/api/event/comments
 @routes.route('/api/event/comments', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def event_create_comments():

@@ -18,31 +18,29 @@ conn = db.connect()
 if conn: print "connected to db"
 else: print "connection failed"
 
-uid = 1
-num = 4
-exe_sql = "SELECT * FROM user_ads WHERE uid = %s LIMIT %s"
-rows = conn.execute(exe_sql, (uid, num)).fetchall()
-ads = []
+
+
+sid = 1
+
+# Update first
+exe_sql = "SELECT set_id FROM user_sets WHERE sid = %s"
+rows = conn.execute(exe_sql, sid).fetchall()
+
+exe_sql = "SELECT * FROM user_sets WHERE sid = %s"
+rows = conn.execute(exe_sql, sid).fetchall()
+user_sets = []
 for row in rows:
-    print row["aid"]
-    exe_sql = "SELECT A.sid AS sid, A.url AS url, A.description AS description, S.name AS name " \
-              "FROM ads AS A, sponsors AS S " \
-              "WHERE A.sid = S.sid AND A.aid = %s"
-    ad_info = conn.execute(exe_sql, row["aid"]).fetchone()
-    ad = {
-        "sid": ad_info["sid"],
-        "sponsor_name": ad_info["name"],
-        "url": ad_info["url"],
-        "description": ad_info["description"]
+    user_set = {
+        "sid": row["sid"],
+        "set_id": row["set_id"],
+        "filters": row["filters"],
+        "description": row["description"],
+        "size": row["size"]
     }
-    ads.append(ad)
-    exe_sql = "UPDATE user_ads SET count = COUNT - 1 WHERE aid = %s"
-    conn.execute(exe_sql, row["aid"])
-    exe_sql = "DELETE FROM user_ads WHERE count < 0"
-    conn.execute(exe_sql)
+    user_sets.append(user_set)
 ret = {}
 ret[STATUS] = SUCCESS
-ret[RESULT] = ads
+ret[RESULT] = user_sets
 print ret
 
 
