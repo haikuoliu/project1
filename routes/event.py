@@ -1,4 +1,4 @@
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.crossdomain import *
 from utils.time_format import *
 import json
@@ -87,15 +87,18 @@ def event_delete():
 
 
 # get an event
-# http://127.0.0.1:8080/api/event?eid=1
+# http://127.0.0.1:8080/api/event?eid=1&myid=1
 @routes.route('/api/event', methods=['GET'])
 @crossdomain(origin='*')
 def event_get():
     if request.method == 'GET':
         try:
             eid = request.args.get('eid')
+            myid = request.args.get('myid')
             exe_sql = "SELECT * FROM events, users WHERE eid = %s AND events.uid = users.uid"
             res = g.conn.execute(exe_sql, eid)
+            exe_sql = "SELECT count(*) As count FROM likes WHERE eid = %s"
+            likes = g.conn.execute(exe_sql, eid).fetchone()["count"]
             row = res.fetchone()
             event = {
                 "eid": eid,
@@ -104,6 +107,8 @@ def event_get():
                 "uid": row["uid"],
                 "user_name": row["name"],
                 "url": row["url"],
+                "likes": likes,
+                "islike": is_like(myid, eid),
                 "content": row["content"],
                 "title": row["title"]
             }

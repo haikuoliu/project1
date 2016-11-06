@@ -1,4 +1,4 @@
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.crossdomain import *
 import json
 from . import routes
@@ -29,6 +29,25 @@ def like_event():
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = NULL
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
+# Check whether user likes an event or not.
+# http://127.0.0.1:8080/api/likes/islike?uid=1&eid=2
+@routes.route('/api/likes/islike', methods=['GET'])
+@crossdomain(origin='*')
+def islike_event():
+    if request.method == 'GET':
+        try:
+            uid = request.args.get('uid')
+            eid = request.args.get('eid')
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = is_like(uid, eid)
             print ret
             return json.dumps(ret)
         except Exception, e:

@@ -1,6 +1,6 @@
 from flask import request
 from utils.connect_db import *
-from utils.constants import *
+from utils.constants_funcs import *
 import json
 from flask import g
 from sqlalchemy import *

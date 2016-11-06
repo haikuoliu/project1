@@ -1,5 +1,5 @@
 # from utils.connect_db import *
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.time_format import *
 from utils.crossdomain import *
 import json
@@ -108,3 +108,47 @@ def user_follows():
         except Exception, e:
             print e
             return default_error_msg(e.message)
+
+
+# Retrieve the user list that a specific user follows
+# http://127.0.0.1:8080/api/users/follow/list?uid=1
+@routes.route('/api/users/follow/list', methods=['GET'])
+@crossdomain(origin='*')
+def user_follows_list():
+    if request.method == 'GET':
+        try:
+            uid = request.args.get('uid')
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = NULL
+            exe_sql = "SELECT * FROM follows, users WHERE source = %s AND users.uid = follows.destination"
+            res = g.conn.execute(exe_sql, uid)
+            rows = res.fetchall()
+            dests = []
+            for row in rows:
+                if row["sex"] == True:
+                    sex = "male"
+                else:
+                    sex = "female"
+                dest = {
+                    "uid": row["uid"],
+                    "email": row["email"],
+                    "birth": date_to_timestamp(row["birth"]),
+                    "sex": sex,
+                    "name": row["name"],
+                    "follows": followers_num(row["uid"]),
+                }
+                dests.append(dest)
+            ret[RESULT] = dests
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
+# This guy follows how many people.
+def followers_num(uid):
+    exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s"
+    return g.conn.execute(exe_sql, uid).fetchone()["count"]
+

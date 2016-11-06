@@ -157,7 +157,7 @@
     }
     ```
 
-2. Retrieve the user list that a specific user follows
+2. Retrieve the user list that a specific user follows (done)
 
     URL: `/api/users/follow/list`
 
@@ -176,9 +176,8 @@
       "result": [
         {
           "uid": 23111,
-          "isFollow": true | false,
           "email": "name@gmail.com",
-          "birth": "742449600.0",
+          "birth": "742449600",
           "sex": "male" | "female",
           "name": "Nick Name",
           "follows": 123,
@@ -274,7 +273,7 @@
         GET:
 
         ```
-        ?eid=12
+        ?eid=12&myid=1 // 0 for visitors
         ```
 
         Return:
@@ -289,6 +288,8 @@
             "description": "some thing",
             "uid": 2311,
             "user_name": "haikuo"
+            "likes": 2,
+            "islike": True | False,
             // picture
             "url": "http:0.0.0.0/abcd",
             // blog
@@ -392,6 +393,7 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
+        "islike" True | False,
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -414,7 +416,7 @@ URL: `api/posts/user`
 GET:
 
 ```
-?uid=12
+?uid=12&myid=1
 ```
 
 Return:
@@ -432,6 +434,7 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
+        "islike": True | False,
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -455,7 +458,7 @@ URL: `api/posts/topic`
 GET:
 
 ```
-?topicName=science
+?topicName=science&myid=1
 ```
 
 Return:
@@ -471,6 +474,7 @@ Return:
     "uid": 2311,
     "user_name": "haikuo",
     "likes": 23,
+    "islike": true | false,
     // picture
     "url": "http:0.0.0.0/abcd",
     // blog
@@ -555,6 +559,8 @@ Return:
 
 ## Likes (done)
 
+1. User likes/dislikes an event.
+
 URL: `api/likes`
 
 GET:
@@ -582,6 +588,32 @@ Return:
   }
 }
 ```
+
+2. Check whether user likes an event or not. (done)
+
+URL: `api/likes/islike`
+
+GET:
+
+```
+?uid=11&eid=1
+```
+
+Return:
+
+```
+{
+  "status": "success" | "fail",
+  // success
+  "result": true | false,
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "Unknown"
+  }
+}
+```
+
 
 ## Sponsors
 
