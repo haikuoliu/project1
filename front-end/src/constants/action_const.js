@@ -5,7 +5,8 @@ export const CLIENT_USER = {
 
 export const CLIENT_PROFILE_USER_INFO = {
   LOAD: '@Client/user/profile/LOAD',
-  UPDATE: '@Client/user/profile/UPDATE'
+  UPDATE: '@Client/user/profile/UPDATE',
+  LOAD_USERS_FOLLOWED_BY: '@Client/user/profile/USERS_FOLLOWED_BY'
 }
 
 export const CLIENT_TOPICS = {

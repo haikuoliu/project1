@@ -80,6 +80,25 @@ export function getPostsOfUser(uid, myId) {
   )
 }
 
+export function getUsersFollowedBy(uid) {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('users:getUsersFollowedBy', uid))
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('users:getUsersFollowedBy', uid), json.result.msg)
+          return
+        }
+        // dispatch(PersistentActions.persistentSet('username', json.result.name))
+        dispatch({
+          type: CLIENT_PROFILE_USER_INFO.LOAD_USERS_FOLLOWED_BY,
+          result: json.result
+        })
+      })
+  )
+}
+
 export function switchFollow(myId, otherId, type = 'follow') {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
     fetchPro(api('users:switchFollow', myId, otherId, type === 'follow' ? 1 : 0))

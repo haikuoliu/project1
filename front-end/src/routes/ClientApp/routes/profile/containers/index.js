@@ -28,6 +28,7 @@ class Profile extends Component {
     this.props.actions.loadUserInfo(userId, query.uid || userId)
     this.props.actions.getTopicsOfUser(query.uid || userId)
     this.props.actions.getPostsOfUser(query.uid || userId, userId)
+    this.props.actions.getUsersFollowedBy(query.uid || userId)
   }
   componentWillReceiveProps(nextProps) {
     const query = this.props.location.query
@@ -37,6 +38,7 @@ class Profile extends Component {
       this.props.actions.loadUserInfo(userId, nextQuery.uid || userId)
       this.props.actions.getTopicsOfUser(nextQuery.uid || userId)
       this.props.actions.getPostsOfUser(nextQuery.uid || userId, userId)
+      this.props.actions.getUsersFollowedBy(nextQuery.uid || userId)
     }
   }
   render() {

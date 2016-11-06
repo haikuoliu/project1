@@ -5,6 +5,7 @@ import { combineReducers } from 'redux'
 import userInfo from '../routes/info/containers/reducer'
 import userTopics from '../routes/subscribe/containers/reducer'
 import userPosts from '../routes/posts/containers/reducer'
+import userFollows from '../routes/follow/containers/reducer'
 //
 // const initialState = Immutable.fromJS({
 //   userName: 'Unkown UserName',
@@ -40,5 +41,6 @@ import userPosts from '../routes/posts/containers/reducer'
 export default combineReducers({
   userInfo,
   userTopics,
-  userPosts
+  userPosts,
+  userFollows
 })

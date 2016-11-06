@@ -14,7 +14,7 @@ const infoList = [
   ['Sex', 'sex'],
   ['Birth Day', 'birth', (timestamp) => moment(timestamp).format('YYYY-MM-DD')],
   ['Email', 'email'],
-  ['Number of Followers', 'followerNum']
+  ['Followed By', 'followerNum']
 ]
 
 class ProfileInfo extends Component {
