@@ -70,9 +70,15 @@ class BlogView extends Component {
             <p>{event.description}</p>
           </div>
         </Card>
-        <Card bordered style={{ margin: '30px 0' }}>
-          <p className="fs20">{event.content}</p>
-        </Card>
+        {
+          event.event_type === 'picture' ?
+            <Card bordered style={{ margin: '30px 0' }}>
+              <img alt="example" width="100%" src={event.url} />
+            </Card> :
+            <Card bordered style={{ margin: '30px 0' }}>
+              <p className="fs20">{event.content}</p>
+            </Card>
+        }
         <Card bordered style={{ margin: '30px 0' }}>
           {
             comments.map(comment => (

@@ -129,9 +129,9 @@ def event_get():
 def event_create_comments():
     if request.method == 'POST':
         try:
-            eid = request.args.get('eid')
-            uid = request.args.get('uid')
-            content = request.args.get('content')
+            eid = request.form.get('eid')
+            uid = request.form.get('uid')
+            content = request.form.get('content')
             exe_sql = "INSERT INTO comments(uid, eid, time, content) VALUES(%s, %s, now(), %s)"
             g.conn.execute(exe_sql, (uid, eid, content))
             ret = {}
