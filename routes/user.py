@@ -1,5 +1,5 @@
 # from utils.connect_db import *
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.time_format import *
 from utils.crossdomain import *
 import json

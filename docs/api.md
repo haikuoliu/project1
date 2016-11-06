@@ -273,7 +273,7 @@
         GET:
 
         ```
-        ?eid=12
+        ?eid=12&myid=1 // 0 for visitors
         ```
 
         Return:
@@ -288,6 +288,8 @@
             "description": "some thing",
             "uid": 2311,
             "user_name": "haikuo"
+            "likes": 2,
+            "islike": True | False,
             // picture
             "url": "http:0.0.0.0/abcd",
             // blog
@@ -391,6 +393,7 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
+        "islike" True | False,
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -413,7 +416,7 @@ URL: `api/posts/user`
 GET:
 
 ```
-?uid=12
+?uid=12&myid=1
 ```
 
 Return:
@@ -431,6 +434,7 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
+        "islike": True | False,
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -454,7 +458,7 @@ URL: `api/posts/topic`
 GET:
 
 ```
-?topicName=science
+?topicName=science&myid=1
 ```
 
 Return:
@@ -470,6 +474,7 @@ Return:
     "uid": 2311,
     "user_name": "haikuo",
     "likes": 23,
+    "islike": true | false,
     // picture
     "url": "http:0.0.0.0/abcd",
     // blog
@@ -584,7 +589,7 @@ Return:
 }
 ```
 
-2. Check whether user likes an event or not.
+2. Check whether user likes an event or not. (done)
 
 URL: `api/likes/islike`
 

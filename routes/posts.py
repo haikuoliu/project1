@@ -1,4 +1,4 @@
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.crossdomain import *
 from utils.time_format import *
 import json
@@ -7,13 +7,14 @@ from flask import g
 
 
 # Retrieve Users's Posts
-# http://127.0.0.1:8080/api/posts/user?uid=4
+# http://127.0.0.1:8080/api/posts/user?uid=4&myid=1
 @routes.route('/api/posts/user', methods=['GET'])
 @crossdomain(origin='*')
 def users_posts():
     if request.method == 'GET':
         try:
             uid = request.args.get('uid')
+            myid = request.args.get('myid')
             exe_sql = "SELECT * FROM events, users WHERE users.uid = %s AND events.uid = users.uid"
             res = g.conn.execute(exe_sql, uid)
             rows = res.fetchall()
@@ -31,6 +32,7 @@ def users_posts():
                     "uid": uid,
                     "user_name": row["name"],
                     "likes": int(likes),
+                    "islike": is_like(myid, row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]
@@ -48,14 +50,15 @@ def users_posts():
             return default_error_msg(e.message)
 
 
-# Retrieve Users's Posts
-# http://127.0.0.1:8080/api/posts/topic?topicName=science
+# Retrieve All Events of Specific Topics
+# http://127.0.0.1:8080/api/posts/topic?topicName=science&myid=1
 @routes.route('/api/posts/topic', methods=['GET'])
 @crossdomain(origin='*')
 def events_of_topic():
     if request.method == 'GET':
         try:
             topic_name = request.args.get('topicName')
+            myid = request.args.get('myid')
             exe_sql = "SELECT * FROM events, belongs WHERE belongs.topic = %s AND events.eid = belongs.eid"
             res = g.conn.execute(exe_sql, topic_name)
             rows = res.fetchall()
@@ -76,6 +79,7 @@ def events_of_topic():
                     "uid": row["uid"],
                     "user_name": name,
                     "likes": int(likes),
+                    "islike": is_like(myid, row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]
@@ -94,7 +98,7 @@ def events_of_topic():
 
 
 # Retrieve Feeds
-# http://127.0.0.1:8080/api/posts/feeds?uid=1&offset=0&count=10&timestamp=1202323213
+# http://127.0.0.1:8080/api/posts/feeds?uid=1&offset=0&count=10&timestamp=1402323213
 @routes.route('/api/posts/feeds', methods=['GET'])
 @crossdomain(origin='*')
 def users_feeds():
@@ -123,6 +127,7 @@ def users_feeds():
                     "uid": uid,
                     "user_name": row["name"],
                     "likes": int(likes),
+                    "islike": is_like(uid, row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]

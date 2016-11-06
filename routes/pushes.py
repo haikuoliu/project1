@@ -1,4 +1,4 @@
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.crossdomain import *
 from utils.time_format import *
 import json

@@ -1,4 +1,4 @@
-from utils.constants import *
+from utils.constants_funcs import *
 from utils.crossdomain import *
 import json
 from . import routes
@@ -45,12 +45,9 @@ def islike_event():
         try:
             uid = request.args.get('uid')
             eid = request.args.get('eid')
-            exe_sql = "SELECT count(*) > 0 AS islike FROM likes WHERE uid = %s AND eid = %s"
-            islike = g.conn.execute(exe_sql, uid, eid).fetchone()["islike"]
-            print type(islike)
             ret = {}
             ret[STATUS] = SUCCESS
-            ret[RESULT] = islike
+            ret[RESULT] = is_like(uid, eid)
             print ret
             return json.dumps(ret)
         except Exception, e:
