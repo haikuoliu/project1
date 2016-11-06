@@ -157,7 +157,7 @@
     }
     ```
 
-2. Retrieve the user list that a specific user follows
+2. Retrieve the user list that a specific user follows (done)
 
     URL: `/api/users/follow/list`
 
@@ -176,9 +176,8 @@
       "result": [
         {
           "uid": 23111,
-          "isFollow": true | false,
           "email": "name@gmail.com",
-          "birth": "742449600.0",
+          "birth": "742449600",
           "sex": "male" | "female",
           "name": "Nick Name",
           "follows": 123,
@@ -582,6 +581,30 @@ Return:
   }
 }
 ```
+
+URL: `api/likes/islike`
+
+GET:
+
+```
+?uid=11&eid=1
+```
+
+Return:
+
+```
+{
+  "status": "success" | "fail",
+  // success
+  "result": true | false,
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "Unknown"
+  }
+}
+```
+
 
 ## Sponsors
 
