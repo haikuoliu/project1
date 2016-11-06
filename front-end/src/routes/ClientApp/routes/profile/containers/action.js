@@ -60,14 +60,14 @@ export function getTopicsOfUser(myId) {
   )
 }
 
-export function getPostsOfUser(myId) {
+export function getPostsOfUser(uid, myId) {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
-    fetchPro(api('events:getPostsOfUser', myId))
+    fetchPro(api('events:getPostsOfUser', uid, myId))
       .then(response => response.json())
       .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
       .then(json => {
         if (json.status === 'fail') {
-          logger.error(api('topics:getTopicsOfUser', myId), json.result.msg)
+          logger.error(api('topics:getTopicsOfUser', uid, myId), json.result.msg)
           return
         }
         // dispatch(PersistentActions.persistentSet('username', json.result.name))

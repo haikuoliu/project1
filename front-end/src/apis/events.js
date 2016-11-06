@@ -2,8 +2,8 @@ import hostname from 'SRC/utils/host'
 
 const events = {
   switchLikeStatus: (uid, eid, isLike) => `${hostname()}/api/likes?uid=${uid}&eid=${eid}&isLike=${isLike}`,
-  getPostsOfUser: (uid) => `${hostname()}/api/posts/user?uid=${uid}`,
-  getSingleEvent: (eid) => `${hostname()}/api/event?eid=${eid}`,
+  getPostsOfUser: (uid, myid) => `${hostname()}/api/posts/user?uid=${uid}&myid=${myid}`,
+  getSingleEvent: (eid, myid) => `${hostname()}/api/event?eid=${eid}&myid=${myid}`,
   getComments: (eid) => `${hostname()}/api/event/comments?eid=${eid}`
 }
 

@@ -3,16 +3,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ClientTopicsAction from '../../../containers/action'
-import * as PersistentActions from 'SRC/action'
+import * as ClientActions from 'SRC/routes/ClientApp/containers/action'
+// import * as PersistentActions from 'SRC/action'
 
 import { BlogCard, ImgCard } from 'SRC/components/event-card'
 
 class TopicEventsList extends Component {
+  constructor(props) {
+    super(props)
+    this.switchLike = this.switchLike.bind(this)
+  }
   componentWillMount() {
     const query = this.props.location.query
     if (!this.props.topicsStore.eventsList[query.topic]) {
-      this.props.actions.loadAllEventsOfTopics(query.topic)
+      this.props.actions.loadAllEventsOfTopics(query.topic, this.props.persistentStore.userId)
     }
+  }
+  switchLike(eid, type = 'like') {
+    const uid = this.props.persistentStore.userId
+    this.props.globalActions.switchLike(uid, eid, type)
   }
   render() {
     const topicsStore = this.props.topicsStore
@@ -22,8 +31,18 @@ class TopicEventsList extends Component {
         {
           (topicsStore.eventsList[topic] || []).map(event => (
             event.event_type === 'blog' ?
-              <BlogCard key={`${topic}-${event.eid}`} event={event} /> :
-              <ImgCard key={`${topic}-${event.eid}`} event={event} />
+              <BlogCard
+                key={`${event.eid}`}
+                event={event}
+                onLike={this.switchLike.bind(null, event.eid, 'like')}
+                onCancelLike={this.switchLike.bind(null, event.eid, 'cancel_like')}
+                /> :
+              <ImgCard
+                key={`${event.eid}`}
+                event={event}
+                onLike={this.switchLike.bind(null, event.eid, 'like')}
+                onCancelLike={this.switchLike.bind(null, event.eid, 'cancel_like')}
+                />
           ))
         }
       </div>
@@ -35,6 +54,7 @@ TopicEventsList.propTypes = {
   topicsStore: React.PropTypes.object,
   persistentStore: React.PropTypes.object,
   persistentActions: React.PropTypes.object,
+  globalActions: React.PropTypes.object,
   actions: React.PropTypes.object
 }
 
@@ -47,8 +67,8 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(PersistentActions, dispatch),
-    actions: bindActionCreators(ClientTopicsAction, dispatch)
+    actions: bindActionCreators(ClientTopicsAction, dispatch),
+    globalActions: bindActionCreators(ClientActions, dispatch)
   }
 }
 

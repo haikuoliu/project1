@@ -29,14 +29,14 @@ export function loadAllTopics() {
   )
 }
 
-export function loadAllEventsOfTopics(topic) {
+export function loadAllEventsOfTopics(topic, myid) {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
-    fetchPro(api('topics:getAllEventsOfTopic', topic))
+    fetchPro(api('topics:getAllEventsOfTopic', topic, myid))
       .then(response => response.json())
       .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
       .then(json => {
         if (json.status === 'fail') {
-          logger.error(api('topics:getAllEventsOfTopic', topic), json.result.msg)
+          logger.error(api('topics:getAllEventsOfTopic', topic, myid), json.result.msg)
           return
         }
         // dispatch(PersistentActions.persistentSet('username', json.result.name))

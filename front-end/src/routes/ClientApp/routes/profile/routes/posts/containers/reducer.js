@@ -10,6 +10,20 @@ const initialState = Immutable.fromJS({
 const reducerMap = {
   [CLIENT_EVENTS.LOAD_USER_POSTS]: (state, action) => {
     return state.set('eventsList', Immutable.fromJS(action.result))
+  },
+  [CLIENT_EVENTS.SWITCH_LIKE]: (state, action) => {
+    const index = state.get('eventsList').findIndex(
+      Value => Value.get('eid') === action.eid
+    )
+    if (index < 0) return state
+    return state.update('eventsList', oldList => (
+      oldList.update(index, V =>
+        V.merge(Immutable.fromJS({
+          islike: action.isLike,
+          likes: V.get('likes') + (action.isLike ? 1 : -1)
+        }))
+      )
+    ))
   }
 }
 

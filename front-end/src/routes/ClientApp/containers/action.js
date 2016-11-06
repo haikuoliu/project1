@@ -1,5 +1,5 @@
 import fetchPro from 'SRC/utils/fetchPro'
-import { CLIENT_USER } from 'SRC/constants/action_const'
+import { CLIENT_USER, CLIENT_EVENTS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
 
@@ -33,6 +33,28 @@ export function loadMyInfo(userId) {
           type: CLIENT_USER.LOAD,
           status: json.status,
           result: json.result
+        })
+      })
+  )
+}
+
+export function switchLike(myId, eid, type = 'like') {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('events:switchLikeStatus', myId, eid, type === 'like' ? 1 : 0))
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('events:switchLikeStatus', myId, eid, type === 'like' ? 1 : 0), json.result.msg)
+          return
+        }
+        // dispatch(PersistentActions.persistentSet('username', json.result.name))
+        // dispatch(profileUserInfoUpdate('isFollow', type === 'follow'))
+        dispatch({
+          type: CLIENT_EVENTS.SWITCH_LIKE,
+          uid: myId,
+          eid,
+          isLike: type === 'like'
         })
       })
   )

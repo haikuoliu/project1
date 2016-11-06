@@ -1,7 +1,7 @@
 // import { combineReducers } from 'redux'
 import Immutable from 'immutable'
 
-import { CLIENT_TOPICS } from 'SRC/constants/action_const'
+import { CLIENT_TOPICS, CLIENT_EVENTS } from 'SRC/constants/action_const'
 // import userInfo from '../routes/info/containers/reducer'
 
 const initialState = Immutable.fromJS({
@@ -18,6 +18,20 @@ const reducerMap = {
     return state.update('eventsList', oldDict => (
       oldDict.set(action.result.topic, Immutable.fromJS(action.result.eventsList))
     ))
+  },
+  [CLIENT_EVENTS.SWITCH_LIKE]: (state, action) => {
+    return state.update('eventsList', oldDict => oldDict.map(array => {
+      const index = array.findIndex(
+        Value => Value.get('eid') === action.eid
+      )
+      if (index < 0) return array
+      return array.update(index, V =>
+        V.merge(Immutable.fromJS({
+          islike: action.isLike,
+          likes: V.get('likes') + (action.isLike ? 1 : -1)
+        }))
+      )
+    }))
   }
 }
 

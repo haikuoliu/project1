@@ -17,5 +17,6 @@ export const CLIENT_TOPICS = {
 export const CLIENT_EVENTS = {
   LOAD_USER_POSTS: '@Client/events/LOAD_USER_POSTS',
   LOAD_SINGLE_EVENT: '@Client/events/LOAD_SINGLE_EVENT',
-  LOAD_COMENTS: '@Client/events/LOAD_COMENTS'
+  LOAD_COMENTS: '@Client/events/LOAD_COMENTS',
+  SWITCH_LIKE: '@Client/events/SWITCH_LIKE'
 }

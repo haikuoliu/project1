@@ -3,17 +3,24 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ClientBlogAction from '../../../containers/action'
+import * as ClientActions from 'SRC/routes/ClientApp/containers/action'
 import * as PersistentActions from 'SRC/action'
 
 import moment from 'moment'
+import { throttle } from 'SRC/utils/utils'
 
 import { Card, Icon, Row, Col } from 'antd'
 
 class BlogView extends Component {
+  constructor(props) {
+    super(props)
+    this.switchLike = throttle(this.switchLike, 5000).bind(this)
+  }
   componentWillMount() {
     const eid = this.props.location.query.eid
     if (eid > 0) {
-      this.props.actions.loadSingleEvent(eid)
+      const myid = this.props.persistentStore.userId
+      this.props.actions.loadSingleEvent(eid, myid)
       this.props.actions.loadComments(eid)
     }
   }
@@ -21,14 +28,18 @@ class BlogView extends Component {
     const eid = this.props.location.query.eid
     const nextEid = nextProps.location.query.eid
     if (eid != nextEid) { // eslint-disable-line eqeqeq
-      this.props.actions.loadSingleEvent(nextEid)
+      const myid = this.props.persistentStore.userId
+      this.props.actions.loadSingleEvent(nextEid, myid)
       this.props.actions.loadComments(nextEid)
     }
+  }
+  switchLike(eid, type = 'like') {
+    const uid = this.props.persistentStore.userId
+    this.props.globalActions.switchLike(uid, eid, type)
   }
   render() {
     const event = this.props.event
     const comments = this.props.comments
-    const myid = parseInt(this.props.persistentStore.userId)
     return (
       <div className="full-height" style={{ background: '#ECECEC', padding: '0 5%', overflow: 'auto' }}>
         <Card bordered style={{ margin: '30px 0' }}>
@@ -40,7 +51,15 @@ class BlogView extends Component {
                 </h2>
               </Col>
               <Col span={2}>
-                <div className="fs16"><Icon type="like" /> {event.likes || 0}</div>
+                {
+                  event.islike ?
+                    <div className="fc-blue fs16 pointer">
+                      <Icon type="like" onClick={this.switchLike.bind(null, event.eid, 'cancel_like')} /> {event.likes || 0}
+                    </div> :
+                    <div className="fs16 pointer">
+                      <Icon type="like" onClick={this.switchLike.bind(null, event.eid, 'like')} /> {event.likes}
+                    </div>
+                }
               </Col>
             </Row>
             <div className="fs12 margB15">
@@ -90,6 +109,7 @@ BlogView.propTypes = {
   event: React.PropTypes.object,
   comments: React.PropTypes.array,
   persistentStore: React.PropTypes.object,
+  globalActions: React.PropTypes.object,
   actions: React.PropTypes.object
 }
 
@@ -104,6 +124,7 @@ function mapState(state) { // eslint-disable-line no-unused-vars
 function mapDispatch(dispatch) {
   return {
     persistentActions: bindActionCreators(PersistentActions, dispatch),
+    globalActions: bindActionCreators(ClientActions, dispatch),
     actions: bindActionCreators(ClientBlogAction, dispatch)
   }
 }

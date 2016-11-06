@@ -18,14 +18,14 @@ import logger from 'SRC/utils/logger'
 
 */
 
-export function loadSingleEvent(eid) {
+export function loadSingleEvent(eid, myid) {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
-    fetchPro(api('events:getSingleEvent', eid))
+    fetchPro(api('events:getSingleEvent', eid, myid))
       .then(response => response.json())
       .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
       .then(json => {
         if (json.status === 'fail') {
-          logger.error(api('events:getSingleEvent', eid), json.result.msg)
+          logger.error(api('events:getSingleEvent', eid, myid), json.result.msg)
           return
         }
         // dispatch(PersistentActions.persistentSet('username', json.result.name))

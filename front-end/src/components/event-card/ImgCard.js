@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Card, Icon } from 'antd'
+import { throttle } from 'SRC/utils/utils'
 
 class BlogCard extends Component {
+  constructor(props) {
+    super(props)
+    this.onLike = throttle(this.props.onLike, 5000).bind(this)
+    this.onCancelLike = throttle(this.props.onCancelLike, 5000).bind(this)
+  }
   render() {
     const { event } = this.props
     return (
@@ -21,18 +27,30 @@ class BlogCard extends Component {
           </Link>
         </div>
         <p>{event.description}</p>
-        <div className="fs16"><Icon type="like" /> {event.likes}</div>
+        {
+          event.islike ?
+            <div className="fc-blue fs16 pointer">
+              <Icon type="like" onClick={this.onCancelLike} /> {event.likes}
+            </div> :
+            <div className="fs16 pointer">
+              <Icon type="like" onClick={this.onLike} /> {event.likes}
+            </div>
+        }
       </Card>
     )
   }
 }
 
 BlogCard.propTypes = {
-  event: React.PropTypes.object
+  event: React.PropTypes.object,
+  onLike: React.PropTypes.func,
+  onCancelLike: React.PropTypes.func
 }
 
 BlogCard.defaultProps = {
-  event: {}
+  event: {},
+  onLike: () => {},
+  onCancelLike: () => {}
 }
 
 export default BlogCard
