@@ -59,7 +59,11 @@ class ClientApp extends Component {
                   My Posts
                 </Link>
               </Menu.Item>
-              <Menu.Item key="blog/edit"><Link to="/client/blog/edit">Create Blog</Link></Menu.Item>
+              <Menu.Item key="blog/edit">
+                <Link to={{ pathname: '/client/blog/edit', query: { eid: -1 } }}>
+                  Create Blog
+                </Link>
+              </Menu.Item>
             </SubMenu>
             <SubMenu key="profile" title="Profile">
               <Menu.Item key="profile/info">

@@ -5,7 +5,8 @@ const events = {
   getPostsOfUser: (uid, myid) => `${hostname()}/api/posts/user?uid=${uid}&myid=${myid}`,
   getSingleEvent: (eid, myid) => `${hostname()}/api/event?eid=${eid}&myid=${myid}`,
   getComments: (eid) => `${hostname()}/api/event/comments?eid=${eid}`,
-  createComments: `${hostname()}/api/event/comments`
+  createComments: `${hostname()}/api/event/comments`,
+  editEvent: `${hostname()}/api/event/create`
 }
 
 export default events

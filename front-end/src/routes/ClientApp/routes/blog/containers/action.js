@@ -3,14 +3,15 @@ import { CLIENT_EVENTS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
 
+import * as ClientTopicActions from '../../topics/containers/action'
 // import * as PersistentActions from 'SRC/action'
 
-// export function deleteBlogListItem(id) {
-//   return {
-//     type: 'BLOG@BLOG_CONTENT@DELETE_ITEM',
-//     id
-//   }
-// }
+export function updateEventFields(event) {
+  return {
+    type: CLIENT_EVENTS.UPDATE_EVENT_FIELDS,
+    event
+  }
+}
 
 /**
 
@@ -78,3 +79,39 @@ export function makeComments(uid, eid, content) {
       })
   }
 }
+
+export function updateEventContent(uid, eid, event) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('eid', eid)
+    formData.append('uid', uid)
+    formData.append('content', event.content)
+    formData.append('title', event.title)
+    formData.append('description', event.description)
+    formData.append('topics', event.topics)
+    formData.append('url', event.url)
+    formData.append('event_type', event.event_type)
+    return fetchPro(api('events:editEvent'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('events:editEvent'), json.result.msg)
+          return
+        }
+        console.log(json)
+      })
+  }
+}
+
+export const loadAllTopics = ClientTopicActions.loadAllTopics
+/**
+  loadAllTopics() =>
+  dispatch({
+    type: CLIENT_TOPICS.LOAD_TOPIC_LIST,
+    status: json.status,
+    result: json.result.sort((a, b) => b.count - a.count)
+  })
+*/
