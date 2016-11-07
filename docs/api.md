@@ -289,7 +289,8 @@
             "uid": 2311,
             "user_name": "haikuo"
             "likes": 2,
-            "islike": True | False,
+            "topics": ["science", "sport"],
+            "islike": true | false,
             // picture
             "url": "http:0.0.0.0/abcd",
             // blog
@@ -393,7 +394,8 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
-        "islike" True | False,
+        "islike" true | false,
+        "topics": ["science", "sport"],
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -434,7 +436,8 @@ Return:
         "uid": 2311,
         "user_name": "haikuo",
         "likes": 23,
-        "islike": True | False,
+        "islike": true | false,
+        "topics": ["science", "sport"],
         // picture
         "url": "http:0.0.0.0/abcd",
         // blog
@@ -475,6 +478,7 @@ Return:
     "user_name": "haikuo",
     "likes": 23,
     "islike": true | false,
+    "topics": ["science", "sport"],
     // picture
     "url": "http:0.0.0.0/abcd",
     // blog

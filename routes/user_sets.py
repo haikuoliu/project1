@@ -5,15 +5,16 @@ from . import routes
 from flask import g
 
 
-# # Create a new User_Sets
+# Create a new User_Sets
+# http://127.0.0.1:8080/api/user_sets/create
 @routes.route('/api/user_sets/create', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def user_sets_create():
     if request.method == 'POST':
         try:
-            sid = request.args.get('sid')
-            filters = request.args.get('filters')
-            description = request.args.get('description')
+            sid = request.form.get('sid')
+            filters = request.form.get('filters')
+            description = request.form.get('description')
             filters_dic = json.loads(filters)
             age_range = filters_dic["age"]
             if filters_dic["sex"] == "male":
@@ -68,7 +69,7 @@ def user_sets_delete():
 
 
 # Get User Sets
-# http://127.0.0.1:8080/api/user_sets/get?set_id=1
+# http://127.0.0.1:8080/api/user_sets/get?set_id=2
 @routes.route('/api/user_sets/get', methods=['GET'])
 @crossdomain(origin='*')
 def user_sets_get():
@@ -109,7 +110,7 @@ def user_sets_get_all():
             exe_sql = "SELECT set_id FROM user_sets WHERE sid = %s"
             rows = g.conn.execute(exe_sql, sid).fetchall()
             for row in rows:
-                update_size_of_user_sets(row["sid"])
+                update_size_of_user_sets(row["set_id"])
 
             exe_sql = "SELECT * FROM user_sets WHERE sid = %s"
             rows = g.conn.execute(exe_sql, sid).fetchall()

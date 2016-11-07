@@ -6,14 +6,15 @@ from flask import g
 
 
 # Create an ad
+# http://127.0.0.1:8080/api/ads/create
 @routes.route('/api/ads/create', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def ads_create():
     if request.method == 'POST':
         try:
-            sid = request.args.get('sid')
-            url = request.args.get('url')
-            description = request.args.get('description')
+            sid = request.form.get('sid')
+            url = request.form.get('url')
+            description = request.form.get('description')
             exe_sql = "INSERT INTO ads(sid, url, description) VALUES(%s, %s, %s)"
             g.conn.execute(exe_sql, sid, url, description)
             ret = {}

@@ -7,7 +7,7 @@ from . import routes
 from flask import g
 
 
-# return all info of an user
+# Return all info of an user
 # http://127.0.0.1:8080/api/users/view_profile?myid=1&otherid=2
 @routes.route('/api/users/view_profile', methods=['GET'])
 @crossdomain(origin='*')
@@ -72,7 +72,7 @@ def user_subscribes():
             return default_error_msg(e.message)
 
 
-# return topics subscribed by an user
+# User follows another user.
 # http://127.0.0.1:8080/api/users/follow?sour=2&dest=1&isFollow=1
 @routes.route('/api/users/follow', methods=['GET'])
 @crossdomain(origin='*')

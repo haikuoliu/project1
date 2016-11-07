@@ -7,16 +7,16 @@ import time
 from flask import g
 
 
-
 # Create a new push
+# http://127.0.0.1:8080/api/pushes/create
 @routes.route('/api/pushes/create', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def pushes_create():
     if request.method == 'POST':
         try:
-            aid = request.args.get('aid')
-            sid = request.args.get('sid')
-            set_id = request.args.get('set_id')
+            aid = request.form.get('aid')
+            sid = request.form.get('sid')
+            set_id = request.form.get('set_id')
             exe_sql = "SELECT filters, size, description FROM user_sets WHERE set_id = %s"
             row = g.conn.execute(exe_sql, set_id).fetchone()
             filters = row["filters"]
