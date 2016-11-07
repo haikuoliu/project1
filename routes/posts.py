@@ -33,6 +33,7 @@ def users_posts():
                     "user_name": row["name"],
                     "likes": int(likes),
                     "islike": is_like(myid, row["eid"]),
+                    "topics": topics_of_event(row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]
@@ -80,6 +81,7 @@ def events_of_topic():
                     "user_name": name,
                     "likes": int(likes),
                     "islike": is_like(myid, row["eid"]),
+                    "topics": topics_of_event(row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]
@@ -131,6 +133,7 @@ def users_feeds():
                     "user_name": row["name"],
                     "likes": int(likes),
                     "islike": is_like(uid, row["eid"]),
+                    "topics": topics_of_event(row["eid"]),
                     "url": row["url"],
                     "content": row["content"],
                     "title": row["title"]

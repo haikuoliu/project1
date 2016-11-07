@@ -19,30 +19,50 @@ if conn: print "connected to db"
 else: print "connection failed"
 
 
+# useful functions
+# uid likes eid?
+def is_likes(uid, eid):
+    exe_sql = "SELECT count(*) > 0 AS islike FROM likes WHERE uid = %s AND eid = %s"
+    islike = conn.execute(exe_sql, uid, eid).fetchone()["islike"]
+    print type(islike)
+    return islike
 
-sid = 1
+# get topics that an event belongs
+def topics_of_events(eid):
+    exe_sql = "SELECT belongs.topic AS topic FROM events, belongs " \
+              "WHERE events.eid = %s AND events.eid = belongs.eid"
+    res = conn.execute(exe_sql, eid)
+    rows = res.fetchall()
+    topics = []
+    for row in rows:
+        topics.append(row["topic"])
+    return topics
 
-# Update first
-exe_sql = "SELECT set_id FROM user_sets WHERE sid = %s"
-rows = conn.execute(exe_sql, sid).fetchall()
 
-exe_sql = "SELECT * FROM user_sets WHERE sid = %s"
-rows = conn.execute(exe_sql, sid).fetchall()
-user_sets = []
-for row in rows:
-    user_set = {
-        "sid": row["sid"],
-        "set_id": row["set_id"],
-        "filters": row["filters"],
-        "description": row["description"],
-        "size": row["size"]
-    }
-    user_sets.append(user_set)
+
+eid = 1
+myid = 2
+exe_sql = "SELECT * FROM events, users WHERE eid = %s AND events.uid = users.uid"
+res = conn.execute(exe_sql, eid)
+exe_sql = "SELECT count(*) As count FROM likes WHERE eid = %s"
+likes = conn.execute(exe_sql, eid).fetchone()["count"]
+row = res.fetchone()
+event = {
+    "eid": eid,
+    "event_type": row["event_type"],
+    "description": row["description"],
+    "uid": row["uid"],
+    "user_name": row["name"],
+    "url": row["url"],
+    "topics": topics_of_events(eid),
+    "likes": likes,
+    "islike": is_likes(myid, eid),
+    "content": row["content"],
+    "title": row["title"]
+}
 ret = {}
 ret[STATUS] = SUCCESS
-ret[RESULT] = user_sets
+ret[RESULT] = event
 print ret
-
-
 
 

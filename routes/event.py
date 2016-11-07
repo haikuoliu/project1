@@ -110,6 +110,7 @@ def event_get():
                 "uid": row["uid"],
                 "user_name": row["name"],
                 "url": row["url"],
+                "topics": topics_of_event(eid),
                 "likes": likes,
                 "islike": is_like(myid, eid),
                 "content": row["content"],

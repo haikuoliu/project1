@@ -9,7 +9,7 @@ def connectdb():
     host = "localhost"
     password = ""
     user = "HaikuoLiu"
-    url = "postgresql://%s:%s@%s/haikuo" % (user, password, host)
+    url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
     db = create_engine(url)
     return db
     # conn = db.connect()
