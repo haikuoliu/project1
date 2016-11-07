@@ -6,8 +6,8 @@ from flask import g
 
 
 # Create an ad
-# http://127.0.0.1:8080/api/ads/create
-@routes.route('/api/ads/create', methods=['GET', 'POST'])
+# http://127.0.0.1:8080/api/sponserposts/create
+@routes.route('/api/sponserposts/create', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def ads_create():
     if request.method == 'POST':
@@ -29,8 +29,8 @@ def ads_create():
 
 
 # Retrieve Sponsor's Ads List
-# http://127.0.0.1:8080/api/ads/sponsor?sid=12
-@routes.route('/api/ads/sponsor', methods=['GET'])
+# http://127.0.0.1:8080/api/sponserposts/sponsor?sid=12
+@routes.route('/api/sponserposts/sponsor', methods=['GET'])
 @crossdomain(origin='*')
 def ads_of_sponsor():
     if request.method == 'GET':
@@ -58,8 +58,8 @@ def ads_of_sponsor():
 
 
 # Retrieve Users's Ads
-# http://127.0.0.1:8080/api/ads/user?uid=1&num=4
-@routes.route('/api/ads/user', methods=['GET'])
+# http://127.0.0.1:8080/api/sponserposts/user?uid=1&num=4
+@routes.route('/api/sponserposts/user', methods=['GET'])
 @crossdomain(origin='*')
 def ads_of_user():
     if request.method == 'GET':
@@ -93,4 +93,3 @@ def ads_of_user():
         except Exception, e:
             print e
             return default_error_msg(e.message)
-

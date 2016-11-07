@@ -22,3 +22,9 @@ export const CLIENT_EVENTS = {
   SWITCH_LIKE: '@Client/events/SWITCH_LIKE',
   UPDATE_EVENT_FIELDS: '@Client/events/UPDATE_EVENT_FIELDS'
 }
+
+export const CLIENT_FEEDS = {
+  LOAD_FEEDS: '@Client/feeds/LOAD_FEEDS',
+  LOAD_ADS: '@Client/feeds/LOAD_ADS',
+  RESET_FEEDS: '@Client/feeds/RESET_FEEDS'
+}

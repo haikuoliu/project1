@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Card, Icon } from 'antd'
+import { Card, Icon, Tag, Row, Col } from 'antd'
 import { throttle } from 'SRC/utils/utils'
 
 class BlogCard extends Component {
@@ -29,15 +29,30 @@ class BlogCard extends Component {
           </div>
           <p>{event.description}</p>
         </div>
-        {
-          event.islike ?
-            <div className="fc-blue fs16 pointer">
-              <Icon type="like" onClick={this.onCancelLike} /> {event.likes}
-            </div> :
-            <div className="fs16 pointer">
-              <Icon type="like" onClick={this.onLike} /> {event.likes}
-            </div>
-        }
+        <Row>
+          <Col span={2}>
+            {
+              event.islike ?
+                <div className="fc-blue fs16 pointer">
+                  <Icon type="like" onClick={this.onCancelLike} /> {event.likes}
+                </div> :
+                <div className="fs16 pointer">
+                  <Icon type="like" onClick={this.onLike} /> {event.likes}
+                </div>
+            }
+          </Col>
+          <Col span={22}>
+            {
+              event.topics.map(topic => (
+                <Tag key={topic}>
+                  <Link to={{ pathname: '/client/topics/topic', query: { topic } }}>
+                    {topic}
+                  </Link>
+                </Tag>
+              ))
+            }
+          </Col>
+        </Row>
       </Card>
     )
   }
