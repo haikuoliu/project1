@@ -2,6 +2,7 @@ import fetchPro from 'SRC/utils/fetchPro'
 import { CLIENT_EVENTS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
+import { hashHistory } from 'react-router'
 
 import * as ClientTopicActions from '../../topics/containers/action'
 // import * as PersistentActions from 'SRC/action'
@@ -80,6 +81,29 @@ export function makeComments(uid, eid, content) {
   }
 }
 
+export function deleteEvent(uid, eid) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('uid', uid)
+    formData.append('eid', eid)
+    return fetchPro(api('events:deleteEvent'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('events:deleteEvent'), json.result.msg)
+          return
+        }
+        hashHistory.push({
+          pathname: '/client/profile/posts',
+          query: { uid }
+        })
+      })
+  }
+}
+
 export function updateEventContent(uid, eid, event) {
   return (dispatch, getState) => { // eslint-disable-line no-unused-vars
     const formData = new FormData()
@@ -101,7 +125,10 @@ export function updateEventContent(uid, eid, event) {
           logger.error(api('events:editEvent'), json.result.msg)
           return
         }
-        console.log(json)
+        hashHistory.push({
+          pathname: '/client/blog/view',
+          query: { eid: json.result.eid }
+        })
       })
   }
 }

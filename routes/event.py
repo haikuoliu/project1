@@ -18,7 +18,7 @@ def event_create_edit():
             description = request.form.get('description')
             uid = request.form.get('uid')
             topics = request.form.get('topics')
-            topics = topics.replace("[", "").replace("]", "").replace("\"", "").split(",")
+            topics = [] if topics == "" else topics.replace("[", "").replace("]", "").replace("\"", "").split(",")
             url = request.form.get('url')
             content = request.form.get('content')
             title = request.form.get('title')
@@ -64,6 +64,10 @@ def event_create_edit():
             print ret
             return json.dumps(ret)
         except Exception, e:
+            exe_sql = "DELETE FROM events WHERE eid = %s"
+            g.conn.execute(exe_sql, (eid))
+            exe_sql = "DELETE FROM belongs WHERE eid = %s"  # delete first
+            g.conn.execute(exe_sql, eid)
             print e
             return default_error_msg(e.message)
 

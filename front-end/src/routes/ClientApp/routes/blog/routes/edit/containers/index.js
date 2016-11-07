@@ -20,6 +20,7 @@ class BlogEdit extends Component {
     super(props)
     this.switchLike = throttle(this.switchLike, 5000).bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
   componentWillMount() {
     const eid = this.props.location.query.eid
@@ -28,6 +29,7 @@ class BlogEdit extends Component {
     if (eid > 0) {
       this.props.actions.loadSingleEvent(eid, myid)
     } else {
+      this.props.actions.updateEventFields('Reset')
       this.props.actions.updateEventFields({
         uid: myid,
         user_name: this.props.myInfo.userName
@@ -61,10 +63,21 @@ class BlogEdit extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
+        this.props.actions.updateEventContent(
+          this.props.persistentStore.userId,
+          this.props.store.event.eid,
+          values
+        )
         // this.props.onSubmit(values.comment)
-        this.props.form.resetFields()
+        // this.props.form.resetFields()
       }
     })
+  }
+  handleDelete() {
+    this.props.actions.deleteEvent(
+      this.props.persistentStore.userId,
+      this.props.store.event.eid
+    )
   }
   render() {
     const { event, topicsList } = this.props.store
@@ -136,7 +149,10 @@ class BlogEdit extends Component {
               </Col>
               <Col span={12}>
                 <FormItem className="text-right">
-                  <Button style={{ marginRight: '20px' }}>
+                  <Button
+                    onClick={this.handleDelete}
+                    style={{ marginRight: '20px' }}
+                    >
                     Delete
                   </Button>
                   <Button type="primary" htmlType="submit">

@@ -74,7 +74,7 @@ export function getPostsOfUser(uid, myId) {
         dispatch({
           type: CLIENT_EVENTS.LOAD_USER_POSTS,
           status: json.status,
-          result: json.result
+          result: json.result.sort((a, b) => b.eid - a.eid)
         })
       })
   )

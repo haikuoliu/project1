@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ClientBlogAction from '../../../containers/action'
 import * as ClientActions from 'SRC/routes/ClientApp/containers/action'
-import * as PersistentActions from 'SRC/action'
 
 import moment from 'moment'
 import { throttle } from 'SRC/utils/utils'
@@ -47,15 +46,26 @@ class BlogView extends Component {
   render() {
     const event = this.props.event
     const comments = this.props.comments
+    const isSelf = parseInt(this.props.persistentStore.userId) === parseInt(event.uid)
     return (
       <div className="full-height" style={{ background: '#ECECEC', padding: '0 5%', overflow: 'auto' }}>
         <Card bordered style={{ margin: '30px 0' }}>
           <div className="fs14 margB15">
-            <Row type="flex" align="bottom">
-              <Col span={22}>
+            <Row type="flex" align="middle">
+              <Col span={20}>
                 <h2 className="captialize fc-dark">
                   {event.title}
                 </h2>
+              </Col>
+              <Col span={2}>
+                {
+                  !isSelf ? null :
+                    <div className="fs16 pointer">
+                      <Link className="fc-dark" to={{ pathname: '/client/blog/edit', query: { eid: event.eid } }}>
+                        <Icon type="edit" /> Edit
+                      </Link>
+                    </div>
+                }
               </Col>
               <Col span={2}>
                 {
@@ -137,7 +147,6 @@ function mapState(state) { // eslint-disable-line no-unused-vars
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(PersistentActions, dispatch),
     globalActions: bindActionCreators(ClientActions, dispatch),
     actions: bindActionCreators(ClientBlogAction, dispatch)
   }
