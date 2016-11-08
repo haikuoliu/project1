@@ -36,12 +36,13 @@ def ads_of_sponsor():
     if request.method == 'GET':
         try:
             sid = request.args.get('sid')
-            exe_sql = "SELECT ads.description AS description, ads.url AS url, sponsors.name AS name " \
+            exe_sql = "SELECT ads.aid as aid, ads.description AS description, ads.url AS url, sponsors.name AS name " \
                       "FROM sponsors, ads WHERE sponsors.sid = ads.sid AND ads.sid = %s"
             rows = g.conn.execute(exe_sql, sid).fetchall()
             ads = []
             for row in rows:
                 ad = {
+                    "aid": row["aid"],
                     "sponsor_name": row["name"],
                     "url": row["url"],
                     "description": row["description"]
