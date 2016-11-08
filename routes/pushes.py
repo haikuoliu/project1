@@ -14,9 +14,9 @@ from flask import g
 def pushes_create():
     if request.method == 'POST':
         try:
-            aid = request.form.get('aid')
-            sid = request.form.get('sid')
-            set_id = request.form.get('set_id')
+            aid = int(request.form.get('aid'))
+            sid = int(request.form.get('sid'))
+            set_id = int(request.form.get('set_id'))
             exe_sql = "SELECT filters, size, description FROM user_sets WHERE set_id = %s"
             row = g.conn.execute(exe_sql, set_id).fetchone()
             filters = row["filters"]
@@ -33,11 +33,11 @@ def pushes_create():
                 sex = None
             # Get filtered uid
             if (sex == None):
-                exe_sql = "SELECT * AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
-                rows = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years")).fetchone()
+                exe_sql = "SELECT uid FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
+                rows = g.conn.execute(exe_sql, (str(int(age_range[0])) + "years", str(int(age_range[1])) + "years")).fetchall()
             else:
-                exe_sql = "SELECT * AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-                rows = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()
+                exe_sql = "SELECT uid FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
+                rows = g.conn.execute(exe_sql, (str(int(age_range[0])) + "years", str(int(age_range[1])) + "years", sex)).fetchall()
             for row in rows:
                 # exe_sql = "INSERT INTO user_ads(uid, aid)"
                 exe_sql = "SELECT * FROM user_ads WHERE uid = %s AND aid = %s"

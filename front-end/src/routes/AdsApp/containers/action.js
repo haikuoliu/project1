@@ -84,8 +84,29 @@ export function loadPushesOfSponsor(sponsorId) {
         }
         dispatch({
           type: ADS.LOAD_PUSHES,
-          result: json.result
+          result: json.result.sort((a, b) => b.time - a.time)
         })
       })
   )
+}
+
+export function makePushes(args) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('sid', args.sid)
+    formData.append('aid', args.aid)
+    formData.append('set_id', args.set_id)
+    return fetchPro(api('ads:makePush'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('ads:makePush'), json.result.msg)
+          return
+        }
+        dispatch(loadPushesOfSponsor(args.sid))
+      })
+  }
 }

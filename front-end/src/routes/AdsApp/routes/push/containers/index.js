@@ -7,6 +7,7 @@ import * as AdsGeneralAction from '../../../containers/action'
 import moment from 'moment'
 
 import { Table, Card } from 'antd'
+import { PushForm } from 'SRC/components/form'
 
 const columns = [{
   title: 'User Set ID',
@@ -48,12 +49,31 @@ const columns = [{
 }]
 
 class Push extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleSubmit(args) {
+    this.props.actions.makePushes({
+      sid: this.props.store.sponsor.sid,
+      set_id: args.userSet,
+      aid: args.ad
+    })
+  }
   render() {
+    const { pushesList, userSetsList, adsList } = this.props.store
     return (
       <div>
         <Card bordered style={{ margin: '30px 5%' }}>
+          <PushForm
+            userSetsList={userSetsList}
+            adsList={adsList}
+            onSubmit={this.handleSubmit}
+            />
+        </Card>
+        <Card bordered style={{ margin: '30px 5%' }}>
           <h1 className="margB30"> Pushes List </h1>
-          <Table dataSource={this.props.pushesList} columns={columns} />
+          <Table dataSource={pushesList} columns={columns} />
         </Card>
       </div>
     )
@@ -66,7 +86,7 @@ Push.propTypes = {
     React.PropTypes.element
   ]),
   location: React.PropTypes.object,
-  pushesList: React.PropTypes.array,
+  store: React.PropTypes.object,
   persistentStore: React.PropTypes.object,
   actions: React.PropTypes.object
 }
@@ -74,7 +94,7 @@ Push.propTypes = {
 function mapState(state) {
   return {
     persistentStore: state.persistentStore.toJS(),
-    pushesList: state.ads.get('pushesList').toJS()
+    store: state.ads.toJS()
   }
 }
 
