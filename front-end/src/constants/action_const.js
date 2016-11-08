@@ -28,3 +28,11 @@ export const CLIENT_FEEDS = {
   LOAD_ADS: '@Client/feeds/LOAD_ADS',
   RESET_FEEDS: '@Client/feeds/RESET_FEEDS'
 }
+
+export const ADS = {
+  LOAD_SPONSORS: '@Client/ads/LOAD_SPONSORS',
+  LOAD_SPONSOR_INFO: '@Client/ads/LOAD_SPONSOR_INFO',
+  LOAD_ADS: '@Client/ads/LOAD_ADS',
+  LOAD_USER_SETS: '@Client/ads/LOAD_USER_SETS',
+  LOAD_PUSHES: '@Client/ads/LOAD_PUSHES'
+}

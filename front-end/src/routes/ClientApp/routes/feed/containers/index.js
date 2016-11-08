@@ -37,7 +37,7 @@ class Feeds extends Component {
               </h1>
             </div>
           </div>
-          <div className="full-height" style={{ overflow: 'auto' }}>
+          <div className="full-height" style={{ background: '#ECECEC', overflow: 'auto' }}>
             {
               (feedsList || []).map((event, i) => (
                 <div key={`${event.eid}`}>

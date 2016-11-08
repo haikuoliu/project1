@@ -274,16 +274,16 @@ INSERT INTO ads(sid, url, description)VALUES
 
 
 INSERT INTO user_sets(filters, description, sid, size) VALUES
-('{"age":"18-30"}', 'Young People', 1, 5),
-('{"age":"30-50"}', 'Middle Aged', 1, 6),
-('{"subscribe_topics":["technology","shopping"],"age":"0-25"}', 'Young Users who might be interested in purchase new phone', 1, 2),
-('{"post_topics":["technology"]},keywords:["iphone"]', 'Bloggers who have posted articles about iphone', 1, 3),
-('{"active_within":["30day"]},"age":"18-30","sex":"male"','Active Male Customs', 1, 4),
-('{"active_within":["30day"]},"age":"18-30","sex":"female"','Active Female Customs', 1, 5),
-('{"subscribe_topics":["sports"]},"age":"18-30","sex":"male"','Potential Male Customs', 7, 6),
-('{"subscribe_topics":["sports"]},"age":"18-30","sex":"female"','Potential Female Customs', 7, 7),
-('{"reg_time":["3year","1year"]}"','Users who have registered for a long time', 3, 8),
-('{"email":"@gmail.com$"','Users who have a gmail account', 3, 1)
+('{"age":[18,30],"sex":""}', 'Young People', 1, 5),
+('{"age":[30,50],"sex":""}', 'Middle Aged', 1, 6),
+('{"subscribe_topics":["technology","shopping"],"age":[0,25],"sex":""}', 'Young Users who might be interested in purchase new phone', 1, 2),
+('{"post_topics":["technology"],"keywords":["iphone"],"age":[0,100],"sex":""}', 'Bloggers who have posted articles about iphone', 1, 3),
+('{"active_within":["30day"],"age":[18,30],"sex":"male"}','Active Male Customs', 1, 4),
+('{"active_within":["30day"],"age":[18,30],"sex":"female"}','Active Female Customs', 1, 5),
+('{"subscribe_topics":["sports"],"age":[18,30],"sex":"male"}','Potential Male Customs', 7, 6),
+('{"subscribe_topics":["sports"],"age":[18,30],"sex":"female"}','Potential Female Customs', 7, 7),
+('{"reg_time":["3year","1year"],"age":[0,100],"sex":""}', 3, 8),
+('{"email":"@gmail.com$","age":[0,100],"sex":""}', 3, 1)
 ;
 
 INSERT INTO pushes( sid, aid, set_id, time, price, count)VALUES

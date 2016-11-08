@@ -27,11 +27,17 @@ def pushes_create():
             age_range = filters_dic["age"]
             if filters_dic["sex"] == "male":
                 sex = True
-            else:
+            elif filters_dic["sex"] == "female":
                 sex = False
+            else:
+                sex = None
             # Get filtered uid
-            exe_sql = "SELECT uid FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-            rows = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchall()
+            if (sex == None):
+                exe_sql = "SELECT * AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
+                rows = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years")).fetchone()
+            else:
+                exe_sql = "SELECT * AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
+                rows = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()
             for row in rows:
                 # exe_sql = "INSERT INTO user_ads(uid, aid)"
                 exe_sql = "SELECT * FROM user_ads WHERE uid = %s AND aid = %s"
@@ -96,5 +102,3 @@ def pushes_get_list():
         except Exception, e:
             print e
             return default_error_msg(e.message)
-
-

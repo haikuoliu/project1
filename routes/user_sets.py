@@ -19,11 +19,17 @@ def user_sets_create():
             age_range = filters_dic["age"]
             if filters_dic["sex"] == "male":
                 sex = True
-            else:
+            elif filters_dic["sex"] == "female":
                 sex = False
+            else:
+                sex = None
             # Get size of user_set
-            exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-            size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()["size"]
+            if (sex == None):
+                exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
+                size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years")).fetchone()["size"]
+            else:
+                exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
+                size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()["size"]
             size = int(size)
             # Intert into data base
             exe_sql = "INSERT INTO user_sets(filters, description, sid, size) VALUES(%s, %s, %s, %s)"
@@ -143,11 +149,17 @@ def update_size_of_user_sets(set_id):
     age_range = filters_dic["age"]
     if filters_dic["sex"] == "male":
         sex = True
-    else:
+    elif filters_dic["sex"] == "female":
         sex = False
+    else:
+        sex = None
     # Get size of user_set
-    exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-    size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()["size"]
+    if (sex == None):
+        exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
+        size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years")).fetchone()["size"]
+    else:
+        exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
+        size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()["size"]
     size = int(size)
     # Update
     exe_sql = "UPDATE user_sets SET size = %s WHERE set_id = %s"

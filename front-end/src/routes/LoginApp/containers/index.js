@@ -23,7 +23,7 @@ class LoginApp extends Component {
       this.props.router.push('/client/feed')
     } else { // type === 'ads'
       this.props.persistentActions.persistentSet('sponsorId', 1)
-      this.props.router.push('/ads')
+      this.props.router.push('/ads/ads_list')
     }
   }
   render() {
