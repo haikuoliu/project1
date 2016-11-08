@@ -32,7 +32,7 @@ class PushForm extends Component {
                   { required: true, message: 'Please select the user set!' }
                 ]
               })(
-                <Select style={{ width: '200px' }} placeholder="Please select a country">
+                <Select style={{ width: '200px' }} placeholder="Please select a user set">
                   {
                     userSetsList.map(r => (
                       <Option
@@ -54,10 +54,10 @@ class PushForm extends Component {
               >
               {getFieldDecorator('ad', {
                 rules: [
-                  { required: true, message: 'Please select the user set!' }
+                  { required: true, message: 'Please select the ad!' }
                 ]
               })(
-                <Select style={{ width: '200px' }} placeholder="Please select a country">
+                <Select style={{ width: '200px' }} placeholder="Please select an ad">
                   {
                     adsList.map(r => (
                       <Option

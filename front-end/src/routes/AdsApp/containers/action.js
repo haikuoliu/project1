@@ -110,3 +110,61 @@ export function makePushes(args) {
       })
   }
 }
+
+export function createUserSet(args) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('sid', args.sid)
+    formData.append('filters', args.filters)
+    formData.append('description', args.description)
+    return fetchPro(api('ads:createUserSet'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('ads:createUserSet'), json.result.msg)
+          return
+        }
+        dispatch(loadUserSetsOfSponsor(args.sid))
+      })
+  }
+}
+
+export function createNewAd(args) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const formData = new FormData()
+    formData.append('sid', args.sid)
+    formData.append('url', args.url)
+    formData.append('description', args.description)
+    return fetchPro(api('ads:createNewAd'), {
+      method: 'post',
+      body: formData
+    }).then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('ads:createNewAd'), json.result.msg)
+          return
+        }
+        dispatch(loadAdsOfSponsor(args.sid))
+      })
+  }
+}
+
+export function deleteUserSet(args) {
+  return (dispatch, getState) => { // eslint-disable-line no-unused-vars
+    const url = api('ads:deleteUserSet', args.set_id)
+    return fetchPro(url)
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(url, json.result.msg)
+          return
+        }
+        dispatch(loadUserSetsOfSponsor(args.sid))
+      })
+  }
+}
