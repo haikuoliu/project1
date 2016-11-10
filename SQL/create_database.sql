@@ -17,7 +17,7 @@ CREATE TABLE events(
     time timestamp NOT NULL,
     event_type valid_event_type NOT NULL,
     description text DEFAULT '',
-    uid int NOT NULL references users,
+    uid int NOT NULL references users ON DELETE CASCADE,
     url text,
     title text,
     content text,
@@ -37,15 +37,15 @@ CREATE TABLE topics(
 -- ***************   RelationShip     ***************
 --follows
 CREATE TABLE follows(
-    source int references users(uid),
-    destination int references users(uid),
+    source int references users(uid) ON DELETE CASCADE,
+    destination int references users(uid) ON DELETE CASCADE,
     primary key (source, destination),
     CHECK(source <> destination)
 );
 
 --comments
 CREATE TABLE comments(
-    uid int references users,
+    uid int references users ON DELETE CASCADE,
     eid int references events ON DELETE CASCADE,
     time timestamp,
     content text DEFAULT '',
@@ -54,14 +54,14 @@ CREATE TABLE comments(
 
 --likes
 CREATE TABLE likes(
-    uid int references users,
+    uid int references users ON DELETE CASCADE,
     eid int references events ON DELETE CASCADE,
     primary key (uid, eid)
 );
 
 --subscribes
 CREATE TABLE subscribes(
-    uid int references users,
+    uid int references users ON DELETE CASCADE,
     topic text references topics(name) ON DELETE CASCADE,
     primary key (uid, topic)
 );
@@ -109,7 +109,7 @@ CREATE TABLE pushes(
 );
 
 CREATE TABLE user_ads(
-    uid int references users,
+    uid int references users ON DELETE CASCADE,
     aid int references ads ON DELETE CASCADE,
     count int NOT NULL,
     primary key (uid, aid)
