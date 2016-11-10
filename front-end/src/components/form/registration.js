@@ -64,8 +64,6 @@ class RegistrationForm extends Component {
         <FormItem
           {...formItemLayout}
           label="E-mail"
-          validateStatus={this.state.emailValid.status}
-          help={this.state.emailValid.msg}
           hasFeedback
           >
           {getFieldDecorator('email', {
@@ -145,7 +143,10 @@ class RegistrationForm extends Component {
             <DatePicker />
           )}
         </FormItem>
-        <FormItem>
+        <FormItem
+          validateStatus={this.state.emailValid.status}
+          help={this.state.emailValid.msg}
+          >
           <div className="text-center">
             <Button type="primary" htmlType="submit" className="login-form-button">
               Register
