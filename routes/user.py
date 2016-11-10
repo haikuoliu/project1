@@ -227,8 +227,6 @@ def user_follows_list():
 def followers_num(uid):
     exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s"
     return g.conn.execute(exe_sql, uid).fetchone()["count"]
-<<<<<<< HEAD
-=======
 
 
 def user_exists(email):
@@ -238,4 +236,3 @@ def user_exists(email):
         return True
     else:
         return False
->>>>>>> origin/master
