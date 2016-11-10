@@ -7,6 +7,46 @@ from . import routes
 from flask import g
 
 
+# Register a new user.
+# http://127.0.0.1:8080/api/users/register
+@routes.route('/api/users/register', methods=['GET', 'POST'])
+@crossdomain(origin='*')
+def user_subscribes():
+    if request.method == 'POST':
+        try:
+            email = request.form.get('email')
+            exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
+            count = g.conn.execute(exe_sql, email).fetchone["count"]
+            print type(count)
+            ret = {}
+            # if email exists
+            if count > 0:
+                ret[STATUS] = FAIL
+                ret[RESULT] = {
+                    "code": 1,
+                    "msg": "Email exists!"
+                }
+                return ret
+            else:
+                email = request.form.get('email')
+                birth = request.form.get('birth')
+                password = request.form.get('password')
+                sex = request.form.get('sex')
+                if sex == "mail":
+                    sex = True
+                else:
+                    sex = False
+                name = request.form.get('name')
+                exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES(now(), %s, %s, %s, %s, %s)"
+                g.conn.execute(exe_sql, birth, password, email, name, sex)
+            ret[STATUS] = FAIL
+            ret[RESULT] = NULL
+            return ret
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
 # Return all info of an user
 # http://127.0.0.1:8080/api/users/view_profile?myid=1&otherid=2
 @routes.route('/api/users/view_profile', methods=['GET'])

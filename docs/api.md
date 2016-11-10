@@ -2,7 +2,7 @@
 
 ## Users
 
-1. Register POST
+1. Register POST (done)
 
     URL: `/api/users/register`
 
@@ -27,13 +27,13 @@
       "result": null,
       // fail
       "result": {
-          "code": 0
+          "code": 1, // 1 means user name exists, 0 otherwise
           "msg": "User name exists!"
       }
     }
     ```
 
-2. Login POST
+2. Login POST (done)
 
     URL: `/api/users/login`
 
