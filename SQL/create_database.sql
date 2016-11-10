@@ -293,8 +293,8 @@ INSERT INTO user_sets(filters, description, sid, size) VALUES
 ('{"active_within":["30day"],"age":[18,30],"sex":"female"}','Active Female Customs', 1, 5),
 ('{"subscribe_topics":["sports"],"age":[18,30],"sex":"male"}','Potential Male Customs', 7, 6),
 ('{"subscribe_topics":["sports"],"age":[18,30],"sex":"female"}','Potential Female Customs', 7, 7),
-('{"reg_time":["3year","1year"],"age":[0,100],"sex":""}', 3, 8),
-('{"email":"@gmail.com$","age":[0,100],"sex":""}', 3, 1)
+('{"reg_time":["3year","1year"],"age":[0,100],"sex":""}', 'Register Time', 3, 8),
+('{"email":"@gmail.com$","age":[0,100],"sex":""}', 'Gmail Acount', 3, 1)
 ;
 
 -- INSERT INTO user_sets(filters, description, sid, size) VALUES
