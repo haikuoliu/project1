@@ -36,8 +36,12 @@ def user_register():
                 exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) " \
                           "VALUES(now(), %s, %s, %s, %s, %s)"
                 g.conn.execute(exe_sql, birth, hashlib.md5(password.encode()).hexdigest(), email, name, sex)
+                exe_sql = "SELECT uid FROM users WHERE email = %s"
+                uid = g.conn.execute(exe_sql, email).fetchone()["uid"]
                 ret[STATUS] = SUCCESS
-                ret[RESULT] = NULL
+                ret[RESULT] = {
+                    "uid": uid
+                }
             print ret
             return json.dumps(ret)
         except Exception, e:
@@ -63,11 +67,13 @@ def user_login():
                 }
             else:
                 password = request.form.get('password')
-                exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s AND password = %s"
-                count = g.conn.execute(exe_sql, email, hashlib.md5(password.encode()).hexdigest()).fetchone()["count"]
-                if count > 0:
+                exe_sql = "SELECT uid, count(*) AS count FROM users WHERE email = %s AND password = %s group by uid"
+                row = g.conn.execute(exe_sql, email, hashlib.md5(password.encode()).hexdigest()).fetchone()
+                if row and row["count"] > 0:
                     ret[STATUS] = SUCCESS
-                    ret[RESULT] = NULL
+                    ret[RESULT] = {
+                        "uid": row["uid"]
+                    }
                 else:
                     ret[STATUS] = FAIL
                     ret[RESULT] = {

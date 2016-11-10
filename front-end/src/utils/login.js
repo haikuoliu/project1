@@ -1,32 +1,40 @@
-// import fetchPro from './fetchPro'
-// import logger from './logger'
-// import api from 'SRC/apis'
+import fetchPro from './fetchPro'
+import logger from './logger'
+import api from 'SRC/apis'
 
-export function userLogin() {
-  const userId = sessionStorage.getItem('userId')
-  if (!userId) return false
-  return true
-  // if (!sessionStorage.getItem('name')) {
-  //   fetchPro(api('users:getUserInfo', userId, userId))
-  //     .then(response => response.json())
-  //     .then(res => {
-  //       console.log(res)
-  //     })
-  //     .catch(error => {
-  //       logger.error(error)
-  //     })
-  // } else {
-  //   return {
-  //     userId,
-  //     username: sessionStorage.getItem('username'),
-  //     sex: sessionStorage.getItem('sex'),
-  //     birth: sessionStorage.getItem('birth'),
-  //     email: sessionStorage.getItem('email'),
-  //     follows: sessionStorage.getItem('email'),
-  //   }
-  // }
+export function userLogin(args) {
+  const formData = new FormData()
+  formData.append('email', args.email)
+  formData.append('password', args.password)
+  return fetchPro(api('users:userLogin'), {
+    method: 'post',
+    body: formData
+  }).then(response => response.json())
+    .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+    .then(json => {
+      if (json.status === 'fail') {
+        logger.error(api('users:userLogin'), json.result.msg)
+      }
+      return json
+    })
 }
 
-export function getUserId() {
-  return sessionStorage.getItem('userId')
+export function userRegister(args) {
+  const formData = new FormData()
+  formData.append('email', args.email)
+  formData.append('password', args.password)
+  formData.append('birth', args.birth.format('YYYY-MM-DD'))
+  formData.append('sex', args.sex)
+  formData.append('name', args.nickname)
+  return fetchPro(api('users:userRegister'), {
+    method: 'post',
+    body: formData
+  }).then(response => response.json())
+    .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+    .then(json => {
+      if (json.status === 'fail') {
+        logger.error(api('users:userRegister'), json.result.msg)
+      }
+      return json
+    })
 }

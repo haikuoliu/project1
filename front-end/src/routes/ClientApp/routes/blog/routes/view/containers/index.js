@@ -36,7 +36,7 @@ class BlogView extends Component {
   }
   switchLike(eid, type = 'like') {
     const uid = this.props.persistentStore.userId
-    this.props.globalActions.switchLike(uid, eid, type)
+    if (uid > 0) this.props.globalActions.switchLike(uid, eid, type)
   }
   makeComment(comment) {
     const uid = this.props.persistentStore.userId
@@ -46,7 +46,9 @@ class BlogView extends Component {
   render() {
     const event = this.props.event
     const comments = this.props.comments
-    const isSelf = parseInt(this.props.persistentStore.userId) === parseInt(event.uid)
+    const myId = parseInt(this.props.persistentStore.userId)
+    const isSelf = myId === parseInt(event.uid)
+    const isVisitor = myId === 0
     return (
       <div className="full-height" style={{ background: '#ECECEC', padding: '0 5%', overflow: 'auto' }}>
         <Card bordered style={{ margin: '30px 0' }}>
@@ -117,7 +119,9 @@ class BlogView extends Component {
               </div>
             ))
           }
-          <Comment onSubmit={this.makeComment} />
+          {
+            isVisitor ? null : <Comment onSubmit={this.makeComment} />
+          }
         </Card>
       </div>
     )

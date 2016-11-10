@@ -14,7 +14,7 @@ const SubMenu = Menu.SubMenu
 class ClientApp extends Component {
   componentWillMount() {
     const { userId } = this.props.persistentStore
-    this.props.actions.loadMyInfo(userId)
+    if (userId > 0) this.props.actions.loadMyInfo(userId)
   }
   componentWillReceiveProps(nextProps) { // eslint-disable-line no-unused-vars
     const { userId } = this.props.persistentStore
@@ -27,6 +27,7 @@ class ClientApp extends Component {
     let pathname = this.props.location.pathname.replace('/client/', '')
     if (pathname === 'topics/topic') pathname = 'topics/list'
     const { userId } = this.props.persistentStore
+    const isVisitor = !userId || parseInt(userId) <= 0
     const userInfo = this.props.userInfo
     return (
       <Row style={{ height: window.innerHeight }}>
@@ -44,9 +45,9 @@ class ClientApp extends Component {
             selectedKeys={[pathname]}
             mode="inline"
             >
-            <Menu.Item key="feed"><Link to="/client/feed">News Feed</Link></Menu.Item>
+            <Menu.Item key="feed" disabled={isVisitor}><Link to="/client/feed">News Feed</Link></Menu.Item>
             <SubMenu key="topics" title="Topics">
-              <Menu.Item key="profile/subscribe">
+              <Menu.Item key="profile/subscribe" disabled={isVisitor}>
                 <Link to={{ pathname: '/client/profile/subscribe', query: { uid: userId } }}>
                   My Topics
                 </Link>
@@ -54,24 +55,24 @@ class ClientApp extends Component {
               <Menu.Item key="topics/list"><Link to="/client/topics/list">More Topics</Link></Menu.Item>
             </SubMenu>
             <SubMenu key="blog" title="Blog">
-              <Menu.Item key="profile/posts">
+              <Menu.Item key="profile/posts" disabled={isVisitor}>
                 <Link to={{ pathname: '/client/profile/posts', query: { uid: userId } }}>
                   My Posts
                 </Link>
               </Menu.Item>
-              <Menu.Item key="blog/edit">
+              <Menu.Item key="blog/edit" disabled={isVisitor}>
                 <Link to={{ pathname: '/client/blog/edit', query: { eid: -1 } }}>
                   Create Blog
                 </Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="profile" title="Profile">
-              <Menu.Item key="profile/info">
+              <Menu.Item key="profile/info" disabled={isVisitor}>
                 <Link to={{ pathname: '/client/profile/info', query: { uid: userId } }}>
                   My Profile
                 </Link>
               </Menu.Item>
-              <Menu.Item key="profile/follow">
+              <Menu.Item key="profile/follow" disabled={isVisitor}>
                 <Link to={{ pathname: '/client/profile/follow', query: { uid: userId } }}>
                   My Follows
                 </Link>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as PersistentActions from 'SRC/action'
 
-import { Link } from 'react-router'
-import { Card, Button, Modal, Tabs, Col, Row } from 'antd'
+import { Card, Modal, Tabs, Col, Row } from 'antd'
 const TabPane = Tabs.TabPane
-import { LoginForm } from 'SRC/components/form'
+import { LoginForm, RegisterForm } from 'SRC/components/form'
 
 import CSSModules from 'react-css-modules'
 import styles from './style.hcss'
@@ -18,6 +18,7 @@ class LoginApp extends Component {
       isLogin: false
     }
     this.login = this.login.bind(this)
+    this.clientLogin = this.clientLogin.bind(this)
     this.switchLoginPanel = this.switchLoginPanel.bind(this)
   }
   componentWillMount() {
@@ -34,6 +35,16 @@ class LoginApp extends Component {
   }
   switchLoginPanel() {
     this.setState({ isLogin: !this.state.isLogin })
+  }
+  clientLogin(uid) {
+    // Login as Normal User
+    if (uid > 0) {
+      this.props.persistentActions.persistentSet('userId', uid)
+      this.props.router.push('/client/feed')
+    } else { // Login in as Visitor
+      this.props.persistentActions.persistentSet('userId', 0)
+      this.props.router.push('/client/topics/list')
+    }
   }
   render() {
     return (
@@ -81,9 +92,11 @@ class LoginApp extends Component {
             >
             <Tabs type="card" defaultActiveKey=".$login">
               <TabPane tab="Login" key="login">
-                <LoginForm />
+                <LoginForm onSubmit={this.clientLogin} />
               </TabPane>
-              <TabPane tab="Register" key="register">Content of Tab Pane 2</TabPane>
+              <TabPane tab="Register" key="register">
+                <RegisterForm onSubmit={this.clientLogin} />
+              </TabPane>
             </Tabs>
           </Modal>
         </div>

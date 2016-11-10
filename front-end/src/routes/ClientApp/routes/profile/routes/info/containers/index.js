@@ -29,6 +29,7 @@ class ProfileInfo extends Component {
   }
   render() {
     const { userInfo } = this.props
+    const isVisitor = parseInt(this.props.persistentStore.userId) === 0
     return (
       <div style={{ paddingTop: '30px' }}>
         {
@@ -44,7 +45,7 @@ class ProfileInfo extends Component {
           ))
         }
         {
-          userInfo.isSelf ? null :
+          isVisitor || userInfo.isSelf ? null :
             <Row className="fs16" style={{ marginBottom: '24px' }}>
               <Col span={8} offset={10}>
                 <Button
@@ -80,7 +81,6 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(PersistentActions, dispatch),
     actions: bindActionCreators(ClientProfileAction, dispatch)
   }
 }

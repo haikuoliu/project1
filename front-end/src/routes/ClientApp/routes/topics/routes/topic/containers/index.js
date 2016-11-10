@@ -21,7 +21,7 @@ class TopicEventsList extends Component {
   }
   switchLike(eid, type = 'like') {
     const uid = this.props.persistentStore.userId
-    this.props.globalActions.switchLike(uid, eid, type)
+    if (uid > 0) this.props.globalActions.switchLike(uid, eid, type)
   }
   render() {
     const topicsStore = this.props.topicsStore
