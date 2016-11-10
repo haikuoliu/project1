@@ -16,11 +16,9 @@ def user_register():
     if request.method == 'POST':
         try:
             email = request.form.get('email')
-            exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
-            count = g.conn.execute(exe_sql, email).fetchone()["count"]
             ret = {}
             # if email exists
-            if count > 0:
+            if user_exists(email):
                 ret[STATUS] = FAIL
                 ret[RESULT] = {
                     "code": 1,
