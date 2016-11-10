@@ -10,16 +10,16 @@ def connectdb():
     # url = "postgresql://%s:%s@%s/db-webblog" % (user, password, host)
 
     # Cloud Database
-    # host = "104.196.175.120"
-    # password = "che2q"
-    # user = "hl3023"
-    # url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
+    host = "104.196.175.120"
+    password = "che2q"
+    user = "hl3023"
+    url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
 
     # Haikuo's Local Test
-    host = "localhost"
-    password = ""
-    user = "HaikuoLiu"
-    url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
+    # host = "localhost"
+    # password = ""
+    # user = "HaikuoLiu"
+    # url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
     db = create_engine(url)
     return db
     # conn = db.connect()

@@ -69,7 +69,13 @@ def filtered_user_info(attrs=[], age=None, sex=None, post_topics=None, subscribe
         # get users whose sex is male/female, sex should be True or False
         args = args + (sex,)
     # if post_topics != None:
-
+    #     if len(post_topics) > 0:
+    #         # len > 1
+    #         if len(post_topics) > 1:
+    #             pass
+    #         # len == 1
+    #         else:
+    #             pass
     # select those attributes
     select = "SELECT uid"
     for attr in attrs:
