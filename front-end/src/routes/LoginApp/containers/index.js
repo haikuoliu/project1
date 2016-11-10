@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux'
 import * as PersistentActions from 'SRC/action'
 
 import { Link } from 'react-router'
-import { Card, Col, Row } from 'antd'
+import { Card, Button, Modal, Tabs, Col, Row } from 'antd'
+const TabPane = Tabs.TabPane
+import { LoginForm } from 'SRC/components/form'
 
 import CSSModules from 'react-css-modules'
 import styles from './style.hcss'
@@ -12,7 +14,11 @@ import styles from './style.hcss'
 class LoginApp extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isLogin: false
+    }
     this.login = this.login.bind(this)
+    this.switchLoginPanel = this.switchLoginPanel.bind(this)
   }
   componentWillMount() {
     this.props.persistentActions.persistentClear()
@@ -26,6 +32,9 @@ class LoginApp extends Component {
       this.props.router.push('/ads/ads_list')
     }
   }
+  switchLoginPanel() {
+    this.setState({ isLogin: !this.state.isLogin })
+  }
   render() {
     return (
       <div>
@@ -37,7 +46,7 @@ class LoginApp extends Component {
                   className="full"
                   style={{ height: '95%' }}
                   bodyStyle={{ padding: 0, height: '100%' }}
-                  onClick={this.login.bind(null, 'client')}
+                  onClick={this.switchLoginPanel}
                   >
                   <div styleName="custom-image1" />
                   <div styleName="custom-card">
@@ -62,6 +71,21 @@ class LoginApp extends Component {
               </Col>
             </Row>
           </div>
+        </div>
+        <div>
+          <Modal
+            closable={false}
+            onClose={this.switchLoginPanel}
+            visible={this.state.isLogin}
+            footer={null}
+            >
+            <Tabs type="card" defaultActiveKey=".$login">
+              <TabPane tab="Login" key="login">
+                <LoginForm />
+              </TabPane>
+              <TabPane tab="Register" key="register">Content of Tab Pane 2</TabPane>
+            </Tabs>
+          </Modal>
         </div>
       </div>
     )

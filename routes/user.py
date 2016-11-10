@@ -39,7 +39,7 @@ def user_register():
                 name = request.form.get('name')
                 exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES(now(), %s, %s, %s, %s, %s)"
                 g.conn.execute(exe_sql, birth, password, email, name, sex)
-            ret[STATUS] = FAIL
+            ret[STATUS] = SUCCESS
             ret[RESULT] = NULL
             return ret
         except Exception, e:
@@ -191,4 +191,3 @@ def user_follows_list():
 def followers_num(uid):
     exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s"
     return g.conn.execute(exe_sql, uid).fetchone()["count"]
-

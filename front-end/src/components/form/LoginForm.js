@@ -21,30 +21,38 @@ class NormalLoginForm extends Component {
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }]
+            rules: [{
+              required: true,
+              type: 'string',
+              message: 'Invalid Username!'
+              // pattern: /^\w[\w\s]+\w$/,
+              // message: 'Invalid Username! Letters or Digits only!',
+              // transform: (value) => value.trim()
+            }]
           })(
             <Input addonBefore={<Icon type="user" />} placeholder="Username" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }]
+            rules: [{
+              type: 'string',
+              required: true,
+              message: 'Please input your Password!'
+              // pattern: /^[^\s]{4,}$/,
+              // message: 'Please input your Password! No space! At least 4 character!'
+            }]
           })(
             <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </Button>
-          Or <a>register now!</a>
+          <div className="text-center">
+            <Button type="primary" htmlType="submit" className="login-form-button">
+              Log in
+            </Button>
+            <span style={{ marginLeft: '20px' }}>Or</span> <a>Visitor</a>
+          </div>
         </FormItem>
       </Form>
     )
