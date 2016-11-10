@@ -869,7 +869,7 @@ Return:
 }
 ```
 
-4. Get filters results
+5. Get filters results (done except statics)
 
 URL: `api/user_sets/filters/results`
 
@@ -877,8 +877,10 @@ POST:
 
 ```
 {
-  "age": [18, 30],
-  "sex": ["male", "female"]
+  "filters": {
+    "age": [18, 30],
+    "sex": "male"
+  }
 }
 ```
 
@@ -889,13 +891,14 @@ Return:
   "status": "success" | "fail",
   // success
   "result": {
-    "users":{
+    "users":{[
         "uid": 123,
         "birth": 3333333,
         "reg_t": 4444444,
         "email": "abc@gmail.com",
         "name": "somebody",
         "sex": "male"
+    ]}
     "statics"{
         "sex_ratio": 0.6 // male/female
     }

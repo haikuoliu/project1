@@ -2,6 +2,7 @@ import json
 from flask import g
 from utils.time_format import *
 
+
 # Useful functions
 # uid likes eid?
 def is_like(uid, eid):
@@ -24,7 +25,7 @@ def topics_of_event(eid):
 
 # Given a filter, return a list of filtered user info.
 # attr is a list of user info that this function returns (plus uid), like["age, sex"].
-def decode_filters(filters, attr=None):
+def decode_filters(filters, attrs=[]):
     filters_dic = json.loads(filters)
     age = None
     sex = None
@@ -39,12 +40,13 @@ def decode_filters(filters, attr=None):
             sex = True
         elif filters_dic["sex"] == "female":
             sex = False
-    return filtered_user_info(attr=attr, age=age, sex=sex)
+    return filtered_user_info(attrs=attrs, age=age, sex=sex)
+
 
 # Get the filtered users info.
 # Supported args: age, sex, post_topics, subscribe_topics, reg_time, email
 # attr is a list of user info that this function returns (plus uid), like["age, sex"].
-def filtered_user_info(attr=None, age=None, sex=None, post_topics=None, subscribe_topics=None, reg_time=None, email=None):
+def filtered_user_info(attrs=[], age=None, sex=None, post_topics=None, subscribe_topics=None, reg_time=None, email=None):
     # get all uid
     exe_sql = "SELECT uid FROM users"
     args = ()
@@ -66,10 +68,13 @@ def filtered_user_info(attr=None, age=None, sex=None, post_topics=None, subscrib
         exe_sql = exe_sql + INTERSECT + sex_sql
         # get users whose sex is male/female, sex should be True or False
         args = args + (sex,)
-
     # if post_topics != None:
 
-
+    # select those attributes
+    select = "SELECT uid"
+    for attr in attrs:
+        select = select + ", " + attr
+    exe_sql = select + " FROM users WHERE uid IN (" + exe_sql + ")"
     rows = g.conn.execute(exe_sql, args).fetchall()
     return rows
 

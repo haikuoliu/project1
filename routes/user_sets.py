@@ -125,6 +125,43 @@ def user_sets_get_all():
             return default_error_msg(e.message)
 
 
+# Get results of a specific filter
+# http://127.0.0.1:8080/api/user_sets/filters/results
+@routes.route('/api/user_sets/filters/results', methods=['GET', 'POST'])
+@crossdomain(origin='*')
+def filters_results():
+    if request.method == 'POST':
+        try:
+            filters = request.form.get('filters')
+            rows = decode_filters(filters=filters, attrs=["name", "birth", "email", "sex", "reg_t"])
+            users = []
+            for row in rows:
+                if row["sex"] == True:
+                    sex = "male"
+                else:
+                    sex = "female"
+                user = {
+                    "uid": row["uid"],
+                    "birth": date_to_timestamp(row["birth"]),
+                    "reg_t": date_to_timestamp(row["reg_t"]),
+                    "email": row["email"],
+                    "name": row["name"],
+                    "sex": sex
+                }
+                users.append(user)
+            ret = {}
+            ret[STATUS] = SUCCESS
+            result = {}
+            result["users"] = users
+            result["statics"] = {}
+            ret[RESULT] = result
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
 # Update the size of 'set_id'
 def update_size_of_user_sets(set_id):
     # Get filters

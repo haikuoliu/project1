@@ -23,7 +23,7 @@ else: print "connection failed"
 
 # Get the filtered users info.
 # Supported args: age, post_topics, subscribe_topics, reg_time, email
-def filtered_user_info_test(age=None, sex=None, post_topics=None, subscribe_topics=None, reg_time=None, email=None):
+def filtered_user_info_test(attrs=[], age=None, sex=None, post_topics=None, subscribe_topics=None, reg_time=None, email=None):
     # get all uid
     exe_sql = "SELECT uid FROM users"
     args = ()
@@ -45,6 +45,10 @@ def filtered_user_info_test(age=None, sex=None, post_topics=None, subscribe_topi
         exe_sql = exe_sql + INTERSECT + sex_sql
         # get users whose sex is male/female, sex should be True or False
         args = args + (sex,)
+    select = "SELECT uid"
+    for attr in attrs:
+        select = select + ", " + attr
+    exe_sql = select + " FROM users WHERE uid IN (" + exe_sql + ")"
     print exe_sql
     print args
     rows = conn.execute(exe_sql, args).fetchall()
@@ -54,7 +58,8 @@ def filtered_user_info_test(age=None, sex=None, post_topics=None, subscribe_topi
 
 # rows = filtered_user_info_test(age=[1, 44], reg_time=[1475280000, 1478753407])
 
-rows = filtered_user_info_test(sex=False)
+rows = filtered_user_info_test(attrs=["uid", "name"],sex=False)
 print type(rows)
 for row in rows:
-    print row["uid"]
+    print str(row["uid"]) + " " + row["name"]
+
