@@ -38,16 +38,26 @@ def topics_all():
 
 
 # User subscribes topic
-# http://0.0.0.0:8080/api/topics/subscribes?uid=6&topicName=science
+# http://0.0.0.0:8080/api/topics/subscribes?uid=6&topicName=science&isSubscribe=0
 @routes.route('/api/topics/subscribes', methods=['GET'])
 @crossdomain(origin='*')
 def topic_subscribes():
     if request.method == 'GET':
         try:
+            is_sub = request.args.get('isSubscribe')
             uid = request.args.get('uid')
             topicName = request.args.get('topicName')
-            exe_sql = "INSERT INTO subscribes(uid, topic) VALUES(%s, %s)"
-            g.conn.execute(exe_sql, uid, topicName)
+            if is_sub == "0":
+                exe_sql = "DELETE FROM subscribes WHERE uid = %s AND topic = %s"
+                g.conn.execute(exe_sql, uid, topicName)
+            elif is_sub == "1":
+                exe_sql = "SELECT count(*) AS count FROM subscribes WHERE uid = %s AND topic = %s"
+                count = g.conn.execute(exe_sql, uid, topicName).fetchone()["count"]
+                if count == 0:
+                    exe_sql = "INSERT INTO subscribes(uid, topic) VALUES(%s, %s)"
+                    g.conn.execute(exe_sql, uid, topicName)
+            else:
+                raise Exception("isSubscribe should be either 0 or 1")
             ret = {}
             ret[STATUS] = SUCCESS
             ret[RESULT] = NULL

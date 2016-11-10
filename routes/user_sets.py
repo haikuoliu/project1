@@ -15,7 +15,6 @@ def user_sets_create():
             sid = request.form.get('sid')
             filters = request.form.get('filters')
             description = request.form.get('description')
-            filters_dic = json.loads(filters)
             size = len(decode_filters(filters))
             # Intert into data base
             exe_sql = "INSERT INTO user_sets(filters, description, sid, size) VALUES(%s, %s, %s, %s)"

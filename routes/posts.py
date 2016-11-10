@@ -115,8 +115,10 @@ def users_feeds():
                       "(SELECT events.eid FROM events, follows WHERE events.uid = follows.destination AND follows.source = %s) " \
                       "OR events.eid in " \
                       "(SELECT events.eid FROM subscribes, events, belongs WHERE events.eid = belongs.eid AND belongs.topic = subscribes.topic AND subscribes.uid = %s)" \
+                      "OR events.eid in " \
+                      "(SELECT eid FROM events WHERE uid = %s)" \
                       ")ORDER BY events.time DESC LIMIT %s OFFSET %s"
-            res = g.conn.execute(exe_sql, (timestamp_to_datetime(ts), uid, uid, str(count), str(offset)))
+            res = g.conn.execute(exe_sql, (timestamp_to_datetime(ts), uid, uid, uid, str(count), str(offset)))
             rows = res.fetchall()
             feeds = []
             for row in rows:

@@ -568,7 +568,7 @@ URL: `api/topics/subscribes`
 GET:
 
 ```
-?uid=1&topicName=science
+?uid=1&topicName=science&isSubscribe=0 //1:subscribes, 0: cancle
 ```
 
 Return:
@@ -861,6 +861,46 @@ Return:
         "size": 100
       }
   }
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "User None Exist"
+  }
+}
+```
+
+4. Get filters results
+
+URL: `api/user_sets/filters/results`
+
+POST:
+
+```
+{
+  "age": [18, 30],
+  "sex": ["male", "female"]
+}
+```
+
+Return:
+
+```
+{
+  "status": "success" | "fail",
+  // success
+  "result": {
+    "users":{
+        "uid": 123,
+        "birth": 3333333,
+        "reg_t": 4444444,
+        "email": "abc@gmail.com",
+        "name": "somebody",
+        "sex": "male"
+    "statics"{
+        "sex_ratio": 0.6 // male/female
+    }
+  }
+
   // fail
   "result": {
     "code": 0,
