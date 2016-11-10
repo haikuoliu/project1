@@ -11,7 +11,7 @@ from flask import g
 # http://127.0.0.1:8080/api/users/register
 @routes.route('/api/users/register', methods=['GET', 'POST'])
 @crossdomain(origin='*')
-def user_subscribes():
+def user_register():
     if request.method == 'POST':
         try:
             email = request.form.get('email')
