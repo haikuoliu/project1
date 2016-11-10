@@ -5,6 +5,7 @@ from utils.crossdomain import *
 import json
 from . import routes
 from flask import g
+import hashlib
 
 
 # Register a new user.
@@ -16,8 +17,7 @@ def user_register():
         try:
             email = request.form.get('email')
             exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
-            count = g.conn.execute(exe_sql, email).fetchone["count"]
-            print type(count)
+            count = g.conn.execute(exe_sql, email).fetchone()["count"]
             ret = {}
             # if email exists
             if count > 0:
@@ -26,22 +26,58 @@ def user_register():
                     "code": 1,
                     "msg": "Email exists!"
                 }
-                return ret
             else:
-                email = request.form.get('email')
                 birth = request.form.get('birth')
                 password = request.form.get('password')
                 sex = request.form.get('sex')
-                if sex == "mail":
+                if sex == "male":
                     sex = True
                 else:
                     sex = False
                 name = request.form.get('name')
-                exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES(now(), %s, %s, %s, %s, %s)"
-                g.conn.execute(exe_sql, birth, password, email, name, sex)
-            ret[STATUS] = SUCCESS
-            ret[RESULT] = NULL
-            return ret
+                exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) " \
+                          "VALUES(now(), %s, %s, %s, %s, %s)"
+                g.conn.execute(exe_sql, birth, hashlib.md5(password.encode()).hexdigest(), email, name, sex)
+                ret[STATUS] = SUCCESS
+                ret[RESULT] = NULL
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
+
+
+# User login
+# http://127.0.0.1:8080/api/users/login
+@routes.route('/api/users/login', methods=['GET', 'POST'])
+@crossdomain(origin='*')
+def user_login():
+    if request.method == 'POST':
+        try:
+            email = request.form.get('email')
+            ret = {}
+            # if user none exists
+            if not user_exists(email):
+                ret[STATUS] = FAIL
+                ret[RESULT] = {
+                    "code": 1,
+                    "msg": "Email not exists!"
+                }
+            else:
+                password = request.form.get('password')
+                exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s AND password = %s"
+                count = g.conn.execute(exe_sql, email, hashlib.md5(password.encode()).hexdigest()).fetchone()["count"]
+                if count > 0:
+                    ret[STATUS] = SUCCESS
+                    ret[RESULT] = NULL
+                else:
+                    ret[STATUS] = FAIL
+                    ret[RESULT] = {
+                        "code": 2,
+                        "msg": "Password incorrect!"
+                    }
+            print ret
+            return json.dumps(ret)
         except Exception, e:
             print e
             return default_error_msg(e.message)
@@ -191,3 +227,15 @@ def user_follows_list():
 def followers_num(uid):
     exe_sql = "SELECT count(*) AS count FROM follows WHERE destination = %s"
     return g.conn.execute(exe_sql, uid).fetchone()["count"]
+<<<<<<< HEAD
+=======
+
+
+def user_exists(email):
+    exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
+    ret = g.conn.execute(exe_sql, email).fetchone()["count"]
+    if ret > 0:
+        return True
+    else:
+        return False
+>>>>>>> origin/master

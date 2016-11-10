@@ -20,7 +20,7 @@ def connectdb():
     # password = ""
     # user = "HaikuoLiu"
     # url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
-    db = create_engine(url)
+    # db = create_engine(url)
     return db
     # conn = db.connect()
     # if conn: print "connected to db"
