@@ -16,21 +16,7 @@ def user_sets_create():
             filters = request.form.get('filters')
             description = request.form.get('description')
             filters_dic = json.loads(filters)
-            age_range = filters_dic["age"]
-            if filters_dic["sex"] == "male":
-                sex = True
-            elif filters_dic["sex"] == "female":
-                sex = False
-            else:
-                sex = None
-            # Get size of user_set
-            if (sex == None):
-                exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
-                size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years")).fetchone()["size"]
-            else:
-                exe_sql = "SELECT count(*) AS size FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-                size = g.conn.execute(exe_sql, (str(age_range[0]) + "years", str(age_range[1]) + "years", sex)).fetchone()["size"]
-            size = int(size)
+            size = len(decode_filters(filters))
             # Intert into data base
             exe_sql = "INSERT INTO user_sets(filters, description, sid, size) VALUES(%s, %s, %s, %s)"
             g.conn.execute(exe_sql, (filters, description, sid, size))

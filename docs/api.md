@@ -561,6 +561,33 @@ Return:
 }
 ```
 
+2. User subscribes topic (done)
+
+URL: `api/topics/subscribes`
+
+GET:
+
+```
+?uid=1&topicName=science
+```
+
+Return:
+
+```
+{
+  "status": "success" | "fail",
+  // success
+  "result": null
+    ]
+  },
+  // fail
+  "result": {
+    "code": 0,
+    "msg": "Unknown"
+  }
+}
+```
+
 ## Likes (done)
 
 1. User likes/dislikes an event.

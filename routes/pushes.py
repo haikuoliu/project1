@@ -23,21 +23,7 @@ def pushes_create():
             size = row["size"]
             price = UNIT_PRICE * int(size)
             description = row["description"]
-            filters_dic = json.loads(filters)
-            age_range = filters_dic["age"]
-            if filters_dic["sex"] == "male":
-                sex = True
-            elif filters_dic["sex"] == "female":
-                sex = False
-            else:
-                sex = None
-            # Get filtered uid
-            if (sex == None):
-                exe_sql = "SELECT uid FROM users WHERE age(birth) >= %s AND age(birth) <= %s"
-                rows = g.conn.execute(exe_sql, (str(int(age_range[0])) + "years", str(int(age_range[1])) + "years")).fetchall()
-            else:
-                exe_sql = "SELECT uid FROM users WHERE age(birth) >= %s AND age(birth) <= %s AND sex = %s"
-                rows = g.conn.execute(exe_sql, (str(int(age_range[0])) + "years", str(int(age_range[1])) + "years", sex)).fetchall()
+            rows = decode_filters(filters)
             for row in rows:
                 # exe_sql = "INSERT INTO user_ads(uid, aid)"
                 exe_sql = "SELECT * FROM user_ads WHERE uid = %s AND aid = %s"

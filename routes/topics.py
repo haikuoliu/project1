@@ -35,3 +35,24 @@ def topics_all():
         except Exception, e:
             print e
             return default_error_msg(e.message)
+
+
+# User subscribes topic
+# http://0.0.0.0:8080/api/topics/subscribes?uid=6&topicName=science
+@routes.route('/api/topics/subscribes', methods=['GET'])
+@crossdomain(origin='*')
+def topic_subscribes():
+    if request.method == 'GET':
+        try:
+            uid = request.args.get('uid')
+            topicName = request.args.get('topicName')
+            exe_sql = "INSERT INTO subscribes(uid, topic) VALUES(%s, %s)"
+            g.conn.execute(exe_sql, uid, topicName)
+            ret = {}
+            ret[STATUS] = SUCCESS
+            ret[RESULT] = NULL
+            print ret
+            return json.dumps(ret)
+        except Exception, e:
+            print e
+            return default_error_msg(e.message)
