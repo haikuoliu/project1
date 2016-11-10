@@ -5,6 +5,8 @@ import json
 from flask import g
 from sqlalchemy import *
 from utils.time_format import *
+import hashlib
+
 
 # host = "104.196.175.120"
 # password = "che2q"
@@ -19,50 +21,30 @@ if conn: print "connected to db"
 else: print "connection failed"
 
 
-# useful functions
-# uid likes eid?
-def is_likes(uid, eid):
-    exe_sql = "SELECT count(*) > 0 AS islike FROM likes WHERE uid = %s AND eid = %s"
-    islike = conn.execute(exe_sql, uid, eid).fetchone()["islike"]
-    print type(islike)
-    return islike
-
-# get topics that an event belongs
-def topics_of_events(eid):
-    exe_sql = "SELECT belongs.topic AS topic FROM events, belongs " \
-              "WHERE events.eid = %s AND events.eid = belongs.eid"
-    res = conn.execute(exe_sql, eid)
-    rows = res.fetchall()
-    topics = []
-    for row in rows:
-        topics.append(row["topic"])
-    return topics
-
-
-
-eid = 1
-myid = 2
-exe_sql = "SELECT * FROM events, users WHERE eid = %s AND events.uid = users.uid"
-res = conn.execute(exe_sql, eid)
-exe_sql = "SELECT count(*) As count FROM likes WHERE eid = %s"
-likes = conn.execute(exe_sql, eid).fetchone()["count"]
-row = res.fetchone()
-event = {
-    "eid": eid,
-    "event_type": row["event_type"],
-    "description": row["description"],
-    "uid": row["uid"],
-    "user_name": row["name"],
-    "url": row["url"],
-    "topics": topics_of_events(eid),
-    "likes": likes,
-    "islike": is_likes(myid, eid),
-    "content": row["content"],
-    "title": row["title"]
-}
+email = "abc@gmail.com"
+exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
+count = conn.execute(exe_sql, email).fetchone()["count"]
+print type(count)
 ret = {}
-ret[STATUS] = SUCCESS
-ret[RESULT] = event
+# if email exists
+if count > 0:
+    ret[STATUS] = FAIL
+    ret[RESULT] = {
+        "code": 1,
+        "msg": "Email exists!"
+    }
+else:
+    birth = "2000-02-13"
+    password = "p"
+    sex = "male"
+    if sex == "male":
+        sex = True
+    else:
+        sex = False
+    name = "n"
+    exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) " \
+              "VALUES(now(), %s, %s, %s, %s, %s)"
+    conn.execute(exe_sql, birth, hashlib.md5(password.encode()).hexdigest(), email, name, sex)
 print ret
 
 

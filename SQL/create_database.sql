@@ -4,7 +4,7 @@ CREATE TABLE users(
     uid serial primary key,
     reg_t timestamp NOT NULL,
     birth date CHECK( birth < now()),
-    password char(16) NOT NULL,
+    password text NOT NULL,
     email text NOT NULL UNIQUE CHECK (email ~ '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$'),
     name text NOT NULL,
     sex bool DEFAULT true
@@ -117,17 +117,28 @@ CREATE TABLE user_ads(
 
 --insert
 INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES
-(now() - interval'1day','1993-7-12','lllhhhkkk','haikuo.liu.cu@gmail.com','HaikuoLiu',true),
-(now() - interval'33day','1994-6-18','zh1234','ZehaoSong@gmail.com','ZehaoSong',true),
-(now() - interval'22day','1996-1-30','benjam123','BenjaminMackenzie@hotmail.com','BenjaminMackenzie',true),
-(now() - interval'111day','1993-4-1','AndrewW','AndrewWallace@163.com','AndrewWallace',true),
-(now() - interval'133day','1990-5-3','bbbbbjjjjj','BrandonJones@126.com','BrandonJones',true),
-(now() - interval'14day','1991-7-4','mgibson,,','MollyGibson@gmail.com','MollyGibson',false),
-(now() - interval'88day','1983-8-9','bernadettehud','BernadetteHudson@hotmail.com','BernadetteHudson',false),
-(now() - interval'12day','2001-12-12','carolyn','CarolynArnold@hotmail.com','CarolynArnold',false),
-(now() - interval'99day','1970-1-18','donnablake','DonnaBlake@gmail.com','DonnaBlake',false),
-(now() - interval'134day','1991-3-23','TraceyColumbia','TraceyGraham@columbia.edu','TraceyGraham',false),
-(now() - interval'124day','1995-6-29','mydavid!','DavidPiper@outlook.com','DavidPiper',true);
+--lllhhhkkk
+(now() - interval'1day','1993-7-12','e9758b9daa55928e4807873586675118','haikuo.liu.cu@gmail.com','HaikuoLiu',true),
+--zh1234
+(now() - interval'33day','1994-6-18','651d7b1f39ca2dc2db47278eb70087c3','ZehaoSong@gmail.com','ZehaoSong',true),
+--benjam123
+(now() - interval'22day','1996-1-30','0df08098440972a832d1474ae847d0fa','BenjaminMackenzie@hotmail.com','BenjaminMackenzie',true),
+--AndrewW
+(now() - interval'111day','1993-4-1','f62b0dbdd7326921acf9a13920cbbef7','AndrewWallace@163.com','AndrewWallace',true),
+--bbbbbjjjjj
+(now() - interval'133day','1990-5-3','a3efbed0d175394b943234b6e9a9ae52','BrandonJones@126.com','BrandonJones',true),
+--mgibson
+(now() - interval'14day','1991-7-4','fc87b69c76eac4e405c7d6736cdbda3e','MollyGibson@gmail.com','MollyGibson',false),
+--bernadettehud
+(now() - interval'88day','1983-8-9','d5b5944ca5c318dcbe0ab5b809c18d4c','BernadetteHudson@hotmail.com','BernadetteHudson',false),
+--carolyn
+(now() - interval'12day','2001-12-12','f08e6e39297757fbe383409944382599','CarolynArnold@hotmail.com','CarolynArnold',false),
+--donnablake
+(now() - interval'99day','1970-1-18','f9b4b7eb02e1f9ed5f5fe092f5bb79cc','DonnaBlake@gmail.com','DonnaBlake',false),
+--TraceyColumbia
+(now() - interval'134day','1991-3-23','c0027d2f4be5d62b402f58579c3d2286','TraceyGraham@columbia.edu','TraceyGraham',false),
+--mydavid!
+(now() - interval'124day','1995-6-29','049eed3423b1a54ee4745bb035e2c58c','DavidPiper@outlook.com','DavidPiper',true);
 
 
 INSERT INTO events(time, event_type, description, uid, url, title, content) VALUES
@@ -274,17 +285,30 @@ INSERT INTO ads(sid, url, description)VALUES
 
 
 INSERT INTO user_sets(filters, description, sid, size) VALUES
-('{"age":[18,30],"sex":""}', 'Young People', 1, 5),
-('{"age":[30,50],"sex":""}', 'Middle Aged', 1, 6),
-('{"subscribe_topics":["technology","shopping"],"age":[0,25],"sex":""}', 'Young Users who might be interested in purchase new phone', 1, 2),
-('{"post_topics":["technology"],"keywords":["iphone"],"age":[0,100],"sex":""}', 'Bloggers who have posted articles about iphone', 1, 3),
-('{"active_within":["30day"],"age":[18,30],"sex":"male"}','Active Male Customs', 1, 4),
-('{"active_within":["30day"],"age":[18,30],"sex":"female"}','Active Female Customs', 1, 5),
-('{"subscribe_topics":["sports"],"age":[18,30],"sex":"male"}','Potential Male Customs', 7, 6),
-('{"subscribe_topics":["sports"],"age":[18,30],"sex":"female"}','Potential Female Customs', 7, 7),
-('{"reg_time":["3year","1year"],"age":[0,100],"sex":""}', 3, 8),
-('{"email":"@gmail.com$","age":[0,100],"sex":""}', 3, 1)
+('{"age":[18, 30],"sex":"male"}', 'Young People', 1, 5),
+('{"age":[10, 32],"sex":"male"}', 'Middle Aged', 1, 6),
+('{"age":[12, 34],"sex":"male"}', 'Young Users who might be interested in purchase new phone', 1, 2),
+('{"age":[13, 33],"sex":"male"}', 'Bloggers who have posted articles about iphone', 1, 3),
+('{"age":[1, 18],"sex":"male"}','Active Male Customs', 1, 4),
+('{"age":[12, 33],"sex":"male"}','Active Female Customs', 1, 5),
+('{"age":[22, 40],"sex":"male"}','Potential Male Customs', 7, 6),
+('{"age":[44, 80],"sex":"male"}','Potential Female Customs', 7, 7),
+('{"age":[33, 50],"sex":"male"}','Potential buyer for phone',3, 8),
+('{"age":[22, 33],"sex":"male"}','Potential buyer for imac',3, 1)
 ;
+
+-- INSERT INTO user_sets(filters, description, sid, size) VALUES
+-- ('{"age":[18, 30],"sex":"male"}', 'Young People', 1, 5),
+-- ('{"age":[30,50],"sex":""}', 'Middle Aged', 1, 6),
+-- ('{"subscribe_topics":["technology","shopping"],"age":[0,25],"sex":""}', 'Young Users who might be interested in purchase new phone', 1, 2),
+-- ('{"post_topics":["technology"],"keywords":["iphone"],"age":[0,100],"sex":""}', 'Bloggers who have posted articles about iphone', 1, 3),
+-- ('{"active_within":["30day"],"age":[18,30],"sex":"male"}','Active Male Customs', 1, 4),
+-- ('{"active_within":["30day"],"age":[18,30],"sex":"female"}','Active Female Customs', 1, 5),
+-- ('{"subscribe_topics":["sports"],"age":[18,30],"sex":"male"}','Potential Male Customs', 7, 6),
+-- ('{"subscribe_topics":["sports"],"age":[18,30],"sex":"female"}','Potential Female Customs', 7, 7),
+-- ('{"reg_time":["3year","1year"],"age":[0,100],"sex":""}', 3, 8),
+-- ('{"email":"@gmail.com$","age":[0,100],"sex":""}', 3, 1)
+-- ;
 
 INSERT INTO pushes( sid, aid, set_id, time, price, count)VALUES
 (1, 1, 1, now() - interval'2hour', 1, 1000),

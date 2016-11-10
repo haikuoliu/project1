@@ -5,6 +5,7 @@ from utils.crossdomain import *
 import json
 from . import routes
 from flask import g
+import hashlib
 
 
 # Register a new user.
@@ -16,7 +17,7 @@ def user_register():
         try:
             email = request.form.get('email')
             exe_sql = "SELECT count(*) AS count FROM users WHERE email = %s"
-            count = g.conn.execute(exe_sql, email).fetchone["count"]
+            count = g.conn.execute(exe_sql, email).fetchone()["count"]
             print type(count)
             ret = {}
             # if email exists
@@ -26,22 +27,23 @@ def user_register():
                     "code": 1,
                     "msg": "Email exists!"
                 }
-                return ret
             else:
-                email = request.form.get('email')
                 birth = request.form.get('birth')
                 password = request.form.get('password')
                 sex = request.form.get('sex')
-                if sex == "mail":
+                if sex == "male":
                     sex = True
                 else:
                     sex = False
                 name = request.form.get('name')
-                exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) VALUES(now(), %s, %s, %s, %s, %s)"
-                g.conn.execute(exe_sql, birth, password, email, name, sex)
-            ret[STATUS] = FAIL
-            ret[RESULT] = NULL
-            return ret
+                exe_sql = "INSERT INTO users(reg_t, birth, password, email, name, sex) " \
+                          "VALUES(now(), %s, %s, %s, %s, %s)"
+                print str(hashlib.md5(password.encode()).hexdigest())
+                g.conn.execute(exe_sql, birth, hashlib.md5(password.encode()).hexdigest(), email, name, sex)
+                ret[STATUS] = SUCCESS
+                ret[RESULT] = NULL
+            print ret
+            return json.dumps(ret)
         except Exception, e:
             print e
             return default_error_msg(e.message)
