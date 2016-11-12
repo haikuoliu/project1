@@ -19,6 +19,19 @@ const reducerMap = {
       oldDict.set(action.result.topic, Immutable.fromJS(action.result.eventsList))
     ))
   },
+  [CLIENT_TOPICS.SWITCH_SUBSCRIBE]: (state, action) => {
+    const index = state.get('topicsList').findIndex(
+      Value => Value.get('topic_name') === action.topic
+    )
+    if (index < 0) return state
+    return state.update('topicsList', oldList => (
+      oldList.update(index, V =>
+        V.merge(Immutable.fromJS({
+          isSubscribed: action.isSubscribed
+        }))
+      )
+    ))
+  },
   [CLIENT_EVENTS.SWITCH_LIKE]: (state, action) => {
     return state.update('eventsList', oldDict => oldDict.map(array => {
       const index = array.findIndex(

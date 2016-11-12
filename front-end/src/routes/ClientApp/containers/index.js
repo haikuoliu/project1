@@ -33,10 +33,10 @@ class ClientApp extends Component {
       <Row style={{ height: window.innerHeight }}>
         <Col span={4} className="full-height" style={{ background: '#404040' }}>
           <h1
-            className="text-center fc-white"
-            style={{ height: '80px', lineHeight: '80px' }}
+            className="text-center fc-white text-single-line"
+            style={{ height: '80px', lineHeight: '80px', overflow: 'hidden' }}
             >
-            {userInfo.userName}
+            Hi, {userInfo.userName}
           </h1>
           <Menu
             theme="dark"

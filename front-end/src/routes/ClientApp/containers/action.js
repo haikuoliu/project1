@@ -1,5 +1,5 @@
 import fetchPro from 'SRC/utils/fetchPro'
-import { CLIENT_USER, CLIENT_EVENTS } from 'SRC/constants/action_const'
+import { CLIENT_USER, CLIENT_EVENTS, CLIENT_TOPICS } from 'SRC/constants/action_const'
 import api from 'SRC/apis'
 import logger from 'SRC/utils/logger'
 
@@ -55,6 +55,26 @@ export function switchLike(myId, eid, type = 'like') {
           uid: myId,
           eid,
           isLike: type === 'like'
+        })
+      })
+  )
+}
+
+export function switchSubscribe(myId, topic, type = 'subscribe') {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('topics:switchSubscribe', myId, topic, type === 'subscribe' ? 1 : 0))
+      .then(response => response.json())
+      .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
+      .then(json => {
+        if (json.status === 'fail') {
+          logger.error(api('topics:switchSubscribe', myId, topic, type === 'subscribe' ? 1 : 0), json.result.msg)
+          return
+        }
+        dispatch({
+          type: CLIENT_TOPICS.SWITCH_SUBSCRIBE,
+          uid: myId,
+          topic,
+          isSubscribed: type === 'subscribe'
         })
       })
   )

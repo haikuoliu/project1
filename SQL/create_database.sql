@@ -149,7 +149,7 @@ INSERT INTO events(time, event_type, description, uid, url, title, content) VALU
 (now() - interval'22day', 'picture', 'this is Columbia University!', 4, 'http://gsas.columbia.edu/sites/default/files/slides/GSAS-Slide01.jpg', null,null),
 (now() - interval'33day', 'picture', 'Lets swim!', 3, 'http://www.indianworkouts.com/wp-content/uploads/2015/02/Woman-swimming-in-a-pool.jpg', null,null),
 (now() - interval'22day', 'picture', 'come and play footbaoll', 1, 'http://www.clipartbest.com/cliparts/7Ta/oy5/7Taoy5jEc.png', null,null),
-(now() - interval'11day', 'picture', 'What a lovely bird!', 10, 'https://en.wikipedia.org/wiki/Red-crested_turaco#/media/File:RedcrestedTuraco.jpg', null,null),
+(now() - interval'11day', 'picture', 'What a lovely bird!', 10, 'https://upload.wikimedia.org/wikipedia/commons/a/a7/RedcrestedTuraco.jpg', null,null),
 (now() - interval'66day', 'picture', 'Hawaii', 9, 'https://www.ncl.com/sites/default/files/DestinationGalleries.Hawaii.SnorkelingBay900x400.jpg', null,null),
 (now() - interval'77day', 'picture', 'This movie is really good!', 1, 'http://www.getmemedia.com/content/5860/Live/image/Screen%20with%20Ident%20frame.jpg', null,null),
 (now() - interval'123day', 'picture', 'See my new Google glass!', 2, 'http://www.dispatch.com/content/graphics/2014/01/03/1aa-abuzz03-art-g2rqdlh3-1exchange-eye-on-the-future-jpeg-05671.jpg', null,null),

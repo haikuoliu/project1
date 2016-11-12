@@ -25,7 +25,7 @@ class BlogEdit extends Component {
   componentWillMount() {
     const eid = this.props.location.query.eid
     const myid = this.props.persistentStore.userId
-    this.props.actions.loadAllTopics()
+    this.props.actions.loadAllTopics(myid)
     if (eid > 0) {
       this.props.actions.loadSingleEvent(eid, myid)
     } else {
@@ -62,7 +62,7 @@ class BlogEdit extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
+        // console.log(values)
         this.props.actions.updateEventContent(
           this.props.persistentStore.userId,
           this.props.store.event.eid,

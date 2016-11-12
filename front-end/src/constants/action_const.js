@@ -12,7 +12,8 @@ export const CLIENT_PROFILE_USER_INFO = {
 export const CLIENT_TOPICS = {
   LOAD_TOPIC_LIST: '@Client/topics/LOAD_TOPIC_LIST',
   LOAD_EVENT_LIST: '@Client/topics/LOAD_EVENT_LIST',
-  LOAD_USER_TOPICS: '@Client/topics/LOAD_USER_TOPICS'
+  LOAD_USER_TOPICS: '@Client/topics/LOAD_USER_TOPICS',
+  SWITCH_SUBSCRIBE: '@Client/topics/SWITCH_SUBSCRIBE'
 }
 
 export const CLIENT_EVENTS = {

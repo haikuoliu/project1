@@ -44,15 +44,15 @@ class NormalLoginForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem
-          validateStatus={this.state.loginStatus.status}
-          help={this.state.loginStatus.msg}
-          >
+        <FormItem>
           {getFieldDecorator('userName', {
             rules: [{
               required: true,
-              type: 'string',
-              message: 'Invalid Username!'
+              type: 'email',
+              message: 'Invalid Username!',
+              transform(value) {
+                return value.toLowerCase()
+              }
               // pattern: /^\w[\w\s]+\w$/,
               // message: 'Invalid Username! Letters or Digits only!',
               // transform: (value) => value.trim()
@@ -61,10 +61,7 @@ class NormalLoginForm extends Component {
             <Input addonBefore={<Icon type="user" />} placeholder="Email" />
           )}
         </FormItem>
-        <FormItem
-          validateStatus={this.state.loginStatus.status}
-          help={this.state.loginStatus.msg}
-          >
+        <FormItem>
           {getFieldDecorator('password', {
             rules: [{
               type: 'string',
@@ -77,7 +74,10 @@ class NormalLoginForm extends Component {
             <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
           )}
         </FormItem>
-        <FormItem>
+        <FormItem
+          validateStatus={this.state.loginStatus.status}
+          help={this.state.loginStatus.msg}
+          >
           <div className="text-center">
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in

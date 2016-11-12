@@ -3,6 +3,8 @@ import { Form, Radio, Input, Button, DatePicker } from 'antd'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 
+import moment from 'moment'
+
 import { userRegister } from 'SRC/utils/login'
 
 class RegistrationForm extends Component {
@@ -52,6 +54,10 @@ class RegistrationForm extends Component {
       form.validateFields(['confirm'], { force: true })
     }
     callback()
+  }
+  checkBirthDate(current) {
+    // can not select days before today and today
+    return current && current.valueOf() > moment().subtract(1, 'days').valueOf()
   }
   render() {
     const { getFieldDecorator } = this.props.form
@@ -140,7 +146,7 @@ class RegistrationForm extends Component {
           {getFieldDecorator('birth', {
             rules: [{ type: 'object', required: true, message: 'Please select time!' }]
           })(
-            <DatePicker />
+            <DatePicker disabledDate={this.checkBirthDate} />
           )}
         </FormItem>
         <FormItem

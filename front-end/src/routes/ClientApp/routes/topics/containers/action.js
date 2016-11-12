@@ -9,21 +9,53 @@ import logger from 'SRC/utils/logger'
 
 */
 
-export function loadAllTopics() {
+export function loadAllTopics(myId) {
   return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
-    fetchPro(api('topics:getAllTopics'))
+    Promise.all([
+      fetchPro(api('topics:getAllTopics'))
+        .then(response => response.json()),
+      fetchPro(api('topics:getTopicsOfUser', myId))
+        .then(response => response.json())
+    ]).catch(() => ([{ status: 'fail', result: { msg: 'Network Unavailable!' } }, null]))
+      .then(jsons => {
+        const [allTopics, myTopics] = jsons
+        if (allTopics.status === 'fail') {
+          logger.error(api('topics:getAllTopics'), allTopics.result.msg)
+          return
+        }
+        if (myTopics.status === 'fail') {
+          logger.error(api('topics:getTopicsOfUser'), myTopics.result.msg)
+          return
+        }
+        const myTopicSet = new Set(myTopics.result.map(topic => topic.topic_name))
+        dispatch({
+          type: CLIENT_TOPICS.LOAD_TOPIC_LIST,
+          result: allTopics.result
+                    .sort((a, b) => b.count - a.count)
+                    .map(topic => ({
+                      ...topic,
+                      isSubscribed: myTopicSet.has(topic.topic_name)
+                    }))
+        })
+      })
+  )
+}
+
+export function getTopicsOfUser(myId) {
+  return (dispatch, getState) => ( // eslint-disable-line no-unused-vars
+    fetchPro(api('topics:getTopicsOfUser', myId))
       .then(response => response.json())
       .catch(() => ({ status: 'fail', result: { msg: 'Network Unavailable!' } }))
       .then(json => {
         if (json.status === 'fail') {
-          logger.error(api('topics:getAllTopics'), json.result.msg)
+          logger.error(api('topics:getTopicsOfUser', myId), json.result.msg)
           return
         }
         // dispatch(PersistentActions.persistentSet('username', json.result.name))
         dispatch({
-          type: CLIENT_TOPICS.LOAD_TOPIC_LIST,
+          type: CLIENT_TOPICS.LOAD_USER_TOPICS,
           status: json.status,
-          result: json.result.sort((a, b) => b.count - a.count)
+          result: json.result
         })
       })
   )

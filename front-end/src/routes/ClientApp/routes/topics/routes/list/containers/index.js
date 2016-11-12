@@ -2,17 +2,30 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import * as ClientGlobalActions from 'SRC/routes/ClientApp/containers/action'
 import * as ClientTopicsAction from '../../../containers/action'
-import * as PersistentActions from 'SRC/action'
 
-import { Row, Col, Card, Badge } from 'antd'
+import { Row, Col, Card, Button } from 'antd'
 
 class TopicsList extends Component {
+  constructor(props) {
+    super(props)
+    this.switchSubscribeStatus = this.switchSubscribeStatus.bind(this)
+  }
   componentWillMount() {
-    this.props.actions.loadAllTopics()
+    this.props.actions.loadAllTopics(this.props.persistentStore.userId)
+  }
+  switchSubscribeStatus(topic, isSubscribed) {
+    const myId = this.props.persistentStore.userId
+    if (isSubscribed) { // Cancel Subscribe
+      this.props.globalActions.switchSubscribe(myId, topic, 'cancel subscribe')
+    } else { // Subscribe
+      this.props.globalActions.switchSubscribe(myId, topic, 'subscribe')
+    }
   }
   render() {
     const topicsStore = this.props.topicsStore
+    const isVisitor = parseInt(this.props.persistentStore.userId) === 0
     return (
       <div className="full-height" style={{ background: '#ECECEC', padding: '5%', overflow: 'auto' }}>
         <Row>
@@ -28,7 +41,21 @@ class TopicsList extends Component {
                     </h3>
                   }
                   bordered
-                  extra={<Badge count={topic.count} style={{ backgroundColor: '#fff', color: '#999', borderColor: '#d9d9d9' }} />}
+                  extra={
+                    <div>
+                      {
+                        isVisitor ? null :
+                          <Button
+                            type={topic.isSubscribed ? 'primary' : 'default'}
+                            size="small"
+                            style={{ width: '80px' }}
+                            onClick={this.switchSubscribeStatus.bind(null, topic.topic_name, topic.isSubscribed)}
+                            >
+                            {topic.isSubscribed ? 'Cancel' : 'Subscribe'}
+                          </Button>
+                      }
+                    </div>
+                  }
                   style={{ width: '90%' }}
                   >
                   <p>{topic.description}</p>
@@ -45,7 +72,7 @@ TopicsList.propTypes = {
   location: React.PropTypes.object,
   topicsStore: React.PropTypes.object,
   persistentStore: React.PropTypes.object,
-  persistentActions: React.PropTypes.object,
+  globalActions: React.PropTypes.object,
   actions: React.PropTypes.object
 }
 
@@ -58,7 +85,7 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    persistentActions: bindActionCreators(PersistentActions, dispatch),
+    globalActions: bindActionCreators(ClientGlobalActions, dispatch),
     actions: bindActionCreators(ClientTopicsAction, dispatch)
   }
 }
