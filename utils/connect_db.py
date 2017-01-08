@@ -18,7 +18,7 @@ def connectdb():
     # Haikuo's Local Test
     host = "localhost"
     password = ""
-    user = "postgres"
+    user = "psql"
     url = "postgresql://%s:%s@%s/postgres" % (user, password, host)
     db = create_engine(url)
     return db
